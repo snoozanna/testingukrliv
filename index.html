@@ -344,6 +344,14 @@ filter: grayscale(100%);
 filter: grayscale(100%);
 }
 
+.ai-img-wrapper.touch{
+  filter: grayscale(0%);
+}
+
+.ai-img-wrapper.touch.filter{
+  filter: grayscale(100%);
+}
+
 #log {
   height: 200px;
   width: 600px;
@@ -452,6 +460,7 @@ setup.checkForRepeats = (array,element) => {
 }
 
 // TOUCHEVENTS 
+// taken from https://developer.mozilla.org/en-US/docs/Web/API/Touch_events  
 setup.startup = () =>  {
   const ongoingTouches = [];
   console.log(ongoingTouches)
@@ -459,78 +468,22 @@ setup.startup = () =>  {
 const handleStart = (evt) =>{
   evt.preventDefault();
   log("touchstart.");
-  const el = document.getElementById("canvas");
-    el.style.background = "blue";
-  // const ctx = el.getContext("2d");
-  // const touches = evt.changedTouches;
-
-  // for (let i = 0; i < touches.length; i++) {
-  //   log(`touchstart: ${i}.`);
-  //   ongoingTouches.push(copyTouch(touches[i]));
-  //   console.log(ongoingTouches)
-  //   const color = colorForTouch(touches[i]);
-  //   log(`color of touch with id ${touches[i].identifier} = ${color}`);
-  //   ctx.beginPath();
-  //   ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
-  //   ctx.fillStyle = color;
-  //   ctx.fill();
-  // }
+  const el = document.getElementById("touch");
+  el.classList.add("filter")  
+  
 }
 
 const handleMove = (evt) => {
   evt.preventDefault();
-  const el = document.getElementById("canvas");
-  const ctx = el.getContext("2d");
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    const color = colorForTouch(touches[i]);
-    const idx = ongoingTouchIndexById(touches[i].identifier);
-
-    if (idx >= 0) {
-      log(`continuing touch ${idx}`);
-      ctx.beginPath();
-      log(
-        `ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`
-      );
-      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-      log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
-      ctx.lineTo(touches[i].pageX, touches[i].pageY);
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = color;
-      ctx.stroke();
-
-      ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-    } else {
-      log("can't figure out which touch to continue");
-    }
-  }
+  
 }
 
 const handleEnd = (evt) => {
   evt.preventDefault();
   log("touchend");
-  const el = document.getElementById("canvas");
-  el.style.background = "green";
-  // const ctx = el.getContext("2d");
-  // const touches = evt.changedTouches;
-
-  // for (let i = 0; i < touches.length; i++) {
-  //   const color = colorForTouch(touches[i]);
-  //   let idx = ongoingTouchIndexById(touches[i].identifier);
-
-  //   if (idx >= 0) {
-  //     ctx.lineWidth = 4;
-  //     ctx.fillStyle = color;
-  //     ctx.beginPath();
-  //     ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-  //     ctx.lineTo(touches[i].pageX, touches[i].pageY);
-  //     ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
-  //     ongoingTouches.splice(idx, 1); // remove it; we're done
-  //   } else {
-  //     log("can't figure out which touch to end");
-  //   }
-  // }
+   const el = document.getElementById("touch");
+  el.classList.remove("filter")  
+  
 }
 
 const handleCancel = (evt) => {
@@ -577,11 +530,12 @@ function log(msg) {
 }
 
 
-  const el = document.getElementById("canvas");
+  // const el = document.getElementById("canvas");
+    const el = document.getElementById("touch");
   el.addEventListener("touchstart", handleStart);
   el.addEventListener("touchend", handleEnd);
   el.addEventListener("touchcancel", handleCancel);
-  el.addEventListener("touchmove", handleMove);
+  // el.addEventListener("touchmove", handleMove);
   log("Initialized.", el);
 }
 
@@ -1094,17 +1048,15 @@ Click the button if you see the same stamp twice.
     &lt;h2&gt; on focus &lt;/h2&gt;
    &lt;a class=&quot;ai-img-wrapper focus&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/a &gt;
   &lt;/div &gt;
-   &lt;div class=&quot;ai-option&quot;&gt;
+   /* &lt;div class=&quot;ai-option&quot;&gt;
     &lt;h2&gt; button &lt;/h2&gt;
    &lt;div class=&quot;ai-img-wrapper focus&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div&gt;
    &lt;button&gt;push tbc&lt;/button&gt;
-  &lt;/div &gt;
+  &lt;/div &gt; */
      &lt;div class=&quot;ai-option&quot;&gt;
     &lt;h2&gt; touch events &lt;/h2&gt;
+  &lt;div class=&quot;ai-img-wrapper touch&quot; id=&quot;touch&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div&gt;
  
-  &lt;canvas id=&quot;canvas&quot; width=&quot;600&quot; height=&quot;600&quot; style=&quot;border:solid black 1px; background: #fff;&quot;&gt;
-  Your browser does not support canvas element.
-&lt;/canvas&gt;
 &lt;br /&gt;
 Log:
 &lt;pre id=&quot;log&quot; style=&quot;border: 1px solid #ccc;&quot;&gt;&lt;/pre&gt;
