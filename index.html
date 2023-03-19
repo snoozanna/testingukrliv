@@ -315,6 +315,7 @@ width: 100%;
 
 .ai-option-wrapper{
 display:flex;
+flex-direction: column;
 }
 
 .ai-option{
@@ -336,6 +337,10 @@ filter: grayscale(100%);
 }
 
 .ai-img-wrapper.active:active{
+filter: grayscale(100%);
+}
+
+.ai-img-wrapper.focus:focus{
 filter: grayscale(100%);
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">$('#ui-bar').remove();
 $(document.head).find('#style-ui-bar').remove();
@@ -933,6 +938,10 @@ Click the button if you see the same stamp twice.
    &lt;div class=&quot;ai-option&quot;&gt;
     &lt;h2&gt; on active &lt;/h2&gt;
    &lt;a class=&quot;ai-img-wrapper active&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/a &gt;
+  &lt;/div &gt;
+   &lt;div class=&quot;ai-option&quot;&gt;
+    &lt;h2&gt; on focus &lt;/h2&gt;
+   &lt;a class=&quot;ai-img-wrapper focus&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/a &gt;
   &lt;/div &gt;
 &lt;/div &gt;
 &lt;/main&gt;

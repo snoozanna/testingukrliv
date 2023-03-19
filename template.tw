@@ -230,6 +230,7 @@ width: 100%;
 
 .ai-option-wrapper{
 display:flex;
+flex-direction: column;
 }
 
 .ai-option{
@@ -251,6 +252,10 @@ filter: grayscale(100%);
 }
 
 .ai-img-wrapper.active:active{
+filter: grayscale(100%);
+}
+
+.ai-img-wrapper.focus:focus{
 filter: grayscale(100%);
 }
 
@@ -980,6 +985,10 @@ Click the button if you see the same stamp twice.
    <div class="ai-option">
     <h2> on active </h2>
    <a class="ai-img-wrapper active" ><img src="./assets/palm-tree.jpeg" class="palmtree"></a >
+  </div >
+   <div class="ai-option">
+    <h2> on focus </h2>
+   <a class="ai-img-wrapper focus" ><img src="./assets/palm-tree.jpeg" class="palmtree"></a >
   </div >
 </div >
 </main>
