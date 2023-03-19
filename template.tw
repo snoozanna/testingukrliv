@@ -492,7 +492,7 @@ You have two options:
 
 :: landing {"position":"450,50","size":"100,100"}
 <<set $passage to "landing">>
-<<include "header">>
+/* <<include "header">> */
 <main>
   menu
 
