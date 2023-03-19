@@ -463,13 +463,6 @@ function log(msg) {
 // document.addEventListener("DOMContentLoaded", startup);
 
 
-
-
-
-
-
-
-
 :: StoryInit {"position":"100,100","size":"100,100"}
 <<cacheaudio "badjoke" "https://youhavefoundconey.net/CG/what/assets/audio/badjoke.mp3">>
 <<waitforaudio>>
@@ -518,7 +511,8 @@ You have two options:
     <<button "stamp game easy">><<set $prevpass to $passage>><<goto "stampgameeasy">><</button>>
      <<button "stamp game hard">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
           <<button "ghost detector">><<set $prevpass to $passage>><<goto "ghostdetector">><</button>>
-   <<button "lofiAI">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
+   <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
+   <<button "360 view">><<set $prevpass to $passage>><<goto "360">><</button>>
 </div>
 </main>
 <<include "footer">>
@@ -1087,7 +1081,7 @@ Click the button if you see the same stamp twice.
 <<set $passage to "lofiai">>
 /* <<include "header">> */
 <main>
-<h1>Lofi AI</h1>
+<h1>Lofi AR</h1>
 <p> trying different methods - think Touch events is the best </p>
 /* An image that when you press a filter appears, when you release the filter dissapears */
 <div class="ai-option-wrapper">
@@ -1122,3 +1116,14 @@ Log:
 </main>
 <<include "footer">>
 <<done>><<set $s to setup.startup()>><</done>>
+
+
+:: 360 {"position":"600,225","size":"100,100"}
+<<set $passage to "360">>
+<main>
+<h1>360 Image Viewer</h1>
+<p> you can add an image of your choosing. via <a href="https://panoraven.com/en" target="_blank">panoraven</a></p>
+<iframe width="90%" height="500px" allowFullScreen="true" allow="accelerometer; magnetometer; gyroscope" style="display:block; margin:20px auto; border:0 none; max-width:880px;border-radius:8px; box-shadow: 0 1px 1px rgba(0,0,0,0.11),0 2px 2px rgba(0,0,0,0.11),0 4px 4px rgba(0,0,0,0.11),0 6px 8px rgba(0,0,0,0.11),0 8px 16px rgba(0,0,0,0.11);" src="https://panoraven.com/en/embed/uE3bv5KK9Q"></iframe>
+<<button "back">><<goto "landing">><</button>>
+</main>
+
