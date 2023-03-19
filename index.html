@@ -167,7 +167,7 @@ header{
 
 main{
    padding: 2rem;
-   margin-block-end: 4rem
+   margin-block-end: 10rem
 }
 
 footer{
@@ -1033,9 +1033,18 @@ Click the button if you see the same stamp twice.
 &lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="lofiai" tags="" position="450,225" size="100,100">&lt;&lt;set $passage to &quot;lofiai&quot;&gt;&gt;
 /* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
-&lt;p&gt;Lofi AI&lt;/p&gt;
+&lt;h1&gt;Lofi AI&lt;/h1&gt;
+&lt;p&gt; trying different methods - think Touch events is the best &lt;/p&gt;
 /* An image that when you press a filter appears, when you release the filter dissapears */
 &lt;div class=&quot;ai-option-wrapper&quot;&gt;
+ &lt;div class=&quot;ai-option&quot;&gt;
+    &lt;h2&gt; touch events &lt;/h2&gt;
+    &lt;p&gt;press image to change filter. This B&amp;W change could be swapped for anything - replacing an image, overlaying an image. &lt;/p&gt;
+  &lt;div class=&quot;ai-img-wrapper touch&quot; id=&quot;touch&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div&gt;
+&lt;br /&gt;
+Log:
+&lt;pre id=&quot;log&quot; style=&quot;border: 1px solid #ccc;&quot;&gt;&lt;/pre&gt;
+  &lt;/div &gt;
   &lt;div class=&quot;ai-option&quot;&gt;
     &lt;h2&gt; on hover &lt;/h2&gt;
     &lt;div class=&quot;ai-img-wrapper hover&quot;&gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div &gt;
@@ -1053,14 +1062,7 @@ Click the button if you see the same stamp twice.
    &lt;div class=&quot;ai-img-wrapper focus&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div&gt;
    &lt;button&gt;push tbc&lt;/button&gt;
   &lt;/div &gt; */
-     &lt;div class=&quot;ai-option&quot;&gt;
-    &lt;h2&gt; touch events &lt;/h2&gt;
-  &lt;div class=&quot;ai-img-wrapper touch&quot; id=&quot;touch&quot; &gt;&lt;img src=&quot;./assets/palm-tree.jpeg&quot; class=&quot;palmtree&quot;&gt;&lt;/div&gt;
- 
-&lt;br /&gt;
-Log:
-&lt;pre id=&quot;log&quot; style=&quot;border: 1px solid #ccc;&quot;&gt;&lt;/pre&gt;
-  &lt;/div &gt;
+    
 
 &lt;/div &gt;
 &lt;/main&gt;

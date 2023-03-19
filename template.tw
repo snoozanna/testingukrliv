@@ -82,7 +82,7 @@ header{
 
 main{
    padding: 2rem;
-   margin-block-end: 4rem
+   margin-block-end: 10rem
 }
 
 footer{
@@ -1087,9 +1087,18 @@ Click the button if you see the same stamp twice.
 <<set $passage to "lofiai">>
 /* <<include "header">> */
 <main>
-<p>Lofi AI</p>
+<h1>Lofi AI</h1>
+<p> trying different methods - think Touch events is the best </p>
 /* An image that when you press a filter appears, when you release the filter dissapears */
 <div class="ai-option-wrapper">
+ <div class="ai-option">
+    <h2> touch events </h2>
+    <p>press image to change filter. This B&W change could be swapped for anything - replacing an image, overlaying an image. </p>
+  <div class="ai-img-wrapper touch" id="touch" ><img src="./assets/palm-tree.jpeg" class="palmtree"></div>
+<br />
+Log:
+<pre id="log" style="border: 1px solid #ccc;"></pre>
+  </div >
   <div class="ai-option">
     <h2> on hover </h2>
     <div class="ai-img-wrapper hover"><img src="./assets/palm-tree.jpeg" class="palmtree"></div >
@@ -1107,14 +1116,7 @@ Click the button if you see the same stamp twice.
    <div class="ai-img-wrapper focus" ><img src="./assets/palm-tree.jpeg" class="palmtree"></div>
    <button>push tbc</button>
   </div > */
-     <div class="ai-option">
-    <h2> touch events </h2>
-  <div class="ai-img-wrapper touch" id="touch" ><img src="./assets/palm-tree.jpeg" class="palmtree"></div>
- 
-<br />
-Log:
-<pre id="log" style="border: 1px solid #ccc;"></pre>
-  </div >
+    
 
 </div >
 </main>
