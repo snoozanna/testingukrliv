@@ -373,24 +373,27 @@ setup.checkForRepeats = (array,element) => {
 // TOUCHEVENTS 
 setup.startup = () =>  {
   const ongoingTouches = [];
+  console.log(ongoingTouches)
 
 const handleStart = (evt) =>{
   evt.preventDefault();
-  console.log("touchstart.");
+  log("touchstart.");
   const el = document.getElementById("canvas");
-  const ctx = el.getContext("2d");
-  const touches = evt.changedTouches;
+    el.style.background = "blue";
+  // const ctx = el.getContext("2d");
+  // const touches = evt.changedTouches;
 
-  for (let i = 0; i < touches.length; i++) {
-    console.log(`touchstart: ${i}.`);
-    ongoingTouches.push(copyTouch(touches[i]));
-    const color = colorForTouch(touches[i]);
-    console.log(`color of touch with id ${touches[i].identifier} = ${color}`);
-    ctx.beginPath();
-    ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
-    ctx.fillStyle = color;
-    ctx.fill();
-  }
+  // for (let i = 0; i < touches.length; i++) {
+  //   log(`touchstart: ${i}.`);
+  //   ongoingTouches.push(copyTouch(touches[i]));
+  //   console.log(ongoingTouches)
+  //   const color = colorForTouch(touches[i]);
+  //   log(`color of touch with id ${touches[i].identifier} = ${color}`);
+  //   ctx.beginPath();
+  //   ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
+  //   ctx.fillStyle = color;
+  //   ctx.fill();
+  // }
 }
 
 const handleMove = (evt) => {
@@ -404,13 +407,13 @@ const handleMove = (evt) => {
     const idx = ongoingTouchIndexById(touches[i].identifier);
 
     if (idx >= 0) {
-      console.log(`continuing touch ${idx}`);
+      log(`continuing touch ${idx}`);
       ctx.beginPath();
-      console.log(
+      log(
         `ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`
       );
       ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-      console.log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
+      log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
       ctx.lineTo(touches[i].pageX, touches[i].pageY);
       ctx.lineWidth = 4;
       ctx.strokeStyle = color;
@@ -418,39 +421,40 @@ const handleMove = (evt) => {
 
       ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
     } else {
-      console.log("can't figure out which touch to continue");
+      log("can't figure out which touch to continue");
     }
   }
 }
 
 const handleEnd = (evt) => {
   evt.preventDefault();
-  console.log("touchend");
+  log("touchend");
   const el = document.getElementById("canvas");
-  const ctx = el.getContext("2d");
-  const touches = evt.changedTouches;
+  el.style.background = "green";
+  // const ctx = el.getContext("2d");
+  // const touches = evt.changedTouches;
 
-  for (let i = 0; i < touches.length; i++) {
-    const color = colorForTouch(touches[i]);
-    let idx = ongoingTouchIndexById(touches[i].identifier);
+  // for (let i = 0; i < touches.length; i++) {
+  //   const color = colorForTouch(touches[i]);
+  //   let idx = ongoingTouchIndexById(touches[i].identifier);
 
-    if (idx >= 0) {
-      ctx.lineWidth = 4;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-      ctx.lineTo(touches[i].pageX, touches[i].pageY);
-      ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
-      ongoingTouches.splice(idx, 1); // remove it; we're done
-    } else {
-      console.log("can't figure out which touch to end");
-    }
-  }
+  //   if (idx >= 0) {
+  //     ctx.lineWidth = 4;
+  //     ctx.fillStyle = color;
+  //     ctx.beginPath();
+  //     ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+  //     ctx.lineTo(touches[i].pageX, touches[i].pageY);
+  //     ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
+  //     ongoingTouches.splice(idx, 1); // remove it; we're done
+  //   } else {
+  //     log("can't figure out which touch to end");
+  //   }
+  // }
 }
 
 const handleCancel = (evt) => {
   evt.preventDefault();
-  console.log("touchcancel.");
+  log("touchcancel.");
   const touches = evt.changedTouches;
 
   for (let i = 0; i < touches.length; i++) {
@@ -459,13 +463,48 @@ const handleCancel = (evt) => {
   }
 }
 
+function colorForTouch(touch) {
+  // let r = touch.identifier % 16;
+  // let g = Math.floor(touch.identifier / 3) % 16;
+  // let b = Math.floor(touch.identifier / 7) % 16;
+  // r = r.toString(16); // make it a hex digit
+  // g = g.toString(16); // make it a hex digit
+  // b = b.toString(16); // make it a hex digit
+  // const color = `#${r}${g}${b}`;
+    const color = `#666`;
+  return color;
+}
+
+
+function copyTouch({ identifier, pageX, pageY }) {
+  return { identifier, pageX, pageY };
+}
+function ongoingTouchIndexById(idToFind) {
+  for (let i = 0; i < ongoingTouches.length; i++) {
+    const id = ongoingTouches[i].identifier;
+
+    if (id === idToFind) {
+      return i;
+    }
+  }
+  return -1; // not found
+}
+
+function log(msg) {
+  const container = document.getElementById("log");
+  container.textContent = `${msg} \n${container.textContent}`;
+}
+
+
   const el = document.getElementById("canvas");
   el.addEventListener("touchstart", handleStart);
   el.addEventListener("touchend", handleEnd);
   el.addEventListener("touchcancel", handleCancel);
   el.addEventListener("touchmove", handleMove);
-  console.log("Initialized.", el);
+  log("Initialized.", el);
 }
+
+
 
 // document.addEventListener("DOMContentLoaded", startup);
 
@@ -1117,7 +1156,7 @@ Click the button if you see the same stamp twice.
      <div class="ai-option">
     <h2> touch events </h2>
  
-  <canvas id="canvas" width="600" height="600" style="border:solid black 1px;">
+  <canvas id="canvas" width="600" height="600" style="border:solid black 1px; background: #fff;">
   Your browser does not support canvas element.
 </canvas>
 <br />
