@@ -1,0 +1,986 @@
+:: StoryTitle
+The Maze of Adventures Template
+
+
+:: StoryData
+{
+	"ifid": "F9E39354-F641-4070-8B45-C310A3FDC8C2",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "landing",
+	"zoom": 0.6
+}
+
+
+:: Story Stylesheet [stylesheet]
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap");
+@import url("./styles/generics.css");
+
+/* GET RID OF TWINE STYLES */
+#story{
+  margin:0
+}
+
+#passages {
+	max-width: 100%;
+
+}
+
+#story a.link-external:after {
+	content: "";
+}
+
+button{
+    background-color: transparent;
+    border: #fff 1px solid;
+    border-radius: 3px;
+}
+
+button:hover{
+	background-color:#cf1b98;
+	border: #fff 1px solid;
+	color: #fff;
+}
+
+a {
+  color: #f2647d;
+}
+
+a:active {
+  background-color: #f2647d;
+}
+
+a:hover {
+  color: #fff;
+}
+
+#story a.link-external:after {
+	content: "";
+}
+
+#story {
+	margin: 0
+}
+
+/* GENERAL STYLES */
+body{
+  font-size: 1.6rem;
+  font-family: "Space Grotesk";
+  overflow:scroll;
+  background:#000;
+  /* padding: 1.5rem */
+  display:flex;
+  flex-direction: column
+}
+
+header{
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+    padding: 2rem
+}
+
+main{
+   padding: 2rem;
+   margin-block-end: 4rem
+}
+
+footer{
+   display:flex;
+  justify-content: space-between;
+  align-items: flex-end; 
+  position:fixed;
+  bottom: 0;
+  padding: 2rem;
+  width: 100%;
+  background-color: #000
+}
+
+nav{
+  display:flex;
+    justify-content: space-between;
+}
+
+.nav-wrapper{
+display:flex;
+  flex-direction:column;
+align-items: flex-start
+}
+
+.nav-wrapper:last-child{
+align-items: flex-end
+}
+
+.nav-item{
+  margin-block-end: 1.5rem
+}
+
+.nav-item:last-child{
+  margin-block-end: 0
+}
+
+
+.nav-wrapper:last-child{
+display:flex;
+align-items: flex-end
+}
+
+.menu-wrapper{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.menu-wrapper > button{
+margin-inline-end: 10px;
+margin-block-end: 10px
+}
+
+.door-container{
+  display:flex;
+  flex-direction: row;
+justify-content: space-around;
+  align-items:center;
+  text-align: right;
+}
+
+.door-item{
+  display:flex;
+  flex-direction:column
+}
+
+.door-item > button > img {
+  max-width: 7rem
+}
+
+.door-item > span {
+  text-align: center
+}
+
+textarea{
+  min-width: 60vw
+}
+
+.wordcontainer{
+  display:flex;
+  flex-direction: row;
+}
+
+.letter-item > input[type=text]{
+    min-width: 2em;
+  	max-width: 2em;
+  	margin-inline-end:10px;
+}
+
+.letter-item > .correct-letter{
+  min-width: 2em;
+  	max-width: 2em;
+  	margin-inline-end:10px;
+}
+
+.detector{
+ width: 50%;
+}
+
+.spinning{
+
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+  /* transform: rotate(3deg); */
+   /* transform: rotate(0.3rad);/ */
+   /* transform: rotate(3grad); */ 
+   /* transform: rotate(.03turn);  */
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+
+/* MAP */
+	.map{
+width: 100%;
+    height: 60vh;
+    border: 0;
+    margin: auto;
+    }
+
+
+.directions-card {
+    display: none!important
+}
+
+@media screen and (min-width: 450px) {
+.map{
+	max-width:60vw;
+	height:50vh;
+	border:0
+}
+}
+
+/* LOFI AI */
+
+.ai-option-wrapper{
+display:flex;
+}
+
+.ai-option{
+display:flex;
+flex-direction: column;
+margin-inline-end: 2rem;
+}
+
+.palmtree{
+
+}
+
+.ai-img-wrapper{
+  max-width: 300px
+}
+
+.ai-img-wrapper.hover:hover{
+filter: grayscale(100%);
+}
+
+.ai-img-wrapper.active:active{
+filter: grayscale(100%);
+}
+
+
+:: Story JavaScript [script]
+$('#ui-bar').remove();
+$(document.head).find('#style-ui-bar').remove();
+// TYPEWRITER FN
+!function() {
+    postrender.typewriter = function (b) {
+        if (this.tags) {
+            var r = new RegExp("t8n.typewriter.([0-9]+)(?:[^0-9]|$)","g");
+            var t = r.exec(this.tags.toString());
+            if (t) {
+                typeout(b, t[1]+0);
+            }
+        }
+        return b;
+    };
+    var typeout = function(c,t) {
+        var Furl = function(current) {
+            this.n = current;
+            this.out = false;
+            this.data = current.nodeValue;
+            current.nodeValue = "";
+            this.kids = [];
+            var cn = current.childNodes;
+            if (current.style && current.style.display=="none") {
+                return;
+            }
+            while (cn.length>0) {
+                var f = new Furl(cn[0]);
+                current.removeChild(cn[0]);
+                f.out = true;this.kids.push(f);
+            }
+        };
+        var nodes = new Furl(c);
+        var unfurl = function(furled,d) {
+            var n = furled.n;
+            if (furled.out) {
+                d.appendChild(n);
+                furled.out = false;
+            }
+            if (furled.data) {
+                n.nodeValue += furled.data[0];
+                furled.data = furled.data.slice(1);
+                return true;
+            }
+            for (var j=0; j<furled.kids.length; j++) {
+                var ret = unfurl(furled.kids[j],n);
+                if (ret) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        var title = passage();
+        var intr = setInterval (
+            function() {
+                if (passage() == title && unfurl(nodes,null)) {
+                    return;
+                }
+                clearInterval(intr);
+            }
+        ,t);
+    };
+}();
+
+// MAKE MAP FUNCTION
+
+setup.generateDirectionsMap = function (origin, dest){
+const iFrame = document.createElement("iframe")
+iFrame.classList.add("map")
+iFrame.setAttribute("loading", "lazy")
+iFrame.setAttribute("referrerpolicy", "no-referrer-when-downgrade")
+// iFrame.setAttribute("allowfullscreen")
+iFrame.setAttribute("src", `https://www.google.com/maps/embed/v1/directions?key=AIzaSyBDRwRTMpSybNcmgkYVX1yZ0YmBbNhs9qU&center=${origin.lat},${origin.long}&zoom=17&origin=${origin.lat},${origin.long}&destination=${dest.lat},${dest.long}&mode=walking`)
+const mount = document.getElementById("mapMount")
+console.log(iFrame)
+return iFrame
+// this.mapMount.appendChild(iFrame)
+}
+//Get random 5 letter word
+
+setup.generate5LetterCode = () => {
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+let word = ""
+for (let i =0 ; i < 5 ; i++){
+word += alphabet[Math.round((alphabet.length-1)*Math.random())];
+}
+  return word;
+}
+
+//Check if an array contains multiple instances of an element
+
+setup.checkForRepeats = (array,element) => {
+ const arrayCopy = [...array];
+ const duplicates = arrayCopy.filter((item, index) => index !== arrayCopy.indexOf(item));
+ return duplicates.contains(element)
+}
+
+
+:: StoryInit {"position":"100,100","size":"100,100"}
+<<cacheaudio "badjoke" "https://youhavefoundconey.net/CG/what/assets/audio/badjoke.mp3">>
+<<waitforaudio>>
+
+
+:: header {"position":"100,225","size":"100,100"}
+<header>Adventure Functionality /
+ Structure Template</header>
+
+
+:: footer {"position":"100,375","size":"100,100"}
+<footer><div class="nav-wrapper "><div class="nav-item"><<button "Replay">><<goto $passage>><</button>> </div><div class="nav-item"><<button "Back">><<goto $prevpass>><</button>></div></div><div class="nav-wrapper"><div class="nav-item"><<button "I'm lost">><<goto "lost">><</button>></div></div></footer>
+
+
+:: lost {"position":"450,50","size":"100,100"}
+<<set $passage to "lost">><<include "header">>
+<main>
+Sorry to hear that you're lost! 
+You have two options:
+
+<<button "Begin the adventure again">><<goto "landing">><</button>>
+
+<<button "Take me straight to the end location!">><<goto "end">><</button>>
+</main>
+<<include "footer">>
+
+
+:: landing {"position":"450,50","size":"100,100"}
+<<set $passage to "landing">>
+<<include "header">>
+<main>
+  menu
+
+<div class="menu-wrapper">
+  <<button "enter codeword">><<set $prevpass to $passage>><<goto "codeword">><</button>>
+  <<button "playaudio">><<set $prevpass to $passage>><<goto "playaudio">><</button>>
+  <<button "buttonchoice">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>>
+  <<button "captions">><<set $prevpass to $passage>><<goto "captions">><</button>>
+  <<button "answeringlongquestion">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
+  <<button "map">><<set $prevpass to $passage>><<goto "map">><</button>>
+  <<button "addletters">><<set $prevpass to $passage>><<goto "addletters">><</button>>
+  <<button "choicetally">><<set $prevpass to $passage>><<goto "choices">><</button>>
+  <<button "random from list">><<set $prevpass to $passage>><<goto "randomfromlist">><</button>>
+  <<button "wordle">><<set $prevpass to $passage>><<goto "wordle">><</button>>
+  <<button "generate codes">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
+    <<button "stamp game easy">><<set $prevpass to $passage>><<goto "stampgameeasy">><</button>>
+     <<button "stamp game hard">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
+          <<button "ghost detector">><<set $prevpass to $passage>><<goto "ghostdetector">><</button>>
+   <<button "lofiAI">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
+</div>
+</main>
+<<include "footer">>
+
+
+:: codeword {"position":"450,1875","size":"100,100"}
+<<set $passage to "landing">>
+<<include "header">>
+<main>
+Enter codeword 
+which is codeword:
+
+
+<div id="coderesult"></div>
+/% CODEWORD FEEDBACK %/
+<div id="resultbutton">
+/% CODEWORD INPUT %/
+<div class="code-input">
+<<textbox "$codeword" "">></div>
+<<button "Enter">>
+</div>
+/% STANDARDISE INPUT %/
+<<set $codeword to $codeword.toUpperCase()>>
+/% CODEWORD CORRECT %/
+<<if $codeword isnot "" and $codeword is "CODEWORD">>
+<<replace "#coderesult">>CORRECT<</replace>>
+<<timed 3s>><<set $prevpass to $passage>><<goto "playaudio">><</timed>>
+<</if>>
+  /% CODEWORD INCORRECT %/
+  <<if $codeword isnot "" and $codeword is not "CODEWORD">>
+  <<replace "#coderesult">>Thats not right.<</replace>>
+  <<timed 1.5s>><<replace "#coderesult">><</replace>><</timed>>
+  <</if>><</button>>
+  </div>
+  </main>
+  <<include "footer">>
+
+
+:: playaudio {"position":"450,2000","size":"100,100"}
+<<include "header">>
+<<set $passage to "playaudio">>
+<<audio "badjoke" play>>
+<<include "header">><<include "footer">>
+<main>playing audio which continues playing on next passage
+<<button "next">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>></main>
+<<include "footer">>
+
+
+:: buttonchoice {"position":"450,2150","size":"100,100"}
+<<set $passage to "buttonchoice">>
+<<include "header">>
+<main>
+  <div class="door-container">
+  <<timed 1s>><div class="door-item"><span>DOOR A</span><<button [img["https://youhavefoundconey.net/CG/what/assets/img/door-white.png"][Door A]]>><<set $doorchoice to "A">><<set $prevpass to $passage>><<goto "doorA">><</button>></div><</timed>>
+  <<timed 2s>><div class="door-item"><span>or</span></div><</timed>>
+  <<timed 3s>><div class="door-item"><span>DOOR B</span><<button [img["https://youhavefoundconey.net/CG/what/assets/img/door-white.png"][Door B]]>><<set $doorchoice to "B">><<set $prevpass to $passage>><<goto "doorB">><</button>></div><</timed>>
+  </div>
+</main>
+<<include "footer">>
+
+
+:: doorA {"position":"625,2175","size":"100,100"}
+<<include "header">>
+<main>
+Door A
+  <<timed 2s>><<goto "captions">><</timed>>
+</main>
+
+
+:: doorB {"position":"750,2175","size":"100,100"}
+<<include "header">>
+<main>
+Door B
+  <<timed 2s>><<goto "captions">><</timed>>
+</main>
+
+
+:: captions {"position":"450,2300","size":"100,100"}
+<<set $passage to "captions">>
+<<include "header">>
+<main>
+  <div id="captions"></div>
+  <<type 50ms >>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <</type>>
+
+   <<type 70ms>>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <</type>>
+
+<<button "next">><<set $prevpass to $passage>><<goto "goingbacktochoice">><</button>>
+</main>
+<<include "footer">>
+
+
+:: goingbacktochoice {"position":"450,2425","size":"100,100"}
+<<set $passage to "goingbacktochoice">><<include "header">>
+<main>
+Which door did you choose?
+
+<<timed 2s>>You chose Door $doorchoice<</timed>>
+
+
+<<button "next">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
+</main>
+<<include "footer">>
+
+
+:: answeringlongquestion {"position":"450,2575","size":"100,100"}
+<<set $passage to "answeringlongquestion">><<include "header">>
+<main>
+<<textarea "$answer"" Write your answer here">>
+<<button "Enter">><<goto "results">><</button>>
+
+<<button "next">><<set $prevpass to $passage>><<goto "results">><</button>>
+
+</main>
+<<include "footer">>
+
+
+:: results {"position":"450,2725","size":"100,100"}
+<<set $passage to "results">>
+<<include "header">>
+<main>
+Your long answer to the question was: 
+$answer
+
+<<button "next">><<set $prevpass to $passage>><<goto "map">><</button>>
+</main>
+<<include "footer">>
+
+
+:: map {"position":"450,2850","size":"100,100"}
+<<set $passage to "map">>
+<<include "header">><<set $myMap = setup.generateDirectionsMap(51.515145100985166,-0.08905860787295125,51.51341581900639, -0.0850674807043743)>>
+<main>$myMap
+Wish list: get rid of the More options/directions box!
+
+<<button "I'm in the right place">><<set $prevpass to $passage>><<goto "map">><</button>>
+</main>
+<<include "footer">>
+
+
+:: addletters {"position":"450,1750","size":"100,100"}
+<<set $passage to "addletters">>
+<<include "header">>
+<main>
+ Enter 6-8 letters:
+ 
+<<textbox "$letters" "">>
+<div id="lettersresult"></div>
+<<button "Enter">>
+<div id="lettersresult"></div>
+/% LETTERS FEEDBACK %/
+<div id="resultbutton">
+</div>
+/% INPUT VALIDATION%/
+/% Uses regex to check input is 6-8 letters %/
+<<set $validationFunc to (input)=>{return  /^[a-z]{6,8}$/.test(input) }>>
+<<if $validationFunc($letters)>>
+<<replace "#lettersresult">>Letters accepted<</replace>>
+<<timed 1s>><<set $prevpass to $passage>><<goto "wordminusletters">><</timed>>
+<<else>><<replace "#lettersresult">>Must be 6-8 letters, please try again<</replace>>
+<</if>><</button>>
+</main>
+<<include "footer">>
+
+
+:: wordminusletters {"position":"575,1750","size":"100,100"}
+<<set $passage to "wordminusletters">>
+<<include "header">>
+<main>
+Original letters: $letters
+<<set $lettersArray to $letters.split("")>>
+<<run $lettersArray.pluckMany(2)>>
+<<set $letters to $lettersArray.join("")>>
+Original letters minus 2 random letters: $letters
+<<button "next">><<set $prevpass to $passage>><<goto "codeword">><</button>>
+</main>
+<<include "footer">>
+
+
+:: choices {"position":"450,1475","size":"100,100"}
+<<set $passage to "landing">>
+<<include "header">>
+<main>
+
+<<set $choicetally to 0>>
+
+<<button "Good choices">>
+<<set $choicetally to $choicetally + 1 >>
+<<replace "#choicetally">>$choicetally<</replace>>
+<</button>>
+
+<<button "Bad choices">><<set $choicetally to $choicetally - 1 >>
+<<replace "#choicetally">>$choicetally<</replace>>
+<</button>>
+
+<<button "Finish">>
+<<if $choicetally gt 0>>
+<<set $prevpass to $passage>><<goto "goodchoices">>
+<<else>>
+<<set $prevpass to $passage>><<goto "badchoices">>
+<</if>>
+<</button>>
+
+<div id="choicetally">0</div>
+
+</main>
+
+
+:: badchoices {"position":"450,1600","size":"100,100"}
+<<set $passage to "badchoices">>
+<<include "header">>
+<main>
+ You made bad choices...
+<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
+</main>
+<<include "footer">>
+
+
+:: goodchoices {"position":"575,1600","size":"100,100"}
+<<set $passage to "goodchoices">>
+<<include "header">>
+<main>
+ You made good choices...
+<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
+</main>
+<<include "footer">>
+
+
+:: randomfromlist {"position":"450,1325","size":"100,100"}
+<<set $passage to "randomfromlist">>
+<<include "header">>
+<main>
+<<set $list to ['Rock','Paper','Scissors']>>
+$list
+<<button "Pick random">>
+<<set $randomitem to $list.random()>>
+<<replace "#randomitem">>$randomitem<</replace>>
+<</button>>
+<div id = "randomitem"></div>
+
+<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
+</main>
+<<include "footer">>
+
+
+:: wordle {"position":"450,1150","size":"100,100"}
+<<set $passage to "wordle">>
+<<include "header">>
+<main>
+
+Make it so this word says "REDO"
+
+<div class="wordcontainer">
+  <div class = "letter-item r">
+      R
+  </div>
+  <div class = "letter-item e">
+      E
+  </div>
+  <div class = "letter-item d">
+    <<textbox "$d" "">>
+  </div>
+  <div class = "letter-item o">
+    <<textbox "$o" "">>
+  </div>
+</div>
+
+
+<div class = "nextplaceholder">
+	<<button "Submit">>
+
+  <<if $d.toUpperCase() is  "D">>
+      <<replace ".d">>
+        D
+      <</replace>>
+  <</if>>
+  <<if $o.toUpperCase() is  "O">>
+      <<replace ".o">>
+          O
+      <</replace>>
+  <</if>>
+    <<if $d.toUpperCase() is "D" and $o.toUpperCase() is "O">>
+    <<replace ".nextplaceholder">>
+   	 <<button "next">><<set $prevpass to $passage>><<goto "randomfromlist">>
+   	 <</button>>
+    <</replace>>
+  <</if>>
+<</button>>
+</div>
+
+
+</main>
+<<include "footer">>
+
+
+:: generatecodes {"position":"450,750","size":"100,100"}
+<<set $passage to "generatecodes">><
+<<include "header">>
+<main><<set $code1 to setup.generate5LetterCode()>>
+<<set $code2 to setup.generate5LetterCode()>>
+<<set $code3 to setup.generate5LetterCode()>><<set $sixletterwordlist to ["BABBLE","ABASED","ABACUS","KEBABS","LABELS","MACAWS","NABBED","RABBIT","UGLIER","YACHTS"]>><<set $randomsixletterword to $sixletterwordlist.random()>>
+Here is a random six letter word:
+$randomsixletterword
+
+Please input the 3 codes correctly:
+
+Code 1: $code1
+Code 2: $code2
+Code 3: $code3
+
+Code 1: <<textbox "$code1guess" "">>
+Code 2: <<textbox "$code2guess" "">>
+Code 3: <<textbox "$code3guess" "">>
+
+<<button "Submit">>
+<<if $code1 is $code1guess and $code2 is $code2guess and $code3 is $code3guess>>
+	<<set $prevpass to $passage>><<goto "allcorrect">>
+<<else>>
+	<<set $prevpass to $passage>><<goto "allnotcorrect">>
+<</if>>
+<</button>>
+
+<<button "next">><<set $prevpass to $passage>><<goto "wordle">><</button>>
+</main>
+<<include "footer">>
+
+
+:: allcorrect {"position":"450,900","size":"100,100"}
+<<set $passage to "badchoices">>
+<<include "header">>
+<main>
+All correct
+<<button "next">><<set $prevpass to $passage>><<goto "multiplechoicecode">><</button>>
+</main>
+<<include "footer">>
+
+
+:: allnotcorrect {"position":"575,900","size":"100,100"}
+<<set $passage to "badchoices">>
+<<include "header">>
+<main>
+All not correct
+<<button "next">><<set $prevpass to $passage>><<goto "multiplechoicecode">><</button>>
+</main>
+<<include "footer">>
+
+
+:: multiplechoicecode {"position":"450,1025","size":"100,100"}
+<<set $passage to "badchoices">><<set $nextpass to "multiplechoicecode">>
+<<include "header">>
+<main>
+<<set $wrongcode1 to setup.generate5LetterCode()>>
+<<set $wrongcode2 to setup.generate5LetterCode()>>
+<<set $wrongcode3 to setup.generate5LetterCode()>>
+
+<<set $answers to [
+"<label><<checkbox '$code1chosen' false true>> $code1 C</label>",
+"<label><<checkbox '$code2chosen' false true>> $code2 C</label>",
+"<label><<checkbox '$code3chosen' false true>> $code3 C</label>",
+"<label><<checkbox '$wrongcode1chosen' false true>> $wrongcode1</label>",
+"<label><<checkbox '$wrongcode2chosen' false true>> $wrongcode2</label>",
+"<label><<checkbox '$wrongcode3chosen' false true>> $wrongcode3</label>"
+]>>
+
+The six letter word from earlier was:
+$randomsixletterword
+
+Pick the correct codes from before (they're followed by a 'C')
+
+<<for _i to 0; _i = $answers.length; _i++>>
+	<<run $answer = $answers.pluck()>>
+    $answer
+<</for>>
+
+<<button "Submit">>
+ <<if $code1chosen and $code2chosen and $code3chosen and !$wrongcode1chosen and !$wrongcode2chosen and !$wrongcode3chosen>>
+ 	<<replace ".codefeedback">>That's correct!<</replace>>
+ <<else>>
+ 	<<replace ".codefeedback">>That's incorrect<</replace>>
+ <</if>>
+<</button>>
+
+<div class = "codefeedback">
+</div>
+
+
+<<button "next">><<set $prevpass to $passage>><<goto "wordle">><</button>>
+</main>
+<<include "footer">>
+
+
+:: countdown {"position":"450,2300","size":"100,100"}
+<<set $passage to "countdown">>
+<<include "header">>
+<main>
+<<set $seconds to 30>>
+Countdown: <span id="countdown">$seconds seconds remaining</span>!\
+<<silently>>
+	<<repeat 1s>>
+		<<set $seconds to $seconds - 1>>
+		<<if $seconds gt 0>>
+			<<replace "#countdown">>$seconds seconds remaining<</replace>>
+		<<else>>
+			<<replace "#countdown">>Times up!<</replace>>
+			<<set $prevpass to $passage>><<goto "landing">>
+			<<stop>>
+		<</if>>
+	<</repeat>>
+<</silently>>
+</main>
+<<include "footer">>
+
+
+:: end {"position":"450,1875","size":"100,100"}
+<<set $passage to "19">><<set $endMap = setup.generateDirectionsMap({lat:51.515145100985166,long:-0.08905860787295125},{lat:51.51341581900639, long:-0.0850674807043743})>><<include "header">>
+<main>
+
+End location
+
+$endMap
+  
+</main>
+<<include "footer">>
+
+
+:: stampgameeasy {"position":"450,400","size":"100,100"}
+<<set $passage to "stampgameeasy">>
+<<include "header">>
+<main>
+
+<<set $stamps = [1,2,3,4,5,6,7,1]>>
+<<set $stampcount to 0>>
+
+STAMP GAME - EASY
+Click the button if you see the same stamp twice.
+
+<div class="stamp-container">$stamps[$stampcount]</div>
+
+<<button "There's more than one of that stamp!">>
+	<<if setup.checkForRepeats($stamps, $stamps[$stampcount])>>
+    	<<replace ".stamp-feedback">>That's right! There's more than one of that stamp<</replace>>
+    <<else>>
+    	<<replace ".stamp-feedback">>Not quite, there's only one of that stamp.<</replace>>
+    <</if>>
+<</button>>
+
+<<silently>>
+	<<repeat 3s>>
+    	<<replace ".stamp-feedback">><</replace>>
+		<<set $stampcount to $stampcount + 1>>
+		<<if $stampcount lt $stamps.length>>
+			<<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
+		<<else>>
+			<<replace ".stamp-container">>Out of stamps<</replace>>
+			<<stop>>
+		<</if>>
+	<</repeat>>
+<</silently>>
+
+<<button "Next stamp">>
+	<<replace ".stamp-feedback">><</replace>>
+	<<if $stampcount lt $stamps.length-1>>
+      <<set $stampcount to $stampcount + 1>>
+      <<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
+    <</if>>
+<</button>>
+<<button "Previous stamp">>
+	<<replace ".stamp-feedback">><</replace>>
+	<<if $stampcount gt 0>>
+      <<set $stampcount to $stampcount - 1>>
+      <<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
+    <</if>>
+<</button>>
+
+<div class = "stamp-feedback">
+</div>
+
+<<button "next">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
+</main>
+<<include "footer">>
+
+
+:: stampgamehard {"position":"450,550","size":"100,100"}
+<<set $passage to "stampgameeasy">>
+<<include "header">>
+<main>
+
+<<set $hardstampquestions = ['2x4','5+4','10-6','8+0']>>
+<<set $hardstampanswers = [8,9,4,8]>>
+<<set $hardstampcount to 0>>
+
+STAMP GAME - HARD
+Click the button if you see the same stamp twice.
+
+<div class="stamp-container">$hardstampquestions[$hardstampcount]</div>
+
+<<button "There's more than one of that stamp!">>
+	<<if setup.checkForRepeats($hardstampanswers, $hardstampanswers[$hardstampcount])>>
+    	<<replace ".stamp-feedback">>That's right! There's more than one of that stamp<</replace>>
+    <<else>>
+    	<<replace ".stamp-feedback">>Not quite, there's only one of that stamp.<</replace>>
+    <</if>>
+<</button>>
+
+<<silently>>
+	<<repeat 3s>>
+    	<<replace ".stamp-feedback">><</replace>>
+		<<set $hardstampcount to $hardstampcount + 1>>
+		<<if $hardstampcount lt $hardstampanswers.length>>
+			<<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
+		<<else>>
+			<<replace ".stamp-container">>Out of stamps<</replace>>
+			<<stop>>
+		<</if>>
+	<</repeat>>
+<</silently>>
+
+<<button "Next stamp">>
+	<<replace ".stamp-feedback">><</replace>>
+	<<if $hardstampcount lt $hardstampquestions.length-1>>
+      <<set $hardstampcount to $hardstampcount + 1>>
+      <<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
+    <</if>>
+<</button>>
+<<button "Previous stamp">>
+	<<replace ".stamp-feedback">><</replace>>
+	<<if $hardstampcount gt 0>>
+      <<set $hardstampcount to $hardstampcount - 1>>
+      <<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
+    <</if>>
+<</button>>
+
+<div class = "stamp-feedback">
+</div>
+
+<<button "next">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
+</main>
+<<include "footer">>
+
+
+:: ghostdetector {"position":"450,225","size":"100,100"}
+<<set $passage to "ghostdetector">>
+<<include "header">>
+<main>
+
+  <div class = "detector">
+  <<set $spinning to false>>
+ 
+<<link "<img src = 'https://media3.giphy.com/media/1hpCPjWPnKpKLwAGIX/giphy.gif'>" >>
+	<<if $spinning>>
+    	<<set $spinning to false>>
+        <<audio ":all" stop>>
+		<<removeclass ".detector" "spinning">>
+    <<else>>
+   		<<set $spinning to true>>
+        <<audio "badjoke" play>>
+   	    <<addclass ".detector" "spinning">>
+    <</if>>
+<</link>> 
+</div>
+ 
+</main>
+<<include "footer">>
+
+
+:: lofiai {"position":"450,225","size":"100,100"}
+<<set $passage to "lofiai">>
+/* <<include "header">> */
+<main>
+<p>Lofi AI</p>
+/* An image that when you press a filter appears, when you release the filter dissapears */
+<div class="ai-option-wrapper">
+  <div class="ai-option">
+    <h2> on hover </h2>
+    <div class="ai-img-wrapper hover"><img src="./assets/palm-tree.jpeg" class="palmtree"></div >
+  </div >
+   <div class="ai-option">
+    <h2> on active </h2>
+   <a class="ai-img-wrapper active" ><img src="./assets/palm-tree.jpeg" class="palmtree"></a >
+  </div >
+</div >
+</main>
+<<include "footer">>
