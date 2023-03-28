@@ -126,8 +126,8 @@ const handleStart = (evt) =>{
   evt.preventDefault();
   log("touchstart.");
   const el = document.getElementById("touch");
-  el.classList.add("dissolve"); 
-  el.classList.remove("hide"); 
+  el.classList.add("filter"); 
+  // el.classList.remove("hide"); 
   
 }
 
@@ -140,7 +140,7 @@ const handleEnd = (evt) => {
   evt.preventDefault();
   log("touchend");
    const el = document.getElementById("touch");
-  el.classList.remove("dissolve")  
+  el.classList.remove("filter")  
   
 }
 
@@ -307,7 +307,7 @@ When you are ready press <<button "Next">><<goto $nextpass>><</button>>
 /* <<include "header">> */
 <main>
   <div class="ai-img-wrapper touch" id="touch" >
-    <img src="./assets/img/everyman-theatre.webp" class="">
+    /* <img src="./assets/img/everyman-theatre.webp" class=""> */
     <img src="./assets/img/big_stage_by_B.Yemets.jpg" class="hide">
     </div>
 /* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */

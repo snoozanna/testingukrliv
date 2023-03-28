@@ -206,8 +206,8 @@ const handleStart = (evt) =>{
   evt.preventDefault();
   log("touchstart.");
   const el = document.getElementById("touch");
-  el.classList.add("dissolve"); 
-  el.classList.remove("hide"); 
+  el.classList.add("filter"); 
+  // el.classList.remove("hide"); 
   
 }
 
@@ -220,7 +220,7 @@ const handleEnd = (evt) => {
   evt.preventDefault();
   log("touchend");
    const el = document.getElementById("touch");
-  el.classList.remove("dissolve")  
+  el.classList.remove("filter")  
   
 }
 
@@ -352,7 +352,7 @@ When you are ready press &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $ne
 /* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
   &lt;div class=&quot;ai-img-wrapper touch&quot; id=&quot;touch&quot; &gt;
-    &lt;img src=&quot;./assets/img/everyman-theatre.webp&quot; class=&quot;&quot;&gt;
+    /* &lt;img src=&quot;./assets/img/everyman-theatre.webp&quot; class=&quot;&quot;&gt; */
     &lt;img src=&quot;./assets/img/big_stage_by_B.Yemets.jpg&quot; class=&quot;hide&quot;&gt;
     &lt;/div&gt;
 /* &lt;p&gt;(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)&lt;/p&gt; */
