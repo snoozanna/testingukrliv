@@ -1,10 +1,10 @@
 :: StoryTitle
-The Maze of Adventures Template
+With Fire & Rage Template
 
 
 :: StoryData
 {
-	"ifid": "F9E39354-F641-4070-8B45-C310A3FDC8C2",
+	"ifid": "F9E39354-F641-4070-8B45-C330A3FDC8C9",
 	"format": "SugarCube",
 	"format-version": "2.36.1",
 	"start": "landing",
@@ -15,270 +15,8 @@ The Maze of Adventures Template
 :: Story Stylesheet [stylesheet]
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap");
 @import url("./styles/generics.css");
+@import url("./styles/styles.css");
 
-/* GET RID OF TWINE STYLES */
-#story{
-  margin:0
-}
-
-#passages {
-	max-width: 100%;
-
-}
-
-#story a.link-external:after {
-	content: "";
-}
-
-button{
-    background-color: transparent;
-    border: #fff 1px solid;
-    border-radius: 3px;
-}
-
-button:hover{
-	background-color:#cf1b98;
-	border: #fff 1px solid;
-	color: #fff;
-}
-
-a {
-  color: #f2647d;
-}
-
-a:active {
-  background-color: #f2647d;
-}
-
-a:hover {
-  color: #fff;
-}
-
-#story a.link-external:after {
-	content: "";
-}
-
-#story {
-	margin: 0
-}
-
-/* GENERAL STYLES */
-body{
-  font-size: 1.6rem;
-  font-family: "Space Grotesk";
-  overflow:scroll;
-  background:#000;
-  /* padding: 1.5rem */
-  display:flex;
-  flex-direction: column
-}
-
-header{
-  display:flex;
-  justify-content: flex-end;
-  align-items: center;
-    padding: 2rem
-}
-
-main{
-   padding: 2rem;
-   margin-block-end: 10rem
-}
-
-footer{
-   display:flex;
-  justify-content: space-between;
-  align-items: flex-end; 
-  position:fixed;
-  bottom: 0;
-  padding: 2rem;
-  width: 100%;
-  background-color: #000
-}
-
-nav{
-  display:flex;
-    justify-content: space-between;
-}
-
-.nav-wrapper{
-display:flex;
-  flex-direction:column;
-align-items: flex-start
-}
-
-.nav-wrapper:last-child{
-align-items: flex-end
-}
-
-.nav-item{
-  margin-block-end: 1.5rem
-}
-
-.nav-item:last-child{
-  margin-block-end: 0
-}
-
-
-.nav-wrapper:last-child{
-display:flex;
-align-items: flex-end
-}
-
-.menu-wrapper{
-  display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.menu-wrapper > button{
-margin-inline-end: 10px;
-margin-block-end: 10px
-}
-
-.door-container{
-  display:flex;
-  flex-direction: row;
-justify-content: space-around;
-  align-items:center;
-  text-align: right;
-}
-
-.door-item{
-  display:flex;
-  flex-direction:column
-}
-
-.door-item > button > img {
-  max-width: 7rem
-}
-
-.door-item > span {
-  text-align: center
-}
-
-textarea{
-  min-width: 60vw
-}
-
-.wordcontainer{
-  display:flex;
-  flex-direction: row;
-}
-
-.letter-item > input[type=text]{
-    min-width: 2em;
-  	max-width: 2em;
-  	margin-inline-end:10px;
-}
-
-.letter-item > .correct-letter{
-  min-width: 2em;
-  	max-width: 2em;
-  	margin-inline-end:10px;
-}
-
-.detector{
- width: 50%;
-}
-
-.spinning{
-
-  animation-name: spin;
-  animation-duration: 2000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear; 
-  /* transform: rotate(3deg); */
-   /* transform: rotate(0.3rad);/ */
-   /* transform: rotate(3grad); */ 
-   /* transform: rotate(.03turn);  */
-}
-
-@keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
-}
-
-
-/* MAP */
-	.map{
-width: 100%;
-    height: 60vh;
-    border: 0;
-    margin: auto;
-    }
-
-
-.directions-card {
-    display: none!important
-}
-
-@media screen and (min-width: 450px) {
-.map{
-	max-width:60vw;
-	height:50vh;
-	border:0
-}
-}
-
-/* LOFI AI */
-
-.ai-option-wrapper{
-display:flex;
-flex-direction: column;
-}
-
-.ai-option{
-display:flex;
-flex-direction: column;
-margin-inline-end: 2rem;
-}
-
-.palmtree{
-
-}
-
-.ai-img-wrapper{
-  max-width: 300px
-}
-
-.ai-img-wrapper.hover:hover{
-filter: grayscale(100%);
-}
-
-.ai-img-wrapper.active:active{
-filter: grayscale(100%);
-}
-
-.ai-img-wrapper.focus:focus{
-filter: grayscale(100%);
-}
-
-.ai-img-wrapper.touch{
-  filter: grayscale(0%);
-}
-
-.ai-img-wrapper.touch.filter{
-  filter: grayscale(100%);
-}
-
-#log {
-  height: 200px;
-  width: 600px;
-  overflow: scroll;
-}
-
-@media screen and (min-width: 450px) {
-.ai-option-wrapper{
-display:flex;
-flex-direction: row;
-}
-}
 
 
 :: Story JavaScript [script]
@@ -388,7 +126,8 @@ const handleStart = (evt) =>{
   evt.preventDefault();
   log("touchstart.");
   const el = document.getElementById("touch");
-  el.classList.add("filter")  
+  el.classList.add("dissolve"); 
+  el.classList.remove("hide"); 
   
 }
 
@@ -401,7 +140,7 @@ const handleEnd = (evt) => {
   evt.preventDefault();
   log("touchend");
    const el = document.getElementById("touch");
-  el.classList.remove("filter")  
+  el.classList.remove("dissolve")  
   
 }
 
@@ -469,12 +208,43 @@ function log(msg) {
 
 
 :: header {"position":"100,225","size":"100,100"}
-<header>Adventure Functionality /
- Structure Template</header>
+<header>
+<h1>Our Biggest Premiere Yet</h1>
+<h3>$title</h3></header>
 
 
-:: footer {"position":"100,375","size":"100,100"}
-<footer><div class="nav-wrapper "><div class="nav-item"><<button "Replay">><<goto $passage>><</button>> </div><div class="nav-item"><<button "Back">><<goto $prevpass>><</button>></div></div><div class="nav-wrapper"><div class="nav-item"><<button "I'm lost">><<goto "lost">><</button>></div></div></footer>
+:: footer [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+     <<button "Replay">><<goto $passage>><</button>>
+    </div>
+    <div class="nav-item">
+      <<button "Back">><<goto $prevpass>><</button>>
+    </div></div>
+    <div class="nav-wrapper">
+    <div class="nav-item">
+      <<button "I'm lost">><<goto "lost">><</button>>
+    </div>
+    <div class="nav-item">
+       <<button "Forward">><<goto $nextpass>><</button>>
+    </div>
+  </div>
+</footer>
+
+
+:: footerAR [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+     Press the image
+    </div></div>
+    <div class="nav-wrapper">
+    <div class="nav-item">
+       <<button "Next">><<goto $nextpass>><</button>>
+    </div>
+  </div>
+</footer>
 
 
 :: lost {"position":"450,50","size":"100,100"}
@@ -490,32 +260,61 @@ You have two options:
 <<include "footer">>
 
 
-:: landing {"position":"450,50","size":"100,100"}
-<<set $passage to "landing">>
-/* <<include "header">> */
-<main>
-  menu
 
-<div class="menu-wrapper">
-  <<button "enter codeword">><<set $prevpass to $passage>><<goto "codeword">><</button>>
-  <<button "playaudio">><<set $prevpass to $passage>><<goto "playaudio">><</button>>
-  <<button "buttonchoice">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>>
-  <<button "captions">><<set $prevpass to $passage>><<goto "captions">><</button>>
-  <<button "answeringlongquestion">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
-  <<button "map">><<set $prevpass to $passage>><<goto "map">><</button>>
-  <<button "addletters">><<set $prevpass to $passage>><<goto "addletters">><</button>>
-  <<button "choicetally">><<set $prevpass to $passage>><<goto "choices">><</button>>
-  <<button "random from list">><<set $prevpass to $passage>><<goto "randomfromlist">><</button>>
-  <<button "wordle">><<set $prevpass to $passage>><<goto "wordle">><</button>>
-  <<button "generate codes">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
-    <<button "stamp game easy">><<set $prevpass to $passage>><<goto "stampgameeasy">><</button>>
-     <<button "stamp game hard">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
-          <<button "ghost detector">><<set $prevpass to $passage>><<goto "ghostdetector">><</button>>
-   <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
-   <<button "360 view">><<set $prevpass to $passage>><<goto "360">><</button>>
-</div>
+
+
+:: landing [nobr]{"position":"450,50","size":"100,100"}
+<<set $title to "Our Biggest Premiere Yet">>
+<<set $prevpass to "landing">>
+<<set $passage to "landing">>
+<<set $nextpass to "introLivEveryman">>
+/* Title  */
+/* Check they are in the right place  */
+<main>
+
+<h2>Our Biggest Premiere Yet</h2>
+<p>You should be inside or outside the Liverpool Everyman</p>
+
+<p>If the theatres open take a seat in the bar area downstairs or upstairs </p>
+
+<p>If its closed then find a place you are comfortable to stand - maybe under the theatre’s balcony</p>
+
+<p>When you are ready press <<button "Play">><<goto $nextpass>><</button>></p>
+
 </main>
 <<include "footer">>
+
+
+:: introLivEveryman [nobr] {"position":"450,50","size":"100,100"}
+<<set $prevpass to "landing">>
+<<set $passage to "introLivEveryman">>
+<<set $nextpass to "AR1">>
+<<include "header">>
+<main>
+
+Audio - Intro & Liverpool Everyman
+
+When you are ready press <<button "Next">><<goto $nextpass>><</button>>
+
+</main>
+<<include "footer">>
+
+
+:: AR1 [nobr]{"position":"450,50","size":"100,100"}
+<<set $prevpass to "landing">>
+<<set $passage to "introLivEveryman">>
+<<set $nextpass to "landing">>
+/* <<include "header">> */
+<main>
+  <div class="ai-img-wrapper touch" id="touch" >
+    <img src="./assets/img/everyman-theatre.webp" class="">
+    <img src="./assets/img/big_stage_by_B.Yemets.jpg" class="hide">
+    </div>
+/* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */
+
+
+</main>
+<<include "footerAR">>
 
 
 :: codeword {"position":"450,1875","size":"100,100"}
@@ -1127,3 +926,29 @@ Log:
 <<button "back">><<goto "landing">><</button>>
 </main>
 
+:: landing2 {"position":"450,50","size":"100,100"}
+<<set $passage to "landing2">>
+/* <<include "header">> */
+<main>
+  menu
+
+<div class="menu-wrapper">
+  <<button "enter codeword">><<set $prevpass to $passage>><<goto "codeword">><</button>>
+  <<button "playaudio">><<set $prevpass to $passage>><<goto "playaudio">><</button>>
+  <<button "buttonchoice">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>>
+  <<button "captions">><<set $prevpass to $passage>><<goto "captions">><</button>>
+  <<button "answeringlongquestion">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
+  <<button "map">><<set $prevpass to $passage>><<goto "map">><</button>>
+  <<button "addletters">><<set $prevpass to $passage>><<goto "addletters">><</button>>
+  <<button "choicetally">><<set $prevpass to $passage>><<goto "choices">><</button>>
+  <<button "random from list">><<set $prevpass to $passage>><<goto "randomfromlist">><</button>>
+  <<button "wordle">><<set $prevpass to $passage>><<goto "wordle">><</button>>
+  <<button "generate codes">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
+    <<button "stamp game easy">><<set $prevpass to $passage>><<goto "stampgameeasy">><</button>>
+     <<button "stamp game hard">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
+          <<button "ghost detector">><<set $prevpass to $passage>><<goto "ghostdetector">><</button>>
+   <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
+   <<button "360 view">><<set $prevpass to $passage>><<goto "360">><</button>>
+</div>
+</main>
+<<include "footer">>

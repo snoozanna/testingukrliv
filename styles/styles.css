@@ -1,0 +1,296 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Secular+One&display=swap");
+
+/* CONSTANTS  */
+
+:root {
+  --main-bg-color: #81184b;
+  --accent-color-primary: #e8d7a4;
+  --accent-color-secondary: #1fb9aa;
+  --color-red: #bc4121;
+  --color-mint: #94cab7;
+  --color-grey: #7f7f7f;
+  --color-orange: #e86530;
+  --color-purple: #7f6fb0;
+  --color-pink: #cd7362;
+  --font-headings: "Secular One", sans-serif;
+  --font-body: "Open Sans", sans-serif;
+  --padding: 1.5rem;
+}
+
+/* GET RID OF TWINE STYLES */
+#story {
+  margin: 0;
+}
+
+#passages {
+  max-width: 100%;
+}
+
+#story a.link-external:after {
+  content: "";
+}
+
+button {
+  background-color: transparent;
+  border: #fff 1px solid;
+  border-radius: 3px;
+}
+
+button:hover {
+  background-color: #cf1b98;
+  border: #fff 1px solid;
+  color: #fff;
+}
+
+a {
+  color: #f2647d;
+}
+
+a:active {
+  background-color: #f2647d;
+}
+
+a:hover {
+  color: #fff;
+}
+
+#story a.link-external:after {
+  content: "";
+}
+
+#story {
+  margin: 0;
+}
+
+/* GENERAL STYLES */
+body {
+  font-size: 1.6rem;
+  font-family: var(--font-body);
+  overflow: scroll;
+  background: var(--main-bg-color);
+  /* padding: 1.5rem */
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--padding);
+}
+
+main {
+  padding: var(--padding);
+  margin-block-end: 10rem;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: fixed;
+  bottom: 0;
+  padding: var(--padding);
+  width: 100%;
+  background-color: var(--main-bg-color);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-wrapper:last-child {
+  display: flex;
+  align-items: flex-end;
+}
+
+.nav-item {
+  margin-block-end: 1rem;
+}
+
+.nav-item:last-child {
+  margin-block-end: 0;
+}
+
+.nav-item > button {
+  font-size: 1.2rem;
+}
+
+.hide {
+  display: none;
+}
+
+.menu-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.menu-wrapper > button {
+  margin-inline-end: 10px;
+  margin-block-end: 10px;
+}
+
+.door-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-align: right;
+}
+
+.door-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.door-item > button > img {
+  max-width: 7rem;
+}
+
+.door-item > span {
+  text-align: center;
+}
+
+textarea {
+  min-width: 60vw;
+}
+
+.wordcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.letter-item > input[type="text"] {
+  min-width: 2em;
+  max-width: 2em;
+  margin-inline-end: 10px;
+}
+
+.letter-item > .correct-letter {
+  min-width: 2em;
+  max-width: 2em;
+  margin-inline-end: 10px;
+}
+
+.detector {
+  width: 50%;
+}
+
+.spinning {
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  /* transform: rotate(3deg); */
+  /* transform: rotate(0.3rad);/ */
+  /* transform: rotate(3grad); */
+  /* transform: rotate(.03turn);  */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* MAP */
+.map {
+  width: 100%;
+  height: 60vh;
+  border: 0;
+  margin: auto;
+}
+
+.directions-card {
+  display: none !important;
+}
+
+@media screen and (min-width: 450px) {
+  .map {
+    max-width: 60vw;
+    height: 50vh;
+    border: 0;
+  }
+}
+
+/* LOFI AI */
+
+.ai-option-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-option {
+  display: flex;
+  flex-direction: column;
+  margin-inline-end: 2rem;
+}
+
+.ai-img-wrapper {
+  height: 80vh;
+  object-fit: cover;
+}
+
+.ai-img-wrapper > img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.ai-img-wrapper.hover:hover {
+  filter: grayscale(100%);
+}
+
+.ai-img-wrapper.active:active {
+  filter: grayscale(100%);
+}
+
+.ai-img-wrapper.focus:focus {
+  filter: grayscale(100%);
+}
+
+.ai-img-wrapper.touch {
+  filter: grayscale(0%);
+}
+
+.ai-img-wrapper.touch.filter {
+  filter: grayscale(100%);
+}
+
+#log {
+  height: 200px;
+  width: 600px;
+  overflow: scroll;
+}
+
+@media screen and (min-width: 450px) {
+  .ai-option-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@keyframes dissolve {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+.dissolve {
+  animation: dissolve 0.5s ease-out normal;
+}
