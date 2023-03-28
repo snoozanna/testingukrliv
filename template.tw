@@ -209,8 +209,8 @@ function log(msg) {
 
 :: header {"position":"100,225","size":"100,100"}
 <header>
-<h1>Our Biggest Premiere Yet</h1>
-<h3>$title</h3></header>
+<h1>$title</h1>
+<h3>With Fire & Rage</h3></header>
 
 
 :: footer [nobr]{"position":"100,375","size":"100,100"}
@@ -267,23 +267,28 @@ You have two options:
 <<set $title to "Our Biggest Premiere Yet">>
 <<set $prevpass to "landing">>
 <<set $passage to "landing">>
-<<set $nextpass to "introLivEveryman">>
+<<set $nextpass to "instructions">>
 /* Title  */
 /* Check they are in the right place  */
 <main>
 
 <h2>Our Biggest Premiere Yet</h2>
+<p><<button "Begin">><<goto $nextpass>><</button>></p>
+
+</main>
+<<include "footer">>
+
+:: instructions
+<<set $prevpass to "landing">>
+<<set $passage to "instructions">>
+<<set $nextpass to "introLivEveryman">>
 <p>You should be inside or outside the Liverpool Everyman</p>
 
 <p>If the theatres open take a seat in the bar area downstairs or upstairs </p>
 
 <p>If its closed then find a place you are comfortable to stand - maybe under the theatre’s balcony</p>
 
-<p>When you are ready press <<button "Play">><<goto $nextpass>><</button>></p>
-
-</main>
-<<include "footer">>
-
+<p>When you are ready press <<button "Start">><<goto $nextpass>><</button>></p>
 
 :: introLivEveryman [nobr] {"position":"450,50","size":"100,100"}
 <<set $prevpass to "landing">>
@@ -308,7 +313,7 @@ When you are ready press <<button "Next">><<goto $nextpass>><</button>>
 <main>
   <div class="ai-img-wrapper touch" id="touch" >
     /* <img src="./assets/img/everyman-theatre.webp" class=""> */
-    <img src="./assets/img/big_stage_by_B.Yemets.jpg" class="hide">
+    <img src="./assets/img/big_stage_by_B.Yemets.jpg" class="">
     </div>
 /* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */
 
