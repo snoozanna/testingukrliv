@@ -204,7 +204,7 @@ setup.startup = () =>  {
 
 const handleStart = (evt) =>{
   evt.preventDefault();
-  log("touchstart.");
+  // log("touchstart.");
   const el = document.getElementById("touch");
   el.classList.add("filter"); 
   // el.classList.remove("hide"); 
@@ -218,7 +218,7 @@ const handleMove = (evt) => {
 
 const handleEnd = (evt) => {
   evt.preventDefault();
-  log("touchend");
+  // log("touchend");
    const el = document.getElementById("touch");
   el.classList.remove("filter")  
   
@@ -226,7 +226,7 @@ const handleEnd = (evt) => {
 
 const handleCancel = (evt) => {
   evt.preventDefault();
-  log("touchcancel.");
+  // log("touchcancel.");
   const touches = evt.changedTouches;
 
   for (let i = 0; i < touches.length; i++) {
@@ -274,7 +274,7 @@ function log(msg) {
   el.addEventListener("touchend", handleEnd);
   el.addEventListener("touchcancel", handleCancel);
   // el.addEventListener("touchmove", handleMove);
-  log("Initialized.", el);
+  // log("Initialized.", el);
 }
 
 
