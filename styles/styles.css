@@ -73,16 +73,39 @@ body {
   flex-direction: column;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-headings);
+  margin-block-end: 0;
+}
+
 header {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
   padding: var(--padding);
+}
+
+.header-item > h1 {
+  font-size: 2rem;
+}
+
+.header-item > h3.subtitle {
+  text-align: right;
+  font-size: 1.5rem;
+  font-family: var(--font-body);
 }
 
 main {
   padding: var(--padding);
+  height: 100%;
   margin-block-end: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 footer {
@@ -226,46 +249,55 @@ textarea {
   }
 }
 
-/* LOFI AI */
+/* LOFI AR */
 
-.ai-option-wrapper {
+.ar-option-wrapper {
   display: flex;
   flex-direction: column;
 }
 
-.ai-option {
+.ar-option {
   display: flex;
   flex-direction: column;
   margin-inline-end: 2rem;
 }
 
-.ai-img-wrapper {
+.ar-imgs-container {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+}
+
+.ar-img-wrapper,
+.hidden-img-wrapper {
   height: 80vh;
   object-fit: cover;
 }
 
-.ai-img-wrapper > img {
+.ar-img-wrapper > img,
+.hidden-img-wrapper > img,
+.static-img-wrapper > img {
   height: 100%;
   object-fit: cover;
 }
 
-.ai-img-wrapper.hover:hover {
+.ar-img-wrapper.hover:hover {
   filter: grayscale(100%);
 }
 
-.ai-img-wrapper.active:active {
+.ar-img-wrapper.active:active {
   filter: grayscale(100%);
 }
 
-.ai-img-wrapper.focus:focus {
+.ar-img-wrapper.focus:focus {
   filter: grayscale(100%);
 }
 
-.ai-img-wrapper.touch {
+.ar-img-wrapper.touch {
   filter: grayscale(0%);
 }
 
-.ai-img-wrapper.touch.filter {
+.ar-img-wrapper.touch.filter {
   filter: grayscale(100%);
 }
 
@@ -292,5 +324,18 @@ textarea {
   }
 }
 .dissolve {
-  animation: dissolve 0.5s ease-out normal;
+  animation: 2s dissolve 0.5s ease-out forwards;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.appear {
+  animation: 2s appear 0.5s ease-out forwards;
 }

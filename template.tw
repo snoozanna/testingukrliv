@@ -125,8 +125,16 @@ setup.startup = () =>  {
 const handleStart = (evt) =>{
   evt.preventDefault();
   // log("touchstart.");
-  const el = document.getElementById("touch");
-  el.classList.add("filter"); 
+  const initial = document.getElementById("initial");
+  const stat = document.getElementById("stat");
+    const reveal = document.getElementById("reveal");
+  initial.classList.add("dissolve"); 
+   stat.classList.add("appear"); 
+  setTimeout(() => {
+    initial.classList.add("hide"); 
+  stat.classList.add("dissolve"); 
+  reveal.classList.add("dissolve"); 
+}, "5000");
   // el.classList.remove("hide"); 
   
 }
@@ -139,8 +147,8 @@ const handleMove = (evt) => {
 const handleEnd = (evt) => {
   evt.preventDefault();
   // log("touchend");
-   const el = document.getElementById("touch");
-  el.classList.remove("filter")  
+   const el = document.getElementById("initial");
+  el.classList.remove("hide")  
   
 }
 
@@ -189,7 +197,7 @@ function log(msg) {
 
 
   // const el = document.getElementById("canvas");
-    const el = document.getElementById("touch");
+    const el = document.getElementById("initial");
   el.addEventListener("touchstart", handleStart);
   el.addEventListener("touchend", handleEnd);
   el.addEventListener("touchcancel", handleCancel);
@@ -207,10 +215,14 @@ function log(msg) {
 <<waitforaudio>>
 
 
-:: header {"position":"100,225","size":"100,100"}
+:: header [nobr]{"position":"100,225","size":"100,100"}
 <header>
-<h1>$title</h1>
-<h3>With Fire & Rage</h3></header>
+<div class="header-item"></div>
+<div class="header-item">
+  <h1>$title</h1>
+  <h3 class="subtitle">With Fire & Rage</h3>
+</div >
+</header>
 
 
 :: footer [nobr]{"position":"100,375","size":"100,100"}
@@ -279,7 +291,7 @@ You have two options:
 </main>
 <<include "footer">>
 
-:: instructions
+:: instructions [nobr]
 <<set $prevpass to "landing">>
 <<set $passage to "instructions">>
 <<set $nextpass to "introLivEveryman">>
@@ -314,15 +326,24 @@ When you are ready press <<button "Next">><<goto $nextpass>><</button>>
 <<set $nextpass to "landing">>
 /* <<include "header">> */
 <main>
-  <div class="ai-img-wrapper touch" id="touch" >
-    /* <img src="./assets/img/everyman-theatre.webp" class=""> */
-    <img src="./assets/img/big_stage_by_B.Yemets.jpg" class="">
+  <div class="ar-imgs-container">
+    <div class="ar-img-wrapper touch" id="initial" >
+      <img src="./assets/img/everyman-theatre.webp" class="">
+      /* <img src="./assets/img/big_stage_by_B.Yemets.jpg" class=""> */
+      </div>
+    <div class="static-img-wrapper" id="stat" class="hide" >
+      <img src="./assets/img/static.gif"  id="stat">
     </div>
+    <div class="hidden-img-wrapper" id="reveal" class="hide" >
+      <img src="./assets/img/big_stage_by_B.Yemets.jpg" >
+    </div>
+  </div >
 /* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */
 
 
 </main>
 <<include "footerAR">>
+<<done>><<set $s to setup.startup()>><</done>>
 
 
 :: codeword {"position":"450,1875","size":"100,100"}
