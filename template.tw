@@ -296,7 +296,7 @@ You have two options:
 <<set $passage to "instructions">>
 <<set $nextpass to "introLivEveryman">>
 <main>
-  <p>You should be inside or outside the Liverpool Everyman</p>
+  <p>Katherine has changed this</p>
   
   <p>If the theatres open take a seat in the bar area downstairs or upstairs </p>
   
