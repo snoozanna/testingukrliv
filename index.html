@@ -98,7 +98,7 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://F9E39354-F641-4070-8B45-C330A3FDC8C9// --><tw-storydata name="With Fire &amp; Rage Template" startnode="6" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F9E39354-F641-4070-8B45-C330A3FDC8C9" zoom="0.6" format="SugarCube" format-version="2.36.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap");
+	<!-- UUID://F9E39354-F641-4070-8B45-C330A3FDC8C9// --><tw-storydata name="With Fire &amp; Rage Template" startnode="8" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F9E39354-F641-4070-8B45-C330A3FDC8C9" zoom="0.6" format="SugarCube" format-version="2.36.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap");
 @import url("./styles/generics.css");
 @import url("./styles/styles.css");</style><script role="script" id="twine-user-script" type="text/twine-javascript">$('#ui-bar').remove();
 $(document.head).find('#style-ui-bar').remove();
@@ -165,18 +165,19 @@ $(document.head).find('#style-ui-bar').remove();
 
 // MAKE MAP FUNCTION
 
-setup.generateDirectionsMap = function (origin, dest){
+setup.generateDirectionsMap = function (latorg, longorg, latdest, longdest){
 const iFrame = document.createElement("iframe")
 iFrame.classList.add("map")
 iFrame.setAttribute("loading", "lazy")
 iFrame.setAttribute("referrerpolicy", "no-referrer-when-downgrade")
 // iFrame.setAttribute("allowfullscreen")
-iFrame.setAttribute("src", `https://www.google.com/maps/embed/v1/directions?key=AIzaSyBDRwRTMpSybNcmgkYVX1yZ0YmBbNhs9qU&center=${origin.lat},${origin.long}&zoom=17&origin=${origin.lat},${origin.long}&destination=${dest.lat},${dest.long}&mode=walking`)
+iFrame.setAttribute("src", `https://www.google.com/maps/embed/v1/directions?key=AIzaSyB7uJuBjDcK-tb0aJpTjaKA1ZNLWhEPN5M&center=${latorg},${longorg}&zoom=17&origin=${latorg},${longorg}&destination=${latdest},${longdest}&mode=walking`)
 const mount = document.getElementById("mapMount")
 console.log(iFrame)
 return iFrame
 // this.mapMount.appendChild(iFrame)
 }
+
 //Get random 5 letter word
 
 setup.generate5LetterCode = () => {
@@ -296,18 +297,20 @@ function log(msg) {
 &lt;/div &gt;
 &lt;/header&gt;</tw-passagedata><tw-passagedata pid="3" name="footer" tags="nobr" position="100,375" size="100,100">&lt;footer&gt;
   &lt;div class=&quot;nav-wrapper&quot;&gt;
+
     &lt;div class=&quot;nav-item&quot;&gt;
-     &lt;&lt;button &quot;Replay&quot;&gt;&gt;&lt;&lt;goto $passage&gt;&gt;&lt;&lt;/button&gt;&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;nav-item&quot;&gt;
-      &lt;&lt;button &quot;Back&quot;&gt;&gt;&lt;&lt;goto $prevpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+        [img[Back|assets/img/backward.png][$prevpass]]
     &lt;/div&gt;&lt;/div&gt;
+     &lt;div class=&quot;nav-wrapper&quot;&gt;
+    &lt;div class=&quot;nav-item&quot;&gt;
+    [img[Replay|assets/img/replay.png][$passage]]
+    &lt;/div&gt;
+    &lt;/div&gt;
     &lt;div class=&quot;nav-wrapper&quot;&gt;
     &lt;div class=&quot;nav-item&quot;&gt;
-      &lt;&lt;button &quot;I&#39;m lost&quot;&gt;&gt;&lt;&lt;goto &quot;lost&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
     &lt;/div&gt;
     &lt;div class=&quot;nav-item&quot;&gt;
-       &lt;&lt;button &quot;Forward&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+         [img[Forward|assets/img/forward.png][$nextpass]]
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/footer&gt;</tw-passagedata><tw-passagedata pid="4" name="footerAR" tags="nobr" position="100,375" size="100,100">&lt;footer&gt;
@@ -320,7 +323,27 @@ function log(msg) {
        &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="5" name="lost" tags="" position="450,50" size="100,100">&lt;&lt;set $passage to &quot;lost&quot;&gt;&gt;&lt;&lt;include &quot;header&quot;&gt;&gt;
+&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="5" name="footerMap" tags="nobr" position="100,375" size="100,100">&lt;footer&gt;
+  &lt;div class=&quot;nav-wrapper&quot;&gt;
+
+    &lt;div class=&quot;nav-item&quot;&gt;
+    &lt;&lt;link [img[assets/img/map.png]]&gt;&gt;&lt;&lt;toggleclass &quot;#map&quot; &quot;hide&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;
+        /* [img[Show Map|assets/img/map.png][toggleclass &quot;#map&quot; &quot;hide&quot;]] */
+    &lt;/div&gt;&lt;/div&gt;
+     &lt;div class=&quot;nav-wrapper&quot;&gt;
+    &lt;div class=&quot;nav-item&quot;&gt;
+    &lt;&lt;link [img[assets/img/play.png]]&gt;&gt;&lt;&lt;replace &quot;#audio&quot;&gt;&gt;&lt;p&gt;[audio playing...]&lt;/p&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+  
+    &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;nav-wrapper&quot;&gt;
+    &lt;div class=&quot;nav-item&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;nav-item&quot;&gt;
+        &lt;&lt;button &quot;I&#39;ve arrived&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="6" name="lost" tags="" position="450,50" size="100,100">&lt;&lt;set $passage to &quot;lost&quot;&gt;&gt;&lt;&lt;include &quot;header&quot;&gt;&gt;
 &lt;main&gt;
 Sorry to hear that you&#39;re lost! 
 You have two options:
@@ -329,22 +352,53 @@ You have two options:
 
 &lt;&lt;button &quot;Take me straight to the end location!&quot;&gt;&gt;&lt;&lt;goto &quot;end&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="landing" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $title to &quot;Our Biggest Premiere Yet&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="credits" tags="" position="450,50" size="100,100">&lt;&lt;set $passage to &quot;credits&quot;&gt;&gt;
+&lt;&lt;include &quot;header&quot;&gt;&gt;
+&lt;main&gt;
+TESTIMONIES INCLUDE: OLYA MUKHINA
+Executive Director of the Lesya Ukrainka Theater
+STAS KONONOV
+Musician and Guitarist
+ALEVTINA SHVETSOVA
+Arts Journalist and Artist
+LUTFIE ZUDIEVA
+Civic Journalist
+OLEKSANDRA OSADCHA
+Researcher and Curator at Kharkiv School Of Photography
+SERHIY ZAKHAROV
+Artist
+VICTORIA AMELINA
+Writer and Poet
+ANNA SHARYHINA
+Activist, Cultural Manager and Founder of Sphere
+JULIA NIKOLAJEVSKA
+Musician and Cultural Manager Kharkiv Music Fest
+DMYTRO KOSTIUMINSKIJ
+Artist, Theatre director and Filmmaker
+POETRY AND ADDITIONAL TEXTS INCLUDE:
+Text Counter/retnuoC by Alexander Levitsky from Anthology24 Text by Nina Zakhozhenko from Anthology24
+Poem by Aliye Kenzhalieva
+Poem Ctrl+Z by Mykhailo Zharzhalio
+Poem Survivor&#39;s Syndrome by Andriy Bondarenko
+Poem by Ostap Slyvynsky
+&lt;/main&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="landing" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $title to &quot;Our Biggest Premiere Yet&quot;&gt;&gt;
 &lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
 &lt;&lt;set $passage to &quot;landing&quot;&gt;&gt;
 &lt;&lt;set $nextpass to &quot;instructions&quot;&gt;&gt;
 /* Title  */
-/* Check they are in the right place  */
-&lt;main&gt;
 
-&lt;h2&gt;Our Biggest Premiere Yet&lt;/h2&gt;
+&lt;main class=&quot;landing&quot;&gt;
+
+&lt;h1&gt;Our Biggest Premiere Yet&lt;/h1&gt;
 &lt;p&gt;&lt;&lt;button &quot;Begin&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
-&lt;&lt;button &quot;lofiAR&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;lofiai&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
+/* &lt;&lt;button &quot;lofiAR&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;lofiai&quot;&gt;&gt;&lt;&lt;/button&gt;&gt; */
 
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="instructions" tags="nobr" position="850,100" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="instructions" tags="nobr" position="1100,100" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
 &lt;&lt;set $passage to &quot;instructions&quot;&gt;&gt;
-&lt;&lt;set $nextpass to &quot;introLivEveryman&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;intro&quot;&gt;&gt;
+&lt;&lt;include &quot;header&quot;&gt;&gt;
 &lt;main&gt;
   &lt;p&gt;You should be inside or outside the Liverpool Everyman&lt;/p&gt;
   
@@ -353,20 +407,119 @@ You have two options:
   &lt;p&gt;If its closed then find a place you are comfortable to stand - maybe under the theatre’s balcony&lt;/p&gt;
   
   &lt;p&gt;When you are ready press &lt;&lt;button &quot;Start&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
-&lt;/main&gt;</tw-passagedata><tw-passagedata pid="8" name="introLivEveryman" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
-&lt;&lt;set $passage to &quot;introLivEveryman&quot;&gt;&gt;
-&lt;&lt;set $nextpass to &quot;AR1&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
+&lt;/main&gt;</tw-passagedata><tw-passagedata pid="10" name="intro" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;instructions&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;intro&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;child&quot;&gt;&gt;
+/* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;NARRATOR:&lt;/p&gt;
 
-Audio - Intro &amp; Liverpool Everyman
+  &lt;p&gt;Welcome to With Fire and Rage...&lt;/p&gt;
 
-When you are ready press &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+  &lt;p&gt;An audio experience following artists on the frontline in Ukraine.&lt;/p&gt;
+  &lt;p&gt;I’m Veronika Skliarova, artist and producer from Kharkiv.&lt;/p&gt;
+  &lt;p&gt;I will be your guide for today, taking you on a journey to meet some of our country&#39;s most radical, brave and innovative creatives.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+
+&lt;&lt;timed 2s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Along the way, I encourage you to take a break... If you want, stop for a coffee. We will not spend long in each location but even so, find a place to sit, to lean, to shelter. Make yourself comfortable, after all, Liverpool is your city, not mine.&lt;/p&gt;
+  &lt;p&gt;The places you will walk in, I have never beepn&lt;/p&gt;
+  &lt;p&gt;But let your imagination wander from your streets to ours.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+
+&lt;&lt;timed 4s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;
+      From art museums, libraries, train stations, bookshops and cafes in Liverpool, to different histories and places across Ukraine.&lt;/p&gt;
+    &lt;p&gt; From the Liverpool Everyman where you are now, to the Lesya Ukrainka Theater in Lviv. Here you will meet our first artist Olya Puzhakovska, the youngest Executive and Artistic Director in Ukraine, who with tremendous courage transformed her theatre in a moment of crisis...
+    &lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;So, are you ready?&lt;/p&gt;
+  &lt;p&gt; &lt;&lt;button &quot;Let&#39;s begin&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
 
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="AR1" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
-&lt;&lt;set $passage to &quot;introLivEveryman&quot;&gt;&gt;
-&lt;&lt;set $nextpass to &quot;landing&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="child" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;child&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;olga&quot;&gt;&gt;
+/* &lt;&lt;include &quot;header&quot;&gt;&gt; */
+&lt;main&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Ten. Nine. Eight. Seven.&lt;/p&gt;
+  &lt;p&gt;Burning house in heaven.&lt;/p&gt;
+  &lt;p&gt;A cartridge is full of deceptions.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 2s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Slyness. Blackmail. No exceptions.&lt;/p&gt;
+  &lt;p&gt;Red reflections.&lt;/p&gt;
+  &lt;p&gt;Reviewing eternal senses of life.&lt;/p&gt;
+  &lt;p&gt;‘Destroy,’ ‘Forget.’ ‘Deprive.’&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 4s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Six. Five.&lt;/p&gt;
+  &lt;p&gt;‘Burn down’ church choirs plea.&lt;/p&gt;
+  &lt;p&gt;There is nowhere to flee.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Four. Three.&lt;/p&gt;
+  &lt;p&gt;To the abyss of suffering, we have run.&lt;/p&gt;
+  &lt;p&gt;Two. One.&lt;/p&gt;
+  &lt;p&gt;The war has begun. &lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 8s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+ &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+
+&lt;/main&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="olga" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;child&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;olga&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;AR1&quot;&gt;&gt;
+/* &lt;&lt;include &quot;header&quot;&gt;&gt; */
+&lt;main&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;On the 24th of February 2022 (the day of the full-scale invasion), we made a plan of how to defend the theatre and how we could avoid it being captured.&lt;/p&gt;
+&lt;p&gt;It’s the highest building in the district and right across the street, there is a big military base. So we put razor wire anywhere a person could climb onto the rooftop, and some of the staff began to make Molotov cocktails.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+ &lt;&lt;timed 2s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;This was the first day.&lt;/p&gt;
+&lt;p&gt;The war had already being going in the east for many years, so the full-scale invasion was not a surprise. But still, in the sharp moment of crisis, we were lost and we didn&#39;t know how to adapt our work.&lt;/p&gt;
+&lt;p&gt;At first, it was very chaotic. We had no sleep. Every day we had meetings with the whole theatre team. We made a lot of mistakes, but we tried to find the best solutions.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+  &lt;&lt;timed 4s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;We started by setting up the spaces for refugees and cleaning the basement that became a bomb shelter.&lt;/p&gt;
+&lt;p&gt;We invited not only artists but anyone who had to flee and needed a space to stay.&lt;/p&gt;
+&lt;p&gt;Many of our staff didn&#39;t feel safe in their apartments, so they also lived here in our theatre.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+   &lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;We set up a shower and created a small kitchen. The person who used to be in charge of the laundry for costumes now washed clothes and bedding instead.&lt;/p&gt;
+&lt;p&gt;The small stage became a space to store humanitarian aid. Actors distributed it not only in Lviv but to other cities, often under shelling.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+   &lt;&lt;timed 8s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;
+  We organised buses for those who were displaced to go through the border to Poland. Because it was an awful situation, those over 60 and mothers with a lot of small kids were stuck there for weeks.
+  We prepared warm food and drinks, and actors would give this out at the railway stations, where internally displaced people were also waiting for days in winter.
+&lt;/p&gt;
+&lt;p&gt;We equipped soldiers, including our colleagues and friends, who went to go and defend the country.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+ &lt;&lt;timed 10s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;In the costume department, we made uniforms and balaclavas for the soldiers. A very interesting fashion designer who lived in our shelter became the head of this production.&lt;/p&gt;
+&lt;p&gt;Everything we had as a theatre was used in a new way. Set and costume became humanitarian aid, and technical supplies things like walkie-talkies were sent to the front line.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+  &lt;&lt;timed 12s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;For the last five years, we have been trying to work without a strict hierarchy. And it is this horizontal structure that led to our biggest premiere yet - where the whole team united on the 24th of February to respond to the full-scale invasion and work as one strong mechanism.&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+   &lt;&lt;timed 14s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt; &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
+ &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+
+&lt;/main&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="AR1" tags="nobr" position="450,50" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;AR1&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;journey1&quot;&gt;&gt;
 /* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
   &lt;div class=&quot;ar-imgs-container&quot;&gt;
@@ -386,59 +539,89 @@ When you are ready press &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $ne
 
 &lt;/main&gt;
 &lt;&lt;include &quot;footerAR&quot;&gt;&gt;
-&lt;&lt;done&gt;&gt;&lt;&lt;set $s to setup.startup()&gt;&gt;&lt;&lt;/done&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="codeword" tags="" position="450,1875" size="100,100">&lt;&lt;set $passage to &quot;landing&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-Enter codeword 
-which is codeword:
+&lt;&lt;done&gt;&gt;&lt;&lt;set $s to setup.startup()&gt;&gt;&lt;&lt;/done&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="journey1" tags="nobr" position="475,225" size="100,100">&lt;&lt;set $prevpass to &quot;AR1&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;journey1&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;narrator2&quot;&gt;&gt;
+/* Everyman to 1931  */
+&lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)&gt;&gt;
+&lt;&lt;set $audio to &quot;journey1audio&quot;&gt;&gt;
+  /* &lt;&lt;include &quot;map1&quot;&gt;&gt; */
 
 
-&lt;div id=&quot;coderesult&quot;&gt;&lt;/div&gt;
-/% CODEWORD FEEDBACK %/
-&lt;div id=&quot;resultbutton&quot;&gt;
-/% CODEWORD INPUT %/
-&lt;div class=&quot;code-input&quot;&gt;
-&lt;&lt;textbox &quot;$codeword&quot; &quot;&quot;&gt;&gt;&lt;/div&gt;
-&lt;&lt;button &quot;Enter&quot;&gt;&gt;
-&lt;/div&gt;
-/% STANDARDISE INPUT %/
-&lt;&lt;set $codeword to $codeword.toUpperCase()&gt;&gt;
-/% CODEWORD CORRECT %/
-&lt;&lt;if $codeword isnot &quot;&quot; and $codeword is &quot;CODEWORD&quot;&gt;&gt;
-&lt;&lt;replace &quot;#coderesult&quot;&gt;&gt;CORRECT&lt;&lt;/replace&gt;&gt;
-&lt;&lt;timed 3s&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;playaudio&quot;&gt;&gt;&lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-  /% CODEWORD INCORRECT %/
-  &lt;&lt;if $codeword isnot &quot;&quot; and $codeword is not &quot;CODEWORD&quot;&gt;&gt;
-  &lt;&lt;replace &quot;#coderesult&quot;&gt;&gt;Thats not right.&lt;&lt;/replace&gt;&gt;
-  &lt;&lt;timed 1.5s&gt;&gt;&lt;&lt;replace &quot;#coderesult&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
-  &lt;&lt;/if&gt;&gt;&lt;&lt;/button&gt;&gt;
-  &lt;/div&gt;
-  &lt;/main&gt;
-  &lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="playaudio" tags="" position="450,2000" size="100,100">&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;&lt;set $passage to &quot;playaudio&quot;&gt;&gt;
-&lt;&lt;audio &quot;badjoke&quot; play&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;&lt;&lt;include &quot;footer&quot;&gt;&gt;
-&lt;main&gt;playing audio which continues playing on next passage
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;buttonchoice&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="buttonchoice" tags="" position="450,2150" size="100,100">&lt;&lt;set $passage to &quot;buttonchoice&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
 &lt;main&gt;
-  &lt;div class=&quot;door-container&quot;&gt;
-  &lt;&lt;timed 1s&gt;&gt;&lt;div class=&quot;door-item&quot;&gt;&lt;span&gt;DOOR A&lt;/span&gt;&lt;&lt;button [img[&quot;https://youhavefoundconey.net/CG/what/assets/img/door-white.png&quot;][Door A]]&gt;&gt;&lt;&lt;set $doorchoice to &quot;A&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;doorA&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/div&gt;&lt;&lt;/timed&gt;&gt;
-  &lt;&lt;timed 2s&gt;&gt;&lt;div class=&quot;door-item&quot;&gt;&lt;span&gt;or&lt;/span&gt;&lt;/div&gt;&lt;&lt;/timed&gt;&gt;
-  &lt;&lt;timed 3s&gt;&gt;&lt;div class=&quot;door-item&quot;&gt;&lt;span&gt;DOOR B&lt;/span&gt;&lt;&lt;button [img[&quot;https://youhavefoundconey.net/CG/what/assets/img/door-white.png&quot;][Door B]]&gt;&gt;&lt;&lt;set $doorchoice to &quot;B&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;doorB&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/div&gt;&lt;&lt;/timed&gt;&gt;
-  &lt;/div&gt;
+&lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
+&lt;p&gt;The next location is the Liverpool Philharmonic. &lt;/p&gt;
+
+&lt;p&gt;Its a couple on minutes straight down the road.&lt;/p&gt;
+
+&lt;p&gt;Use the Map to help you get there.&lt;/p&gt;
+
+&lt;p&gt;As you begin to walk press Play.&lt;/p&gt;
+
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="doorA" tags="" position="625,2175" size="100,100">&lt;&lt;include &quot;header&quot;&gt;&gt;
+
+&lt;&lt;include &quot;footerMap&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="journey1audio" tags="nobr" position="600,225" size="100,100">&lt;&lt;replace &quot;#audio&quot;&gt;&gt;&lt;p&gt;[audio playing...]&lt;/p&gt;&lt;&lt;/replace&gt;&gt;
+
+
+$map */</tw-passagedata><tw-passagedata pid="16" name="narrator2" tags="nobr" position="725,225" size="100,100">&lt;&lt;set $prevpass to &quot;map&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;narrator2&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;teacher&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;
 &lt;main&gt;
-Door A
-  &lt;&lt;timed 2s&gt;&gt;&lt;&lt;goto &quot;captions&quot;&gt;&gt;&lt;&lt;/timed&gt;&gt;
-&lt;/main&gt;</tw-passagedata><tw-passagedata pid="14" name="doorB" tags="" position="750,2175" size="100,100">&lt;&lt;include &quot;header&quot;&gt;&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;NARRATOR:&lt;/p&gt;
+  &lt;p&gt;From the beginning, our cities and streets changed and became full of strange and interesting artefacts.&lt;/p&gt;
+  &lt;p&gt;People made roadblocks and outposts to prepare for invasion. Artists welded giant metal beams creating “hedgehogs” that we impossible for tanks to drive over&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 2s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Signs are put up, as shop basements, underground bars and metro stations become a place to hide from rockets.&lt;/p&gt;
+  &lt;p&gt;Churches like the one behind and the one in front of you on Hope Street, are boarded up, to stop the stain glass from shattering in explosions.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 4s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Statues similar to the one you will pass on your left of social reformer Hugh Stowell Brown, are covered in sandbags to protect them, as are important buildings.&lt;/p&gt;
+  &lt;p&gt;And the air raid alarm, a memory from high school drills, now appear as a nightmare.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+  &lt;p&gt;Millions of people flee the frontline cities, men of all ages are drafted into the military and teachers cancel lessons writing...&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 8s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;/main&gt;</tw-passagedata><tw-passagedata pid="17" name="teacher" tags="" position="850,225" size="100,100">&lt;&lt;set $prevpass to &quot;narrator2&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;teacher&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;end&quot;&gt;&gt;
 &lt;main&gt;
-Door B
-  &lt;&lt;timed 2s&gt;&gt;&lt;&lt;goto &quot;captions&quot;&gt;&gt;&lt;&lt;/timed&gt;&gt;
-&lt;/main&gt;</tw-passagedata><tw-passagedata pid="15" name="captions" tags="" position="450,2300" size="100,100">&lt;&lt;set $passage to &quot;captions&quot;&gt;&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;(Text by Nina Zakhozhenko from Anthology24)&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;There will be no classes today.&lt;/p&gt;
+Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 2s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;Write your name/surname on your hand. Your blood group. Relatives’ phone number. If the explosion is close, run to the bathroom.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 4s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;Keep in touch. Breathe deeply.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 6s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt;This will go down in the history books.&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 8s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+&lt;p&gt; &lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
+&lt;/main&gt;</tw-passagedata><tw-passagedata pid="18" name="end" tags="" position="975,225" size="100,100">&lt;&lt;set $prevpass to &quot;teacher&quot;&gt;&gt;
+&lt;&lt;set $passage to &quot;end&quot;&gt;&gt;
+&lt;&lt;set $nextpass to &quot;end&quot;&gt;&gt;
+&lt;main&gt;
+&lt;p&gt;Arrive at Liverpool Philharmonic&lt;/p&gt;
+&lt;p&gt;Reccomendations&lt;/p&gt;
+&lt;&lt;button &quot;Credits&quot;&gt;&gt;&lt;&lt;goto &quot;credits&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
+&lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+&lt;/main&gt;</tw-passagedata><tw-passagedata pid="19" name="captions" tags="" position="450,2300" size="100,100">&lt;&lt;set $passage to &quot;captions&quot;&gt;&gt;
 &lt;&lt;include &quot;header&quot;&gt;&gt;
 &lt;main&gt;
   &lt;div id=&quot;captions&quot;&gt;&lt;/div&gt;
@@ -448,246 +631,14 @@ Door B
 
 &lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;goingbacktochoice&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="goingbacktochoice" tags="" position="450,2425" size="100,100">&lt;&lt;set $passage to &quot;goingbacktochoice&quot;&gt;&gt;&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-Which door did you choose?
-
-&lt;&lt;timed 2s&gt;&gt;You chose Door $doorchoice&lt;&lt;/timed&gt;&gt;
-
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;answeringlongquestion&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="answeringlongquestion" tags="" position="450,2575" size="100,100">&lt;&lt;set $passage to &quot;answeringlongquestion&quot;&gt;&gt;&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-&lt;&lt;textarea &quot;$answer&quot;&quot; Write your answer here&quot;&gt;&gt;
-&lt;&lt;button &quot;Enter&quot;&gt;&gt;&lt;&lt;goto &quot;results&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;results&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="18" name="results" tags="" position="450,2725" size="100,100">&lt;&lt;set $passage to &quot;results&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-Your long answer to the question was: 
-$answer
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;map&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="map" tags="" position="450,2850" size="100,100">&lt;&lt;set $passage to &quot;map&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="maptemp" tags="" position="450,2850" size="100,100">&lt;&lt;set $passage to &quot;maptemp&quot;&gt;&gt;
 &lt;&lt;include &quot;header&quot;&gt;&gt;&lt;&lt;set $myMap = setup.generateDirectionsMap(51.515145100985166,-0.08905860787295125,51.51341581900639, -0.0850674807043743)&gt;&gt;
 &lt;main&gt;$myMap
 Wish list: get rid of the More options/directions box!
 
-&lt;&lt;button &quot;I&#39;m in the right place&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;map&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
+&lt;&lt;button &quot;I&#39;m in the right place&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;maptemp&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="addletters" tags="" position="450,1750" size="100,100">&lt;&lt;set $passage to &quot;addletters&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
- Enter 6-8 letters:
- 
-&lt;&lt;textbox &quot;$letters&quot; &quot;&quot;&gt;&gt;
-&lt;div id=&quot;lettersresult&quot;&gt;&lt;/div&gt;
-&lt;&lt;button &quot;Enter&quot;&gt;&gt;
-&lt;div id=&quot;lettersresult&quot;&gt;&lt;/div&gt;
-/% LETTERS FEEDBACK %/
-&lt;div id=&quot;resultbutton&quot;&gt;
-&lt;/div&gt;
-/% INPUT VALIDATION%/
-/% Uses regex to check input is 6-8 letters %/
-&lt;&lt;set $validationFunc to (input)=&gt;{return  /^[a-z]{6,8}$/.test(input) }&gt;&gt;
-&lt;&lt;if $validationFunc($letters)&gt;&gt;
-&lt;&lt;replace &quot;#lettersresult&quot;&gt;&gt;Letters accepted&lt;&lt;/replace&gt;&gt;
-&lt;&lt;timed 1s&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;wordminusletters&quot;&gt;&gt;&lt;&lt;/timed&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;replace &quot;#lettersresult&quot;&gt;&gt;Must be 6-8 letters, please try again&lt;&lt;/replace&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="wordminusletters" tags="" position="575,1750" size="100,100">&lt;&lt;set $passage to &quot;wordminusletters&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-Original letters: $letters
-&lt;&lt;set $lettersArray to $letters.split(&quot;&quot;)&gt;&gt;
-&lt;&lt;run $lettersArray.pluckMany(2)&gt;&gt;
-&lt;&lt;set $letters to $lettersArray.join(&quot;&quot;)&gt;&gt;
-Original letters minus 2 random letters: $letters
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;codeword&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="choices" tags="" position="450,1475" size="100,100">&lt;&lt;set $passage to &quot;landing&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-&lt;&lt;set $choicetally to 0&gt;&gt;
-
-&lt;&lt;button &quot;Good choices&quot;&gt;&gt;
-&lt;&lt;set $choicetally to $choicetally + 1 &gt;&gt;
-&lt;&lt;replace &quot;#choicetally&quot;&gt;&gt;$choicetally&lt;&lt;/replace&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;button &quot;Bad choices&quot;&gt;&gt;&lt;&lt;set $choicetally to $choicetally - 1 &gt;&gt;
-&lt;&lt;replace &quot;#choicetally&quot;&gt;&gt;$choicetally&lt;&lt;/replace&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;button &quot;Finish&quot;&gt;&gt;
-&lt;&lt;if $choicetally gt 0&gt;&gt;
-&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;goodchoices&quot;&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;badchoices&quot;&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;div id=&quot;choicetally&quot;&gt;0&lt;/div&gt;
-
-&lt;/main&gt;</tw-passagedata><tw-passagedata pid="23" name="badchoices" tags="" position="450,1600" size="100,100">&lt;&lt;set $passage to &quot;badchoices&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
- You made bad choices...
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;addletters&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="24" name="goodchoices" tags="" position="575,1600" size="100,100">&lt;&lt;set $passage to &quot;goodchoices&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
- You made good choices...
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;addletters&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="randomfromlist" tags="" position="450,1325" size="100,100">&lt;&lt;set $passage to &quot;randomfromlist&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-&lt;&lt;set $list to [&#39;Rock&#39;,&#39;Paper&#39;,&#39;Scissors&#39;]&gt;&gt;
-$list
-&lt;&lt;button &quot;Pick random&quot;&gt;&gt;
-&lt;&lt;set $randomitem to $list.random()&gt;&gt;
-&lt;&lt;replace &quot;#randomitem&quot;&gt;&gt;$randomitem&lt;&lt;/replace&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-&lt;div id = &quot;randomitem&quot;&gt;&lt;/div&gt;
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;addletters&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="wordle" tags="" position="450,1150" size="100,100">&lt;&lt;set $passage to &quot;wordle&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-Make it so this word says &quot;REDO&quot;
-
-&lt;div class=&quot;wordcontainer&quot;&gt;
-  &lt;div class = &quot;letter-item r&quot;&gt;
-      R
-  &lt;/div&gt;
-  &lt;div class = &quot;letter-item e&quot;&gt;
-      E
-  &lt;/div&gt;
-  &lt;div class = &quot;letter-item d&quot;&gt;
-    &lt;&lt;textbox &quot;$d&quot; &quot;&quot;&gt;&gt;
-  &lt;/div&gt;
-  &lt;div class = &quot;letter-item o&quot;&gt;
-    &lt;&lt;textbox &quot;$o&quot; &quot;&quot;&gt;&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-
-&lt;div class = &quot;nextplaceholder&quot;&gt;
-	&lt;&lt;button &quot;Submit&quot;&gt;&gt;
-
-  &lt;&lt;if $d.toUpperCase() is  &quot;D&quot;&gt;&gt;
-      &lt;&lt;replace &quot;.d&quot;&gt;&gt;
-        D
-      &lt;&lt;/replace&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  &lt;&lt;if $o.toUpperCase() is  &quot;O&quot;&gt;&gt;
-      &lt;&lt;replace &quot;.o&quot;&gt;&gt;
-          O
-      &lt;&lt;/replace&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-    &lt;&lt;if $d.toUpperCase() is &quot;D&quot; and $o.toUpperCase() is &quot;O&quot;&gt;&gt;
-    &lt;&lt;replace &quot;.nextplaceholder&quot;&gt;&gt;
-   	 &lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;randomfromlist&quot;&gt;&gt;
-   	 &lt;&lt;/button&gt;&gt;
-    &lt;&lt;/replace&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-&lt;/div&gt;
-
-
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="generatecodes" tags="" position="450,750" size="100,100">&lt;&lt;set $passage to &quot;generatecodes&quot;&gt;&gt;&lt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;&lt;&lt;set $code1 to setup.generate5LetterCode()&gt;&gt;
-&lt;&lt;set $code2 to setup.generate5LetterCode()&gt;&gt;
-&lt;&lt;set $code3 to setup.generate5LetterCode()&gt;&gt;&lt;&lt;set $sixletterwordlist to [&quot;BABBLE&quot;,&quot;ABASED&quot;,&quot;ABACUS&quot;,&quot;KEBABS&quot;,&quot;LABELS&quot;,&quot;MACAWS&quot;,&quot;NABBED&quot;,&quot;RABBIT&quot;,&quot;UGLIER&quot;,&quot;YACHTS&quot;]&gt;&gt;&lt;&lt;set $randomsixletterword to $sixletterwordlist.random()&gt;&gt;
-Here is a random six letter word:
-$randomsixletterword
-
-Please input the 3 codes correctly:
-
-Code 1: $code1
-Code 2: $code2
-Code 3: $code3
-
-Code 1: &lt;&lt;textbox &quot;$code1guess&quot; &quot;&quot;&gt;&gt;
-Code 2: &lt;&lt;textbox &quot;$code2guess&quot; &quot;&quot;&gt;&gt;
-Code 3: &lt;&lt;textbox &quot;$code3guess&quot; &quot;&quot;&gt;&gt;
-
-&lt;&lt;button &quot;Submit&quot;&gt;&gt;
-&lt;&lt;if $code1 is $code1guess and $code2 is $code2guess and $code3 is $code3guess&gt;&gt;
-	&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;allcorrect&quot;&gt;&gt;
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;allnotcorrect&quot;&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;wordle&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="allcorrect" tags="" position="450,900" size="100,100">&lt;&lt;set $passage to &quot;badchoices&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-All correct
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;multiplechoicecode&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="allnotcorrect" tags="" position="575,900" size="100,100">&lt;&lt;set $passage to &quot;badchoices&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-All not correct
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;multiplechoicecode&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="multiplechoicecode" tags="" position="450,1025" size="100,100">&lt;&lt;set $passage to &quot;badchoices&quot;&gt;&gt;&lt;&lt;set $nextpass to &quot;multiplechoicecode&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-&lt;&lt;set $wrongcode1 to setup.generate5LetterCode()&gt;&gt;
-&lt;&lt;set $wrongcode2 to setup.generate5LetterCode()&gt;&gt;
-&lt;&lt;set $wrongcode3 to setup.generate5LetterCode()&gt;&gt;
-
-&lt;&lt;set $answers to [
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$code1chosen&#39; false true&gt;&gt; $code1 C&lt;/label&gt;&quot;,
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$code2chosen&#39; false true&gt;&gt; $code2 C&lt;/label&gt;&quot;,
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$code3chosen&#39; false true&gt;&gt; $code3 C&lt;/label&gt;&quot;,
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$wrongcode1chosen&#39; false true&gt;&gt; $wrongcode1&lt;/label&gt;&quot;,
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$wrongcode2chosen&#39; false true&gt;&gt; $wrongcode2&lt;/label&gt;&quot;,
-&quot;&lt;label&gt;&lt;&lt;checkbox &#39;$wrongcode3chosen&#39; false true&gt;&gt; $wrongcode3&lt;/label&gt;&quot;
-]&gt;&gt;
-
-The six letter word from earlier was:
-$randomsixletterword
-
-Pick the correct codes from before (they&#39;re followed by a &#39;C&#39;)
-
-&lt;&lt;for _i to 0; _i = $answers.length; _i++&gt;&gt;
-	&lt;&lt;run $answer = $answers.pluck()&gt;&gt;
-    $answer
-&lt;&lt;/for&gt;&gt;
-
-&lt;&lt;button &quot;Submit&quot;&gt;&gt;
- &lt;&lt;if $code1chosen and $code2chosen and $code3chosen and !$wrongcode1chosen and !$wrongcode2chosen and !$wrongcode3chosen&gt;&gt;
- 	&lt;&lt;replace &quot;.codefeedback&quot;&gt;&gt;That&#39;s correct!&lt;&lt;/replace&gt;&gt;
- &lt;&lt;else&gt;&gt;
- 	&lt;&lt;replace &quot;.codefeedback&quot;&gt;&gt;That&#39;s incorrect&lt;&lt;/replace&gt;&gt;
- &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;div class = &quot;codefeedback&quot;&gt;
-&lt;/div&gt;
-
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;wordle&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="countdown" tags="" position="450,2300" size="100,100">&lt;&lt;set $passage to &quot;countdown&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="countdown" tags="" position="450,2300" size="100,100">&lt;&lt;set $passage to &quot;countdown&quot;&gt;&gt;
 &lt;&lt;include &quot;header&quot;&gt;&gt;
 &lt;main&gt;
 &lt;&lt;set $seconds to 30&gt;&gt;
@@ -705,143 +656,7 @@ Countdown: &lt;span id=&quot;countdown&quot;&gt;$seconds seconds remaining&lt;/s
 	&lt;&lt;/repeat&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="end" tags="" position="450,1875" size="100,100">&lt;&lt;set $passage to &quot;19&quot;&gt;&gt;&lt;&lt;set $endMap = setup.generateDirectionsMap({lat:51.515145100985166,long:-0.08905860787295125},{lat:51.51341581900639, long:-0.0850674807043743})&gt;&gt;&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-End location
-
-$endMap
-  
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="stampgameeasy" tags="" position="450,400" size="100,100">&lt;&lt;set $passage to &quot;stampgameeasy&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-&lt;&lt;set $stamps = [1,2,3,4,5,6,7,1]&gt;&gt;
-&lt;&lt;set $stampcount to 0&gt;&gt;
-
-STAMP GAME - EASY
-Click the button if you see the same stamp twice.
-
-&lt;div class=&quot;stamp-container&quot;&gt;$stamps[$stampcount]&lt;/div&gt;
-
-&lt;&lt;button &quot;There&#39;s more than one of that stamp!&quot;&gt;&gt;
-	&lt;&lt;if setup.checkForRepeats($stamps, $stamps[$stampcount])&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;That&#39;s right! There&#39;s more than one of that stamp&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;else&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;Not quite, there&#39;s only one of that stamp.&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;silently&gt;&gt;
-	&lt;&lt;repeat 3s&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-		&lt;&lt;set $stampcount to $stampcount + 1&gt;&gt;
-		&lt;&lt;if $stampcount lt $stamps.length&gt;&gt;
-			&lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$stamps[$stampcount]&lt;&lt;/replace&gt;&gt;
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;Out of stamps&lt;&lt;/replace&gt;&gt;
-			&lt;&lt;stop&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;/repeat&gt;&gt;
-&lt;&lt;/silently&gt;&gt;
-
-&lt;&lt;button &quot;Next stamp&quot;&gt;&gt;
-	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-	&lt;&lt;if $stampcount lt $stamps.length-1&gt;&gt;
-      &lt;&lt;set $stampcount to $stampcount + 1&gt;&gt;
-      &lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$stamps[$stampcount]&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-&lt;&lt;button &quot;Previous stamp&quot;&gt;&gt;
-	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-	&lt;&lt;if $stampcount gt 0&gt;&gt;
-      &lt;&lt;set $stampcount to $stampcount - 1&gt;&gt;
-      &lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$stamps[$stampcount]&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;div class = &quot;stamp-feedback&quot;&gt;
-&lt;/div&gt;
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;stampgamehard&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="stampgamehard" tags="" position="450,550" size="100,100">&lt;&lt;set $passage to &quot;stampgameeasy&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-&lt;&lt;set $hardstampquestions = [&#39;2x4&#39;,&#39;5+4&#39;,&#39;10-6&#39;,&#39;8+0&#39;]&gt;&gt;
-&lt;&lt;set $hardstampanswers = [8,9,4,8]&gt;&gt;
-&lt;&lt;set $hardstampcount to 0&gt;&gt;
-
-STAMP GAME - HARD
-Click the button if you see the same stamp twice.
-
-&lt;div class=&quot;stamp-container&quot;&gt;$hardstampquestions[$hardstampcount]&lt;/div&gt;
-
-&lt;&lt;button &quot;There&#39;s more than one of that stamp!&quot;&gt;&gt;
-	&lt;&lt;if setup.checkForRepeats($hardstampanswers, $hardstampanswers[$hardstampcount])&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;That&#39;s right! There&#39;s more than one of that stamp&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;else&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;Not quite, there&#39;s only one of that stamp.&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;&lt;silently&gt;&gt;
-	&lt;&lt;repeat 3s&gt;&gt;
-    	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-		&lt;&lt;set $hardstampcount to $hardstampcount + 1&gt;&gt;
-		&lt;&lt;if $hardstampcount lt $hardstampanswers.length&gt;&gt;
-			&lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$hardstampquestions[$hardstampcount]&lt;&lt;/replace&gt;&gt;
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;Out of stamps&lt;&lt;/replace&gt;&gt;
-			&lt;&lt;stop&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;/repeat&gt;&gt;
-&lt;&lt;/silently&gt;&gt;
-
-&lt;&lt;button &quot;Next stamp&quot;&gt;&gt;
-	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-	&lt;&lt;if $hardstampcount lt $hardstampquestions.length-1&gt;&gt;
-      &lt;&lt;set $hardstampcount to $hardstampcount + 1&gt;&gt;
-      &lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$hardstampquestions[$hardstampcount]&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-&lt;&lt;button &quot;Previous stamp&quot;&gt;&gt;
-	&lt;&lt;replace &quot;.stamp-feedback&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
-	&lt;&lt;if $hardstampcount gt 0&gt;&gt;
-      &lt;&lt;set $hardstampcount to $hardstampcount - 1&gt;&gt;
-      &lt;&lt;replace &quot;.stamp-container&quot;&gt;&gt;$hardstampquestions[$hardstampcount]&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/button&gt;&gt;
-
-&lt;div class = &quot;stamp-feedback&quot;&gt;
-&lt;/div&gt;
-
-&lt;&lt;button &quot;next&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;generatecodes&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="ghostdetector" tags="" position="450,225" size="100,100">&lt;&lt;set $passage to &quot;ghostdetector&quot;&gt;&gt;
-&lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
-
-  &lt;div class = &quot;detector&quot;&gt;
-  &lt;&lt;set $spinning to false&gt;&gt;
- 
-&lt;&lt;link &quot;&lt;img src = &#39;https://media3.giphy.com/media/1hpCPjWPnKpKLwAGIX/giphy.gif&#39;&gt;&quot; &gt;&gt;
-	&lt;&lt;if $spinning&gt;&gt;
-    	&lt;&lt;set $spinning to false&gt;&gt;
-        &lt;&lt;audio &quot;:all&quot; stop&gt;&gt;
-		&lt;&lt;removeclass &quot;.detector&quot; &quot;spinning&quot;&gt;&gt;
-    &lt;&lt;else&gt;&gt;
-   		&lt;&lt;set $spinning to true&gt;&gt;
-        &lt;&lt;audio &quot;badjoke&quot; play&gt;&gt;
-   	    &lt;&lt;addclass &quot;.detector&quot; &quot;spinning&quot;&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt; 
-&lt;/div&gt;
- 
-&lt;/main&gt;
-&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="lofiai" tags="" position="450,225" size="100,100">&lt;&lt;set $passage to &quot;lofiai&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="lofiai" tags="" position="450,225" size="100,100">&lt;&lt;set $passage to &quot;lofiai&quot;&gt;&gt;
 /* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
 &lt;h1&gt;Lofi AR&lt;/h1&gt;
@@ -878,13 +693,13 @@ Log:
 &lt;/div &gt;
 &lt;/main&gt;
 &lt;&lt;include &quot;footer&quot;&gt;&gt;
-&lt;&lt;done&gt;&gt;&lt;&lt;set $s to setup.startup()&gt;&gt;&lt;&lt;/done&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="360" tags="" position="600,225" size="100,100">&lt;&lt;set $passage to &quot;360&quot;&gt;&gt;
+&lt;&lt;done&gt;&gt;&lt;&lt;set $s to setup.startup()&gt;&gt;&lt;&lt;/done&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="360" tags="" position="600,225" size="100,100">&lt;&lt;set $passage to &quot;360&quot;&gt;&gt;
 &lt;main&gt;
 &lt;h1&gt;360 Image Viewer&lt;/h1&gt;
 &lt;p&gt; you can add an image of your choosing. via &lt;a href=&quot;https://panoraven.com/en&quot; target=&quot;_blank&quot;&gt;panoraven&lt;/a&gt;&lt;/p&gt;
 &lt;iframe width=&quot;90%&quot; height=&quot;500px&quot; allowFullScreen=&quot;true&quot; allow=&quot;accelerometer; magnetometer; gyroscope&quot; style=&quot;display:block; margin:20px auto; border:0 none; max-width:880px;border-radius:8px; box-shadow: 0 1px 1px rgba(0,0,0,0.11),0 2px 2px rgba(0,0,0,0.11),0 4px 4px rgba(0,0,0,0.11),0 6px 8px rgba(0,0,0,0.11),0 8px 16px rgba(0,0,0,0.11);&quot; src=&quot;https://panoraven.com/en/embed/uE3bv5KK9Q&quot;&gt;&lt;/iframe&gt;
 &lt;&lt;button &quot;back&quot;&gt;&gt;&lt;&lt;goto &quot;landing&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;/main&gt;</tw-passagedata><tw-passagedata pid="38" name="landing2" tags="" position="450,50" size="100,100">&lt;&lt;set $passage to &quot;landing2&quot;&gt;&gt;
+&lt;/main&gt;</tw-passagedata><tw-passagedata pid="24" name="landing2" tags="" position="450,50" size="100,100">&lt;&lt;set $passage to &quot;landing2&quot;&gt;&gt;
 /* &lt;&lt;include &quot;header&quot;&gt;&gt; */
 &lt;main&gt;
   menu

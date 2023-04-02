@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap");
 
 /* CONSTANTS  */
 
 :root {
-  --main-bg-color: #81184b;
+  --main-bg-color: #2e375f;
   --accent-color-primary: #e8d7a4;
   --accent-color-secondary: #1fb9aa;
   --color-red: #bc4121;
@@ -12,9 +13,9 @@
   --color-orange: #e86530;
   --color-purple: #7f6fb0;
   --color-pink: #cd7362;
-  --font-headings: "Secular One", sans-serif;
+  --font-headings: "Merriweather", serif;
   --font-body: "Open Sans", sans-serif;
-  --padding: 1.5rem;
+  --padding: 2rem;
 }
 
 /* GET RID OF TWINE STYLES */
@@ -100,7 +101,7 @@ header {
 
 main {
   padding: var(--padding);
-  height: 100%;
+  min-height: 80vh;
   margin-block-end: 10rem;
   display: flex;
   justify-content: center;
@@ -108,6 +109,7 @@ main {
   flex-direction: column;
 }
 
+/* footer  */
 footer {
   display: flex;
   justify-content: space-between;
@@ -137,6 +139,10 @@ nav {
 
 .nav-item {
   margin-block-end: 1rem;
+}
+
+.nav-item > a > img {
+  width: 30px;
 }
 
 .nav-item:last-child {
@@ -247,6 +253,16 @@ textarea {
     height: 50vh;
     border: 0;
   }
+}
+
+/* LANDING  */
+main.landing {
+  align-items: center;
+}
+
+main.landing > h1 {
+  text-align: center;
+  margin-block-end: 3rem;
 }
 
 /* LOFI AR */

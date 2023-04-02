@@ -85,18 +85,19 @@ $(document.head).find('#style-ui-bar').remove();
 
 // MAKE MAP FUNCTION
 
-setup.generateDirectionsMap = function (origin, dest){
+setup.generateDirectionsMap = function (latorg, longorg, latdest, longdest){
 const iFrame = document.createElement("iframe")
 iFrame.classList.add("map")
 iFrame.setAttribute("loading", "lazy")
 iFrame.setAttribute("referrerpolicy", "no-referrer-when-downgrade")
 // iFrame.setAttribute("allowfullscreen")
-iFrame.setAttribute("src", `https://www.google.com/maps/embed/v1/directions?key=AIzaSyBDRwRTMpSybNcmgkYVX1yZ0YmBbNhs9qU&center=${origin.lat},${origin.long}&zoom=17&origin=${origin.lat},${origin.long}&destination=${dest.lat},${dest.long}&mode=walking`)
+iFrame.setAttribute("src", `https://www.google.com/maps/embed/v1/directions?key=AIzaSyB7uJuBjDcK-tb0aJpTjaKA1ZNLWhEPN5M&center=${latorg},${longorg}&zoom=17&origin=${latorg},${longorg}&destination=${latdest},${longdest}&mode=walking`)
 const mount = document.getElementById("mapMount")
 console.log(iFrame)
 return iFrame
 // this.mapMount.appendChild(iFrame)
 }
+
 //Get random 5 letter word
 
 setup.generate5LetterCode = () => {
@@ -228,18 +229,20 @@ function log(msg) {
 :: footer [nobr]{"position":"100,375","size":"100,100"}
 <footer>
   <div class="nav-wrapper">
+
     <div class="nav-item">
-     <<button "Replay">><<goto $passage>><</button>>
-    </div>
-    <div class="nav-item">
-      <<button "Back">><<goto $prevpass>><</button>>
+        [img[Back|assets/img/backward.png][$prevpass]]
     </div></div>
+     <div class="nav-wrapper">
+    <div class="nav-item">
+    [img[Replay|assets/img/replay.png][$passage]]
+    </div>
+    </div>
     <div class="nav-wrapper">
     <div class="nav-item">
-      <<button "I'm lost">><<goto "lost">><</button>>
     </div>
     <div class="nav-item">
-       <<button "Forward">><<goto $nextpass>><</button>>
+         [img[Forward|assets/img/forward.png][$nextpass]]
     </div>
   </div>
 </footer>
@@ -258,6 +261,29 @@ function log(msg) {
   </div>
 </footer>
 
+:: footerMap [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+  <div class="nav-wrapper">
+
+    <div class="nav-item">
+    <<link [img[assets/img/map.png]]>><<toggleclass "#map" "hide">><</link>>
+        /* [img[Show Map|assets/img/map.png][toggleclass "#map" "hide"]] */
+    </div></div>
+     <div class="nav-wrapper">
+    <div class="nav-item">
+    <<link [img[assets/img/play.png]]>><<replace "#audio">><p>[audio playing...]</p><</replace>><</link>>
+  
+    </div>
+    </div>
+    <div class="nav-wrapper">
+    <div class="nav-item">
+    </div>
+    <div class="nav-item">
+        <<button "I've arrived">><<goto $nextpass>><</button>>
+    </div>
+  </div>
+</footer>
+
 
 :: lost {"position":"450,50","size":"100,100"}
 <<set $passage to "lost">><<include "header">>
@@ -272,7 +298,38 @@ You have two options:
 <<include "footer">>
 
 
-
+:: credits {"position":"450,50","size":"100,100"}
+<<set $passage to "credits">>
+<<include "header">>
+<main>
+TESTIMONIES INCLUDE: OLYA MUKHINA
+Executive Director of the Lesya Ukrainka Theater
+STAS KONONOV
+Musician and Guitarist
+ALEVTINA SHVETSOVA
+Arts Journalist and Artist
+LUTFIE ZUDIEVA
+Civic Journalist
+OLEKSANDRA OSADCHA
+Researcher and Curator at Kharkiv School Of Photography
+SERHIY ZAKHAROV
+Artist
+VICTORIA AMELINA
+Writer and Poet
+ANNA SHARYHINA
+Activist, Cultural Manager and Founder of Sphere
+JULIA NIKOLAJEVSKA
+Musician and Cultural Manager Kharkiv Music Fest
+DMYTRO KOSTIUMINSKIJ
+Artist, Theatre director and Filmmaker
+POETRY AND ADDITIONAL TEXTS INCLUDE:
+Text Counter/retnuoC by Alexander Levitsky from Anthology24 Text by Nina Zakhozhenko from Anthology24
+Poem by Aliye Kenzhalieva
+Poem Ctrl+Z by Mykhailo Zharzhalio
+Poem Survivor's Syndrome by Andriy Bondarenko
+Poem by Ostap Slyvynsky
+</main>
+<<include "footer">>
 
 
 :: landing [nobr]{"position":"450,50","size":"100,100"}
@@ -281,12 +338,12 @@ You have two options:
 <<set $passage to "landing">>
 <<set $nextpass to "instructions">>
 /* Title  */
-/* Check they are in the right place  */
-<main>
 
-<h2>Our Biggest Premiere Yet</h2>
+<main class="landing">
+
+<h1>Our Biggest Premiere Yet</h1>
 <p><<button "Begin">><<goto $nextpass>><</button>></p>
-<<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
+/* <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>> */
 
 </main>
 <<include "footer">>
@@ -294,7 +351,8 @@ You have two options:
 :: instructions [nobr]
 <<set $prevpass to "landing">>
 <<set $passage to "instructions">>
-<<set $nextpass to "introLivEveryman">>
+<<set $nextpass to "intro">>
+<<include "header">>
 <main>
   <p>You should be inside or outside the Liverpool Everyman</p>
   
@@ -305,25 +363,129 @@ You have two options:
   <p>When you are ready press <<button "Start">><<goto $nextpass>><</button>></p>
 </main>
 
-:: introLivEveryman [nobr] {"position":"450,50","size":"100,100"}
-<<set $prevpass to "landing">>
-<<set $passage to "introLivEveryman">>
-<<set $nextpass to "AR1">>
-<<include "header">>
+:: intro [nobr] {"position":"450,50","size":"100,100"}
+<<set $prevpass to "instructions">>
+<<set $passage to "intro">>
+<<set $nextpass to "child">>
+/* <<include "header">> */
 <main>
+<div id="mount"></div>
+<<timed 0.1s>><<replace "#mount">>
+  <p>NARRATOR:</p>
 
-Audio - Intro & Liverpool Everyman
+  <p>Welcome to With Fire and Rage...</p>
 
-When you are ready press <<button "Next">><<goto $nextpass>><</button>>
+  <p>An audio experience following artists on the frontline in Ukraine.</p>
+  <p>I’m Veronika Skliarova, artist and producer from Kharkiv.</p>
+  <p>I will be your guide for today, taking you on a journey to meet some of our country's most radical, brave and innovative creatives.</p>
+<</replace>><</timed>>
+
+<<timed 2s>><<replace "#mount">>
+  <p>Along the way, I encourage you to take a break... If you want, stop for a coffee. We will not spend long in each location but even so, find a place to sit, to lean, to shelter. Make yourself comfortable, after all, Liverpool is your city, not mine.</p>
+  <p>The places you will walk in, I have never beepn</p>
+  <p>But let your imagination wander from your streets to ours.</p>
+<</replace>><</timed>>
+
+<<timed 4s>><<replace "#mount">>
+  <p>
+      From art museums, libraries, train stations, bookshops and cafes in Liverpool, to different histories and places across Ukraine.</p>
+    <p> From the Liverpool Everyman where you are now, to the Lesya Ukrainka Theater in Lviv. Here you will meet our first artist Olya Puzhakovska, the youngest Executive and Artistic Director in Ukraine, who with tremendous courage transformed her theatre in a moment of crisis...
+    </p>
+<</replace>><</timed>>
+<<timed 6s>><<replace "#mount">>
+  <p>So, are you ready?</p>
+  <p> <<button "Let's begin">><<goto $nextpass>><</button>></p>
+<</replace>><</timed>>
 
 </main>
 <<include "footer">>
 
+:: child [nobr] {"position":"450,50","size":"100,100"}
+<<set $prevpass to "landing">>
+<<set $passage to "child">>
+<<set $nextpass to "olga">>
+/* <<include "header">> */
+<main>
+<div id="mount"></div>
+<<timed 0.1s>><<replace "#mount">>
+  <p>Ten. Nine. Eight. Seven.</p>
+  <p>Burning house in heaven.</p>
+  <p>A cartridge is full of deceptions.</p>
+<</replace>><</timed>>
+<<timed 2s>><<replace "#mount">>
+  <p>Slyness. Blackmail. No exceptions.</p>
+  <p>Red reflections.</p>
+  <p>Reviewing eternal senses of life.</p>
+  <p>‘Destroy,’ ‘Forget.’ ‘Deprive.’</p>
+<</replace>><</timed>>
+<<timed 4s>><<replace "#mount">>
+  <p>Six. Five.</p>
+  <p>‘Burn down’ church choirs plea.</p>
+  <p>There is nowhere to flee.</p>
+<</replace>><</timed>>
+<<timed 6s>><<replace "#mount">>
+  <p>Four. Three.</p>
+  <p>To the abyss of suffering, we have run.</p>
+  <p>Two. One.</p>
+  <p>The war has begun. </p>
+<</replace>><</timed>>
+<<timed 8s>><<replace "#mount">>
+ <<button "Next">><<goto $nextpass>><</button>>
+ <</replace>><</timed>>
+
+</main>
+<<include "footer">>
+
+:: olga [nobr] {"position":"450,50","size":"100,100"}
+<<set $prevpass to "child">>
+<<set $passage to "olga">>
+<<set $nextpass to "AR1">>
+/* <<include "header">> */
+<main>
+<div id="mount"></div>
+<<timed 0.1s>><<replace "#mount">>
+<p>On the 24th of February 2022 (the day of the full-scale invasion), we made a plan of how to defend the theatre and how we could avoid it being captured.</p>
+<p>It’s the highest building in the district and right across the street, there is a big military base. So we put razor wire anywhere a person could climb onto the rooftop, and some of the staff began to make Molotov cocktails.</p>
+ <</replace>><</timed>>
+ <<timed 2s>><<replace "#mount">>
+<p>This was the first day.</p>
+<p>The war had already being going in the east for many years, so the full-scale invasion was not a surprise. But still, in the sharp moment of crisis, we were lost and we didn't know how to adapt our work.</p>
+<p>At first, it was very chaotic. We had no sleep. Every day we had meetings with the whole theatre team. We made a lot of mistakes, but we tried to find the best solutions.</p>
+ <</replace>><</timed>>
+  <<timed 4s>><<replace "#mount">>
+<p>We started by setting up the spaces for refugees and cleaning the basement that became a bomb shelter.</p>
+<p>We invited not only artists but anyone who had to flee and needed a space to stay.</p>
+<p>Many of our staff didn't feel safe in their apartments, so they also lived here in our theatre.</p>
+ <</replace>><</timed>>
+   <<timed 6s>><<replace "#mount">>
+<p>We set up a shower and created a small kitchen. The person who used to be in charge of the laundry for costumes now washed clothes and bedding instead.</p>
+<p>The small stage became a space to store humanitarian aid. Actors distributed it not only in Lviv but to other cities, often under shelling.</p>
+ <</replace>><</timed>>
+   <<timed 8s>><<replace "#mount">>
+<p>
+  We organised buses for those who were displaced to go through the border to Poland. Because it was an awful situation, those over 60 and mothers with a lot of small kids were stuck there for weeks.
+  We prepared warm food and drinks, and actors would give this out at the railway stations, where internally displaced people were also waiting for days in winter.
+</p>
+<p>We equipped soldiers, including our colleagues and friends, who went to go and defend the country.</p>
+ <</replace>><</timed>>
+ <<timed 10s>><<replace "#mount">>
+<p>In the costume department, we made uniforms and balaclavas for the soldiers. A very interesting fashion designer who lived in our shelter became the head of this production.</p>
+<p>Everything we had as a theatre was used in a new way. Set and costume became humanitarian aid, and technical supplies things like walkie-talkies were sent to the front line.</p>
+ <</replace>><</timed>>
+  <<timed 12s>><<replace "#mount">>
+<p>For the last five years, we have been trying to work without a strict hierarchy. And it is this horizontal structure that led to our biggest premiere yet - where the whole team united on the 24th of February to respond to the full-scale invasion and work as one strong mechanism.</p>
+ <</replace>><</timed>>
+   <<timed 14s>><<replace "#mount">>
+<p> <<button "Next">><<goto $nextpass>><</button>></p>
+ <</replace>><</timed>>
+
+</main>
+<<include "footer">>
 
 :: AR1 [nobr]{"position":"450,50","size":"100,100"}
 <<set $prevpass to "landing">>
-<<set $passage to "introLivEveryman">>
-<<set $nextpass to "landing">>
+<<set $passage to "AR1">>
+<<set $nextpass to "journey1">>
 /* <<include "header">> */
 <main>
   <div class="ar-imgs-container">
@@ -346,76 +508,108 @@ When you are ready press <<button "Next">><<goto $nextpass>><</button>>
 <<done>><<set $s to setup.startup()>><</done>>
 
 
-:: codeword {"position":"450,1875","size":"100,100"}
-<<set $passage to "landing">>
-<<include "header">>
+:: journey1 [nobr]
+<<set $prevpass to "AR1">>
+<<set $passage to "journey1">>
+<<set $nextpass to "narrator2">>
+/* Everyman to 1931  */
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
+<<set $audio to "journey1audio">>
+  /* <<include "map1">> */
+
+
 <main>
-Enter codeword 
-which is codeword:
+<div id="audio"></div>
+<div id="map" class="hide">$map</div>
+<p>The next location is the Liverpool Philharmonic. </p>
+
+<p>Its a couple on minutes straight down the road.</p>
+
+<p>Use the Map to help you get there.</p>
+
+<p>As you begin to walk press Play.</p>
+
+</main>
+
+<<include "footerMap">>
 
 
-<div id="coderesult"></div>
-/% CODEWORD FEEDBACK %/
-<div id="resultbutton">
-/% CODEWORD INPUT %/
-<div class="code-input">
-<<textbox "$codeword" "">></div>
-<<button "Enter">>
-</div>
-/% STANDARDISE INPUT %/
-<<set $codeword to $codeword.toUpperCase()>>
-/% CODEWORD CORRECT %/
-<<if $codeword isnot "" and $codeword is "CODEWORD">>
-<<replace "#coderesult">>CORRECT<</replace>>
-<<timed 3s>><<set $prevpass to $passage>><<goto "playaudio">><</timed>>
-<</if>>
-  /% CODEWORD INCORRECT %/
-  <<if $codeword isnot "" and $codeword is not "CODEWORD">>
-  <<replace "#coderesult">>Thats not right.<</replace>>
-  <<timed 1.5s>><<replace "#coderesult">><</replace>><</timed>>
-  <</if>><</button>>
-  </div>
-  </main>
-  <<include "footer">>
+:: journey1audio [nobr]
+<<replace "#audio">><p>[audio playing...]</p><</replace>>
 
 
-:: playaudio {"position":"450,2000","size":"100,100"}
-<<include "header">>
-<<set $passage to "playaudio">>
-<<audio "badjoke" play>>
-<<include "header">><<include "footer">>
-<main>playing audio which continues playing on next passage
-<<button "next">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>></main>
+$map */
+
+
+:: narrator2[nobr]
+<<set $prevpass to "map">>
+<<set $passage to "narrator2">>
+<<set $nextpass to "teacher">>
 <<include "footer">>
-
-
-:: buttonchoice {"position":"450,2150","size":"100,100"}
-<<set $passage to "buttonchoice">>
-<<include "header">>
 <main>
-  <div class="door-container">
-  <<timed 1s>><div class="door-item"><span>DOOR A</span><<button [img["https://youhavefoundconey.net/CG/what/assets/img/door-white.png"][Door A]]>><<set $doorchoice to "A">><<set $prevpass to $passage>><<goto "doorA">><</button>></div><</timed>>
-  <<timed 2s>><div class="door-item"><span>or</span></div><</timed>>
-  <<timed 3s>><div class="door-item"><span>DOOR B</span><<button [img["https://youhavefoundconey.net/CG/what/assets/img/door-white.png"][Door B]]>><<set $doorchoice to "B">><<set $prevpass to $passage>><<goto "doorB">><</button>></div><</timed>>
-  </div>
+<div id="mount"></div>
+<<timed 0.1s>><<replace "#mount">>
+  <p>NARRATOR:</p>
+  <p>From the beginning, our cities and streets changed and became full of strange and interesting artefacts.</p>
+  <p>People made roadblocks and outposts to prepare for invasion. Artists welded giant metal beams creating “hedgehogs” that we impossible for tanks to drive over</p>
+<</replace>><</timed>>
+<<timed 2s>><<replace "#mount">>
+  <p>Signs are put up, as shop basements, underground bars and metro stations become a place to hide from rockets.</p>
+  <p>Churches like the one behind and the one in front of you on Hope Street, are boarded up, to stop the stain glass from shattering in explosions.</p>
+<</replace>><</timed>>
+<<timed 4s>><<replace "#mount">>
+  <p>Statues similar to the one you will pass on your left of social reformer Hugh Stowell Brown, are covered in sandbags to protect them, as are important buildings.</p>
+  <p>And the air raid alarm, a memory from high school drills, now appear as a nightmare.</p>
+<</replace>><</timed>>
+<<timed 6s>><<replace "#mount">>
+  <p>Millions of people flee the frontline cities, men of all ages are drafted into the military and teachers cancel lessons writing...</p>
+<</replace>><</timed>>
+<<timed 8s>><<replace "#mount">>
+<<button "Next">><<goto $nextpass>><</button>>
+<</replace>><</timed>>
 </main>
-<<include "footer">>
 
 
-:: doorA {"position":"625,2175","size":"100,100"}
-<<include "header">>
+:: teacher
+<<set $prevpass to "narrator2">>
+<<set $passage to "teacher">>
+<<set $nextpass to "end">>
 <main>
-Door A
-  <<timed 2s>><<goto "captions">><</timed>>
+<div id="mount"></div>
+<<timed 6s>><<replace "#mount">>
+<p>(Text by Nina Zakhozhenko from Anthology24)</p>
+<</replace>><</timed>>
+<<timed 0.1s>><<replace "#mount">>
+<p>There will be no classes today.</p>
+Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.</p>
+<</replace>><</timed>>
+<<timed 2s>><<replace "#mount">>
+<p>Write your name/surname on your hand. Your blood group. Relatives’ phone number. If the explosion is close, run to the bathroom.</p>
+<</replace>><</timed>>
+<<timed 4s>><<replace "#mount">>
+<p>Keep in touch. Breathe deeply.</p>
+<</replace>><</timed>>
+<<timed 6s>><<replace "#mount">>
+<p>This will go down in the history books.</p>
+<</replace>><</timed>>
+<<timed 8s>><<replace "#mount">>
+<p> <<button "Next">><<goto $nextpass>><</button>></p>
+<</replace>><</timed>>
 </main>
 
-
-:: doorB {"position":"750,2175","size":"100,100"}
-<<include "header">>
+:: end
+<<set $prevpass to "teacher">>
+<<set $passage to "end">>
+<<set $nextpass to "end">>
 <main>
-Door B
-  <<timed 2s>><<goto "captions">><</timed>>
+<p>Arrive at Liverpool Philharmonic</p>
+<p>Reccomendations</p>
+<<button "Credits">><<goto "credits">><</button>>
+<<button "Next">><<goto $nextpass>><</button>>
 </main>
+
+
+
 
 
 :: captions {"position":"450,2300","size":"100,100"}
@@ -432,303 +626,25 @@ Door B
 <<include "footer">>
 
 
-:: goingbacktochoice {"position":"450,2425","size":"100,100"}
-<<set $passage to "goingbacktochoice">><<include "header">>
-<main>
-Which door did you choose?
-
-<<timed 2s>>You chose Door $doorchoice<</timed>>
 
 
-<<button "next">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
-</main>
-<<include "footer">>
-
-
-:: answeringlongquestion {"position":"450,2575","size":"100,100"}
-<<set $passage to "answeringlongquestion">><<include "header">>
-<main>
-<<textarea "$answer"" Write your answer here">>
-<<button "Enter">><<goto "results">><</button>>
-
-<<button "next">><<set $prevpass to $passage>><<goto "results">><</button>>
-
-</main>
-<<include "footer">>
-
-
-:: results {"position":"450,2725","size":"100,100"}
-<<set $passage to "results">>
-<<include "header">>
-<main>
-Your long answer to the question was: 
-$answer
-
-<<button "next">><<set $prevpass to $passage>><<goto "map">><</button>>
-</main>
-<<include "footer">>
-
-
-:: map {"position":"450,2850","size":"100,100"}
-<<set $passage to "map">>
+:: maptemp {"position":"450,2850","size":"100,100"}
+<<set $passage to "maptemp">>
 <<include "header">><<set $myMap = setup.generateDirectionsMap(51.515145100985166,-0.08905860787295125,51.51341581900639, -0.0850674807043743)>>
 <main>$myMap
 Wish list: get rid of the More options/directions box!
 
-<<button "I'm in the right place">><<set $prevpass to $passage>><<goto "map">><</button>>
+<<button "I'm in the right place">><<set $prevpass to $passage>><<goto "maptemp">><</button>>
 </main>
 <<include "footer">>
 
 
-:: addletters {"position":"450,1750","size":"100,100"}
-<<set $passage to "addletters">>
-<<include "header">>
-<main>
- Enter 6-8 letters:
- 
-<<textbox "$letters" "">>
-<div id="lettersresult"></div>
-<<button "Enter">>
-<div id="lettersresult"></div>
-/% LETTERS FEEDBACK %/
-<div id="resultbutton">
-</div>
-/% INPUT VALIDATION%/
-/% Uses regex to check input is 6-8 letters %/
-<<set $validationFunc to (input)=>{return  /^[a-z]{6,8}$/.test(input) }>>
-<<if $validationFunc($letters)>>
-<<replace "#lettersresult">>Letters accepted<</replace>>
-<<timed 1s>><<set $prevpass to $passage>><<goto "wordminusletters">><</timed>>
-<<else>><<replace "#lettersresult">>Must be 6-8 letters, please try again<</replace>>
-<</if>><</button>>
-</main>
-<<include "footer">>
 
 
-:: wordminusletters {"position":"575,1750","size":"100,100"}
-<<set $passage to "wordminusletters">>
-<<include "header">>
-<main>
-Original letters: $letters
-<<set $lettersArray to $letters.split("")>>
-<<run $lettersArray.pluckMany(2)>>
-<<set $letters to $lettersArray.join("")>>
-Original letters minus 2 random letters: $letters
-<<button "next">><<set $prevpass to $passage>><<goto "codeword">><</button>>
-</main>
-<<include "footer">>
 
 
-:: choices {"position":"450,1475","size":"100,100"}
-<<set $passage to "landing">>
-<<include "header">>
-<main>
-
-<<set $choicetally to 0>>
-
-<<button "Good choices">>
-<<set $choicetally to $choicetally + 1 >>
-<<replace "#choicetally">>$choicetally<</replace>>
-<</button>>
-
-<<button "Bad choices">><<set $choicetally to $choicetally - 1 >>
-<<replace "#choicetally">>$choicetally<</replace>>
-<</button>>
-
-<<button "Finish">>
-<<if $choicetally gt 0>>
-<<set $prevpass to $passage>><<goto "goodchoices">>
-<<else>>
-<<set $prevpass to $passage>><<goto "badchoices">>
-<</if>>
-<</button>>
-
-<div id="choicetally">0</div>
-
-</main>
 
 
-:: badchoices {"position":"450,1600","size":"100,100"}
-<<set $passage to "badchoices">>
-<<include "header">>
-<main>
- You made bad choices...
-<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
-</main>
-<<include "footer">>
-
-
-:: goodchoices {"position":"575,1600","size":"100,100"}
-<<set $passage to "goodchoices">>
-<<include "header">>
-<main>
- You made good choices...
-<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
-</main>
-<<include "footer">>
-
-
-:: randomfromlist {"position":"450,1325","size":"100,100"}
-<<set $passage to "randomfromlist">>
-<<include "header">>
-<main>
-<<set $list to ['Rock','Paper','Scissors']>>
-$list
-<<button "Pick random">>
-<<set $randomitem to $list.random()>>
-<<replace "#randomitem">>$randomitem<</replace>>
-<</button>>
-<div id = "randomitem"></div>
-
-<<button "next">><<set $prevpass to $passage>><<goto "addletters">><</button>>
-</main>
-<<include "footer">>
-
-
-:: wordle {"position":"450,1150","size":"100,100"}
-<<set $passage to "wordle">>
-<<include "header">>
-<main>
-
-Make it so this word says "REDO"
-
-<div class="wordcontainer">
-  <div class = "letter-item r">
-      R
-  </div>
-  <div class = "letter-item e">
-      E
-  </div>
-  <div class = "letter-item d">
-    <<textbox "$d" "">>
-  </div>
-  <div class = "letter-item o">
-    <<textbox "$o" "">>
-  </div>
-</div>
-
-
-<div class = "nextplaceholder">
-	<<button "Submit">>
-
-  <<if $d.toUpperCase() is  "D">>
-      <<replace ".d">>
-        D
-      <</replace>>
-  <</if>>
-  <<if $o.toUpperCase() is  "O">>
-      <<replace ".o">>
-          O
-      <</replace>>
-  <</if>>
-    <<if $d.toUpperCase() is "D" and $o.toUpperCase() is "O">>
-    <<replace ".nextplaceholder">>
-   	 <<button "next">><<set $prevpass to $passage>><<goto "randomfromlist">>
-   	 <</button>>
-    <</replace>>
-  <</if>>
-<</button>>
-</div>
-
-
-</main>
-<<include "footer">>
-
-
-:: generatecodes {"position":"450,750","size":"100,100"}
-<<set $passage to "generatecodes">><
-<<include "header">>
-<main><<set $code1 to setup.generate5LetterCode()>>
-<<set $code2 to setup.generate5LetterCode()>>
-<<set $code3 to setup.generate5LetterCode()>><<set $sixletterwordlist to ["BABBLE","ABASED","ABACUS","KEBABS","LABELS","MACAWS","NABBED","RABBIT","UGLIER","YACHTS"]>><<set $randomsixletterword to $sixletterwordlist.random()>>
-Here is a random six letter word:
-$randomsixletterword
-
-Please input the 3 codes correctly:
-
-Code 1: $code1
-Code 2: $code2
-Code 3: $code3
-
-Code 1: <<textbox "$code1guess" "">>
-Code 2: <<textbox "$code2guess" "">>
-Code 3: <<textbox "$code3guess" "">>
-
-<<button "Submit">>
-<<if $code1 is $code1guess and $code2 is $code2guess and $code3 is $code3guess>>
-	<<set $prevpass to $passage>><<goto "allcorrect">>
-<<else>>
-	<<set $prevpass to $passage>><<goto "allnotcorrect">>
-<</if>>
-<</button>>
-
-<<button "next">><<set $prevpass to $passage>><<goto "wordle">><</button>>
-</main>
-<<include "footer">>
-
-
-:: allcorrect {"position":"450,900","size":"100,100"}
-<<set $passage to "badchoices">>
-<<include "header">>
-<main>
-All correct
-<<button "next">><<set $prevpass to $passage>><<goto "multiplechoicecode">><</button>>
-</main>
-<<include "footer">>
-
-
-:: allnotcorrect {"position":"575,900","size":"100,100"}
-<<set $passage to "badchoices">>
-<<include "header">>
-<main>
-All not correct
-<<button "next">><<set $prevpass to $passage>><<goto "multiplechoicecode">><</button>>
-</main>
-<<include "footer">>
-
-
-:: multiplechoicecode {"position":"450,1025","size":"100,100"}
-<<set $passage to "badchoices">><<set $nextpass to "multiplechoicecode">>
-<<include "header">>
-<main>
-<<set $wrongcode1 to setup.generate5LetterCode()>>
-<<set $wrongcode2 to setup.generate5LetterCode()>>
-<<set $wrongcode3 to setup.generate5LetterCode()>>
-
-<<set $answers to [
-"<label><<checkbox '$code1chosen' false true>> $code1 C</label>",
-"<label><<checkbox '$code2chosen' false true>> $code2 C</label>",
-"<label><<checkbox '$code3chosen' false true>> $code3 C</label>",
-"<label><<checkbox '$wrongcode1chosen' false true>> $wrongcode1</label>",
-"<label><<checkbox '$wrongcode2chosen' false true>> $wrongcode2</label>",
-"<label><<checkbox '$wrongcode3chosen' false true>> $wrongcode3</label>"
-]>>
-
-The six letter word from earlier was:
-$randomsixletterword
-
-Pick the correct codes from before (they're followed by a 'C')
-
-<<for _i to 0; _i = $answers.length; _i++>>
-	<<run $answer = $answers.pluck()>>
-    $answer
-<</for>>
-
-<<button "Submit">>
- <<if $code1chosen and $code2chosen and $code3chosen and !$wrongcode1chosen and !$wrongcode2chosen and !$wrongcode3chosen>>
- 	<<replace ".codefeedback">>That's correct!<</replace>>
- <<else>>
- 	<<replace ".codefeedback">>That's incorrect<</replace>>
- <</if>>
-<</button>>
-
-<div class = "codefeedback">
-</div>
-
-
-<<button "next">><<set $prevpass to $passage>><<goto "wordle">><</button>>
-</main>
-<<include "footer">>
 
 
 :: countdown {"position":"450,2300","size":"100,100"}
@@ -753,156 +669,7 @@ Countdown: <span id="countdown">$seconds seconds remaining</span>!\
 <<include "footer">>
 
 
-:: end {"position":"450,1875","size":"100,100"}
-<<set $passage to "19">><<set $endMap = setup.generateDirectionsMap({lat:51.515145100985166,long:-0.08905860787295125},{lat:51.51341581900639, long:-0.0850674807043743})>><<include "header">>
-<main>
 
-End location
-
-$endMap
-  
-</main>
-<<include "footer">>
-
-
-:: stampgameeasy {"position":"450,400","size":"100,100"}
-<<set $passage to "stampgameeasy">>
-<<include "header">>
-<main>
-
-<<set $stamps = [1,2,3,4,5,6,7,1]>>
-<<set $stampcount to 0>>
-
-STAMP GAME - EASY
-Click the button if you see the same stamp twice.
-
-<div class="stamp-container">$stamps[$stampcount]</div>
-
-<<button "There's more than one of that stamp!">>
-	<<if setup.checkForRepeats($stamps, $stamps[$stampcount])>>
-    	<<replace ".stamp-feedback">>That's right! There's more than one of that stamp<</replace>>
-    <<else>>
-    	<<replace ".stamp-feedback">>Not quite, there's only one of that stamp.<</replace>>
-    <</if>>
-<</button>>
-
-<<silently>>
-	<<repeat 3s>>
-    	<<replace ".stamp-feedback">><</replace>>
-		<<set $stampcount to $stampcount + 1>>
-		<<if $stampcount lt $stamps.length>>
-			<<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
-		<<else>>
-			<<replace ".stamp-container">>Out of stamps<</replace>>
-			<<stop>>
-		<</if>>
-	<</repeat>>
-<</silently>>
-
-<<button "Next stamp">>
-	<<replace ".stamp-feedback">><</replace>>
-	<<if $stampcount lt $stamps.length-1>>
-      <<set $stampcount to $stampcount + 1>>
-      <<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
-    <</if>>
-<</button>>
-<<button "Previous stamp">>
-	<<replace ".stamp-feedback">><</replace>>
-	<<if $stampcount gt 0>>
-      <<set $stampcount to $stampcount - 1>>
-      <<replace ".stamp-container">>$stamps[$stampcount]<</replace>>
-    <</if>>
-<</button>>
-
-<div class = "stamp-feedback">
-</div>
-
-<<button "next">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
-</main>
-<<include "footer">>
-
-
-:: stampgamehard {"position":"450,550","size":"100,100"}
-<<set $passage to "stampgameeasy">>
-<<include "header">>
-<main>
-
-<<set $hardstampquestions = ['2x4','5+4','10-6','8+0']>>
-<<set $hardstampanswers = [8,9,4,8]>>
-<<set $hardstampcount to 0>>
-
-STAMP GAME - HARD
-Click the button if you see the same stamp twice.
-
-<div class="stamp-container">$hardstampquestions[$hardstampcount]</div>
-
-<<button "There's more than one of that stamp!">>
-	<<if setup.checkForRepeats($hardstampanswers, $hardstampanswers[$hardstampcount])>>
-    	<<replace ".stamp-feedback">>That's right! There's more than one of that stamp<</replace>>
-    <<else>>
-    	<<replace ".stamp-feedback">>Not quite, there's only one of that stamp.<</replace>>
-    <</if>>
-<</button>>
-
-<<silently>>
-	<<repeat 3s>>
-    	<<replace ".stamp-feedback">><</replace>>
-		<<set $hardstampcount to $hardstampcount + 1>>
-		<<if $hardstampcount lt $hardstampanswers.length>>
-			<<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
-		<<else>>
-			<<replace ".stamp-container">>Out of stamps<</replace>>
-			<<stop>>
-		<</if>>
-	<</repeat>>
-<</silently>>
-
-<<button "Next stamp">>
-	<<replace ".stamp-feedback">><</replace>>
-	<<if $hardstampcount lt $hardstampquestions.length-1>>
-      <<set $hardstampcount to $hardstampcount + 1>>
-      <<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
-    <</if>>
-<</button>>
-<<button "Previous stamp">>
-	<<replace ".stamp-feedback">><</replace>>
-	<<if $hardstampcount gt 0>>
-      <<set $hardstampcount to $hardstampcount - 1>>
-      <<replace ".stamp-container">>$hardstampquestions[$hardstampcount]<</replace>>
-    <</if>>
-<</button>>
-
-<div class = "stamp-feedback">
-</div>
-
-<<button "next">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
-</main>
-<<include "footer">>
-
-
-:: ghostdetector {"position":"450,225","size":"100,100"}
-<<set $passage to "ghostdetector">>
-<<include "header">>
-<main>
-
-  <div class = "detector">
-  <<set $spinning to false>>
- 
-<<link "<img src = 'https://media3.giphy.com/media/1hpCPjWPnKpKLwAGIX/giphy.gif'>" >>
-	<<if $spinning>>
-    	<<set $spinning to false>>
-        <<audio ":all" stop>>
-		<<removeclass ".detector" "spinning">>
-    <<else>>
-   		<<set $spinning to true>>
-        <<audio "badjoke" play>>
-   	    <<addclass ".detector" "spinning">>
-    <</if>>
-<</link>> 
-</div>
- 
-</main>
-<<include "footer">>
 
 
 :: lofiai {"position":"450,225","size":"100,100"}
