@@ -129,13 +129,25 @@ const handleStart = (evt) =>{
   const initial = document.getElementById("initial");
   const stat = document.getElementById("stat");
     const reveal = document.getElementById("reveal");
-  initial.classList.add("dissolve"); 
-   stat.classList.add("appear"); 
-  setTimeout(() => {
-    initial.classList.add("hide"); 
-  stat.classList.add("dissolve"); 
-  reveal.classList.add("dissolve"); 
-}, "5000");
+    //  reveal.classList.add("transparent");  
+     initial.classList.add("transparent");  
+     console.log(reveal)
+//       setTimeout(() => {
+//     initial.classList.add("hide"); 
+// }, "1000");
+   
+//   initial.classList.add("dissolve");  
+//    stat.classList.add("appear"); 
+//   setTimeout(() => {
+//     initial.classList.add("hide"); 
+//   // stat.classList.add("dissolve"); 
+//   // reveal.classList.add("dissolve"); 
+// }, "5000");
+//  setTimeout(() => {
+//     // initial.classList.add("hide"); 
+//   stat.classList.add("hide"); 
+//   // reveal.classList.add("dissolve"); 
+// }, "6000");
   // el.classList.remove("hide"); 
   
 }
@@ -148,8 +160,12 @@ const handleMove = (evt) => {
 const handleEnd = (evt) => {
   evt.preventDefault();
   // log("touchend");
-   const el = document.getElementById("initial");
-  el.classList.remove("hide")  
+   const initial = document.getElementById("initial");
+    const reveal = document.getElementById("reveal");
+    //  initial.classList.remove("hide"); 
+     initial.classList.remove("transparent");  
+  // initial.classList.remove("hide")  
+  //   reveal.classList.add("hide");  
   
 }
 
@@ -197,7 +213,7 @@ function log(msg) {
 }
 
 
-  // const el = document.getElementById("canvas");
+
     const el = document.getElementById("initial");
   el.addEventListener("touchstart", handleStart);
   el.addEventListener("touchend", handleEnd);
@@ -229,15 +245,38 @@ function log(msg) {
 :: footer [nobr]{"position":"100,375","size":"100,100"}
 <footer>
   <div class="nav-wrapper">
-
     <div class="nav-item">
         [img[Back|assets/img/backward.png][$prevpass]]
-    </div></div>
+    </div>
+  </div>
+  <<if $showMap is true>>
+    <div class="nav-wrapper">
+      <div class="nav-item">
+    <<link [img[assets/img/map.png]]>><<toggleclass "#map" "hide">><</link>>
+    </div>
+  </div>
+  <</if>>
+  <<if $showAudio is true>>
+   <div class="nav-wrapper">
+    <div class="nav-item">
+ <<link [img[assets/img/play.png]]>><<replace "#audio">><p>[audio playing...]</p><</replace>><</link>>
+   </div>
+  </div>
+  <</if>>
+    <<if $showReplay is true>>
      <div class="nav-wrapper">
     <div class="nav-item">
     [img[Replay|assets/img/replay.png][$passage]]
     </div>
     </div>
+    <</if>>
+    <<if $showCredits is true>>
+     <div class="nav-wrapper">
+    <div class="nav-item">
+    [[Credits|credits]]
+    </div>
+    </div>
+    <</if>>
     <div class="nav-wrapper">
     <div class="nav-item">
     </div>
@@ -245,6 +284,20 @@ function log(msg) {
          [img[Forward|assets/img/forward.png][$nextpass]]
     </div>
   </div>
+</footer>
+
+
+:: footerback [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Back|assets/img/backward.png][$prevpass]]
+    </div>
+  </div>
+  <div class="nav-wrapper">
+ 
+  </div>
+  
 </footer>
 
 
@@ -298,45 +351,56 @@ You have two options:
 <<include "footer">>
 
 
-:: credits {"position":"450,50","size":"100,100"}
+:: credits [nobr]{"position":"450,50","size":"100,100"}
 <<set $passage to "credits">>
-<<include "header">>
-<main>
-TESTIMONIES INCLUDE: OLYA MUKHINA
-Executive Director of the Lesya Ukrainka Theater
-STAS KONONOV
-Musician and Guitarist
-ALEVTINA SHVETSOVA
-Arts Journalist and Artist
-LUTFIE ZUDIEVA
-Civic Journalist
-OLEKSANDRA OSADCHA
-Researcher and Curator at Kharkiv School Of Photography
-SERHIY ZAKHAROV
-Artist
-VICTORIA AMELINA
-Writer and Poet
-ANNA SHARYHINA
-Activist, Cultural Manager and Founder of Sphere
-JULIA NIKOLAJEVSKA
-Musician and Cultural Manager Kharkiv Music Fest
-DMYTRO KOSTIUMINSKIJ
-Artist, Theatre director and Filmmaker
-POETRY AND ADDITIONAL TEXTS INCLUDE:
-Text Counter/retnuoC by Alexander Levitsky from Anthology24 Text by Nina Zakhozhenko from Anthology24
-Poem by Aliye Kenzhalieva
-Poem Ctrl+Z by Mykhailo Zharzhalio
-Poem Survivor's Syndrome by Andriy Bondarenko
-Poem by Ostap Slyvynsky
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to false>>
+<<set $showCredits to false>>
+<header class="credits">
+<div class="header-item"></div>
+<div class="header-item">
+  <h1>With Fire & Rage</h1>
+</div >
+</header>
+<main class="credits">
+<p>Testimonies include: </p>
+<h3>OLYA MUKHINA</h3>
+<p>Executive Director of the Lesya Ukrainka Theater</p>
+<h3>STAS KONONOV</h3>
+<p>Musician and Guitarist</p>
+<h3>ALEVTINA SHVETSOVA</h3>
+<p>Arts Journalist and Artist</p>
+<h3>LUTFIE ZUDIEVA</h3>
+<p>Civic Journalist</p>
+<h3>OLEKSANDRA OSADCHA</h3>
+<p>Researcher and Curator at Kharkiv School Of Photography</p>
+<h3>SERHIY ZAKHAROV</h3>
+<p>Artist</p>
+<h3>VICTORIA AMELINA</h3>
+<p>Writer and Poet</p>
+<h3>ANNA SHARYHINA</h3>
+<p>Activist, Cultural Manager and Founder of Sphere</p>
+<h3>JULIA NIKOLAJEVSKA</h3>
+<p>Musician and Cultural Manager Kharkiv Music Fest</p>
+<h3>DMYTRO KOSTIUMINSKIJ</h3>
+<p>Artist, Theatre director and Filmmaker</p>
+<br/>
+<p>Poetry & Additional Texts include:</p>
+<p>Text Counter/retnuoC by Alexander Levitsky from Anthology24 Text by Nina Zakhozhenko from Anthology24</p>
+<p>Poem by Aliye Kenzhalieva</p>
+<p>Poem Ctrl+Z by Mykhailo Zharzhalio</p>
+<p>Poem Survivor's Syndrome by Andriy Bondarenko</p>
+<p>Poem by Ostap Slyvynsky</p>
 </main>
-<<include "footer">>
+<<include "footerback">>
 
 
 :: landing [nobr]{"position":"450,50","size":"100,100"}
 <<set $title to "Our Biggest Premiere Yet">>
 <<set $prevpass to "landing">>
 <<set $passage to "landing">>
-<<set $nextpass to "instructions">>
+<<set $nextpass to "instructions1">>
 /* Title  */
 
 <main class="landing">
@@ -346,15 +410,22 @@ Poem by Ostap Slyvynsky
 /* <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>> */
 
 </main>
-<<include "footer">>
+/* <<include "footer">> */
 
-:: instructions [nobr]
+:: instructions1 [nobr]
 <<set $prevpass to "landing">>
-<<set $passage to "instructions">>
+<<set $passage to "instructions1">>
 <<set $nextpass to "intro">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
+<div id="audio"></div>
 <<include "header">>
 <main>
-  <p>Katherine has changed this</p>
+<div id="map" class="hide">$map</div>
+  <p>You should be inside or outside the Liverpool Everyman</p>
   
   <p>If the theatres open take a seat in the bar area downstairs or upstairs </p>
   
@@ -362,11 +433,16 @@ Poem by Ostap Slyvynsky
   
   <p>When you are ready press <<button "Start">><<goto $nextpass>><</button>></p>
 </main>
+<<include "footer">>
 
 :: intro [nobr] {"position":"450,50","size":"100,100"}
-<<set $prevpass to "instructions">>
+<<set $prevpass to "instructions1">>
 <<set $passage to "intro">>
 <<set $nextpass to "child">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
 /* <<include "header">> */
 <main>
 <div id="mount"></div>
@@ -404,10 +480,18 @@ Poem by Ostap Slyvynsky
 <<set $prevpass to "landing">>
 <<set $passage to "child">>
 <<set $nextpass to "olga">>
-/* <<include "header">> */
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
 <main>
 <div id="mount"></div>
 <<timed 0.1s>><<replace "#mount">>
+<p>A CHILD’S VOICE:</p>
+<p>(Text Counter/retnuoC by Alexander Levitsky from Anthology24)</p><</replace>><</timed>>
+
+<<timed 1s>><<replace "#mount">>
+
   <p>Ten. Nine. Eight. Seven.</p>
   <p>Burning house in heaven.</p>
   <p>A cartridge is full of deceptions.</p>
@@ -440,10 +524,14 @@ Poem by Ostap Slyvynsky
 <<set $prevpass to "child">>
 <<set $passage to "olga">>
 <<set $nextpass to "AR1">>
-/* <<include "header">> */
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
 <main>
 <div id="mount"></div>
 <<timed 0.1s>><<replace "#mount">>
+<p>OLYA PUZHAKOVSKA:</p>
 <p>On the 24th of February 2022 (the day of the full-scale invasion), we made a plan of how to defend the theatre and how we could avoid it being captured.</p>
 <p>It’s the highest building in the district and right across the street, there is a big military base. So we put razor wire anywhere a person could climb onto the rooftop, and some of the staff began to make Molotov cocktails.</p>
  <</replace>><</timed>>
@@ -489,17 +577,18 @@ Poem by Ostap Slyvynsky
 /* <<include "header">> */
 <main>
   <div class="ar-imgs-container">
-    <div class="ar-img-wrapper touch" id="initial" >
+    <div class="ar-img-wrapper touch bottom" id="initial" >
       <img src="./assets/img/everyman-theatre.webp" class="">
       /* <img src="./assets/img/big_stage_by_B.Yemets.jpg" class=""> */
       </div>
-    <div class="static-img-wrapper" id="stat" class="hide" >
+    /* <div class="static-img-wrapper" id="stat" class="hide" >
       <img src="./assets/img/static.gif"  id="stat">
-    </div>
-    <div class="hidden-img-wrapper" id="reveal" class="hide" >
+    </div> */
+    /* <div class="hidden-img-wrapper top" id="reveal"  >
       <img src="./assets/img/big_stage_by_B.Yemets.jpg" >
-    </div>
+    </div> */
   </div >
+
 /* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */
 
 
@@ -512,12 +601,13 @@ Poem by Ostap Slyvynsky
 <<set $prevpass to "AR1">>
 <<set $passage to "journey1">>
 <<set $nextpass to "narrator2">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
+/* <<set $showAudio to true>> */
 /* Everyman to 1931  */
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
-<<set $audio to "journey1audio">>
-  /* <<include "map1">> */
-
-
 <main>
 <div id="audio"></div>
 <div id="map" class="hide">$map</div>
@@ -527,11 +617,11 @@ Poem by Ostap Slyvynsky
 
 <p>Use the Map to help you get there.</p>
 
-<p>As you begin to walk press Play.</p>
+<p>As you begin to walk press [[Play|narrator2]].</p>
 
 </main>
 
-<<include "footerMap">>
+<<include "footer">>
 
 
 :: journey1audio [nobr]
@@ -542,11 +632,19 @@ Poem by Ostap Slyvynsky
 
 
 :: narrator2[nobr]
-<<set $prevpass to "map">>
+<<set $prevpass to "journey1">>
 <<set $passage to "narrator2">>
 <<set $nextpass to "teacher">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
+<<set $audio to "journey1audio">>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <<include "footer">>
 <main>
+<div id="audio"></div>
+<div id="map" class="hide">$map</div>
 <div id="mount"></div>
 <<timed 0.1s>><<replace "#mount">>
 <p>Audio - The Streets Part One</p>
@@ -569,20 +667,28 @@ Poem by Ostap Slyvynsky
 <<button "Next">><<goto $nextpass>><</button>>
 <</replace>><</timed>>
 </main>
+<<include "footer">>
 
-
-:: teacher
+:: teacher [nobr]
 <<set $prevpass to "narrator2">>
 <<set $passage to "teacher">>
 <<set $nextpass to "end">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showCredits to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <main>
+<div id="audio"></div>
+<div id="map" class="hide">$map</div>
 <div id="mount"></div>
-<<timed 6s>><<replace "#mount">>
+<<timed 0.1s>><<replace "#mount">>
+<p>THE TEACHER:</p>
 <p>(Text by Nina Zakhozhenko from Anthology24)</p>
 <</replace>><</timed>>
-<<timed 0.1s>><<replace "#mount">>
+<<timed 1s>><<replace "#mount">>
 <p>There will be no classes today.</p>
-Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.</p>
+<p>Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.</p>
 <</replace>><</timed>>
 <<timed 2s>><<replace "#mount">>
 <p>Write your name/surname on your hand. Your blood group. Relatives’ phone number. If the explosion is close, run to the bathroom.</p>
@@ -594,124 +700,49 @@ Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages an
 <p>This will go down in the history books.</p>
 <</replace>><</timed>>
 <<timed 8s>><<replace "#mount">>
-<p> <<button "Next">><<goto $nextpass>><</button>></p>
+<p> <<button "I've arrived">><<goto $nextpass>><</button>></p>
 <</replace>><</timed>>
 </main>
+<<include "footer">>
 
-:: end
+:: end [nobr]
 <<set $prevpass to "teacher">>
 <<set $passage to "end">>
 <<set $nextpass to "end">>
-<main>
-<p>Arrive at Liverpool Philharmonic</p>
-<p>Reccomendations</p>
-<<button "Credits">><<goto "credits">><</button>>
-<<button "Next">><<goto $nextpass>><</button>>
-</main>
+<<set $showMap to false>>
+<<set $showCredits to true>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
+<main class="end">
+<div id="audio"></div>
+<div id="map" class="hide">$map</div>
+<div id="mount"></div>
+<h2>Liverpool Philharmonic</h2>
+<p>Would you like to go on another journey?</p>
+<p>Here are two options:</p>
+<div class="option-wrapper">
+  <div class="option-item">
+    <div class="option-info-wrapper">
+      <h3>Spirits of Concrete & Iron</h3>
+      <p>Location: Liverpool Philharmonic</p>
+    </div >
+    <<button "Start">><<goto "">><</button>>
+  </div>
+    <div class="option-item">
+    <div class="option-info-wrapper">
+      <h3>Flowers that Grew from the Concrete</h3>
+      <p>Location: Bombed Out Church</p>
+    </div>
+    <<button "Start">><<goto "">><</button>>
+</div>
 
-
-
-
-
-:: captions {"position":"450,2300","size":"100,100"}
-<<set $passage to "captions">>
-<<include "header">>
-<main>
-  <div id="captions"></div>
-  <<type 50ms >>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <</type>>
-
-   <<type 70ms>>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <</type>>
-
-<<button "next">><<set $prevpass to $passage>><<goto "goingbacktochoice">><</button>>
-</main>
-<<include "footer">>
-
-
-
-
-:: maptemp {"position":"450,2850","size":"100,100"}
-<<set $passage to "maptemp">>
-<<include "header">><<set $myMap = setup.generateDirectionsMap(51.515145100985166,-0.08905860787295125,51.51341581900639, -0.0850674807043743)>>
-<main>$myMap
-Wish list: get rid of the More options/directions box!
-
-<<button "I'm in the right place">><<set $prevpass to $passage>><<goto "maptemp">><</button>>
+</div>
+<br/>
+<p>Or back to the main <a href="https://liv-ukr-main.netlify.app/map">map</a></p>
 </main>
 <<include "footer">>
 
 
 
-
-
-
-
-
-
-
-:: countdown {"position":"450,2300","size":"100,100"}
-<<set $passage to "countdown">>
-<<include "header">>
-<main>
-<<set $seconds to 30>>
-Countdown: <span id="countdown">$seconds seconds remaining</span>!\
-<<silently>>
-	<<repeat 1s>>
-		<<set $seconds to $seconds - 1>>
-		<<if $seconds gt 0>>
-			<<replace "#countdown">>$seconds seconds remaining<</replace>>
-		<<else>>
-			<<replace "#countdown">>Times up!<</replace>>
-			<<set $prevpass to $passage>><<goto "landing">>
-			<<stop>>
-		<</if>>
-	<</repeat>>
-<</silently>>
-</main>
-<<include "footer">>
-
-
-
-
-
-:: lofiai {"position":"450,225","size":"100,100"}
-<<set $passage to "lofiai">>
-/* <<include "header">> */
-<main>
-<h1>Lofi AR</h1>
-<p> trying different methods - think Touch events is the best </p>
-/* An image that when you press a filter appears, when you release the filter dissapears */
-<div class="ai-option-wrapper">
- <div class="ai-option">
-    <h2> touch events </h2>
-    <p>press image to change filter. This B&W change could be swapped for anything - replacing an image, overlaying an image. </p>
-  <div class="ai-img-wrapper touch" id="touch" ><img src="./assets/palm-tree.jpeg" class="palmtree"></div>
-<br />
-Log:
-<pre id="log" style="border: 1px solid #ccc;"></pre>
-  </div >
-  <div class="ai-option">
-    <h2> on hover </h2>
-    <div class="ai-img-wrapper hover"><img src="./assets/palm-tree.jpeg" class="palmtree"></div >
-  </div >
-   <div class="ai-option">
-    <h2> on active </h2>
-   <a class="ai-img-wrapper active" ><img src="./assets/palm-tree.jpeg" class="palmtree"></a >
-  </div >
-   <div class="ai-option">
-    <h2> on focus </h2>
-   <a class="ai-img-wrapper focus" ><img src="./assets/palm-tree.jpeg" class="palmtree"></a >
-  </div >
-   /* <div class="ai-option">
-    <h2> button </h2>
-   <div class="ai-img-wrapper focus" ><img src="./assets/palm-tree.jpeg" class="palmtree"></div>
-   <button>push tbc</button>
-  </div > */
-    
-
-</div >
-</main>
-<<include "footer">>
-<<done>><<set $s to setup.startup()>><</done>>
 
 
 :: 360 {"position":"600,225","size":"100,100"}
@@ -723,29 +754,3 @@ Log:
 <<button "back">><<goto "landing">><</button>>
 </main>
 
-:: landing2 {"position":"450,50","size":"100,100"}
-<<set $passage to "landing2">>
-/* <<include "header">> */
-<main>
-  menu
-
-<div class="menu-wrapper">
-  <<button "enter codeword">><<set $prevpass to $passage>><<goto "codeword">><</button>>
-  <<button "playaudio">><<set $prevpass to $passage>><<goto "playaudio">><</button>>
-  <<button "buttonchoice">><<set $prevpass to $passage>><<goto "buttonchoice">><</button>>
-  <<button "captions">><<set $prevpass to $passage>><<goto "captions">><</button>>
-  <<button "answeringlongquestion">><<set $prevpass to $passage>><<goto "answeringlongquestion">><</button>>
-  <<button "map">><<set $prevpass to $passage>><<goto "map">><</button>>
-  <<button "addletters">><<set $prevpass to $passage>><<goto "addletters">><</button>>
-  <<button "choicetally">><<set $prevpass to $passage>><<goto "choices">><</button>>
-  <<button "random from list">><<set $prevpass to $passage>><<goto "randomfromlist">><</button>>
-  <<button "wordle">><<set $prevpass to $passage>><<goto "wordle">><</button>>
-  <<button "generate codes">><<set $prevpass to $passage>><<goto "generatecodes">><</button>>
-    <<button "stamp game easy">><<set $prevpass to $passage>><<goto "stampgameeasy">><</button>>
-     <<button "stamp game hard">><<set $prevpass to $passage>><<goto "stampgamehard">><</button>>
-          <<button "ghost detector">><<set $prevpass to $passage>><<goto "ghostdetector">><</button>>
-   <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>>
-   <<button "360 view">><<set $prevpass to $passage>><<goto "360">><</button>>
-</div>
-</main>
-<<include "footer">>

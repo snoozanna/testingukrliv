@@ -155,6 +155,7 @@ nav {
 
 .hide {
   display: none;
+  opacity: 0;
 }
 
 .menu-wrapper {
@@ -265,6 +266,49 @@ main.landing > h1 {
   margin-block-end: 3rem;
 }
 
+/* CREDITS  */
+
+header.credits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main.credits {
+  align-items: center;
+}
+
+main.credits > h3,
+main.credits > p,
+header.credits > .header-item > h1,
+header.credits > .header-item > h3 {
+  text-align: center;
+}
+
+/* END  */
+
+main.end {
+  justify-content: center;
+  align-items: center;
+}
+.option-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5f9ea082;
+  padding: 0.8rem;
+  margin-block-end: 2rem;
+}
+
+.option-info-wrapper > p {
+  margin-block-end: 0;
+}
+
 /* LOFI AR */
 
 .ar-option-wrapper {
@@ -282,12 +326,20 @@ main.landing > h1 {
   position: relative;
   width: 100%;
   height: 80vh;
+  background-image: url("./../assets/img/big_stage_by_B.Yemets.jpg");
+  background-size: cover;
 }
 
 .ar-img-wrapper,
 .hidden-img-wrapper {
   height: 80vh;
   object-fit: cover;
+  /* position: absolute; */
+  left: 0;
+  -webkit-transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -o-transition: opacity 2s ease-in-out;
+  transition: opacity 2s ease-in-out;
 }
 
 .ar-img-wrapper > img,
@@ -295,6 +347,13 @@ main.landing > h1 {
 .static-img-wrapper > img {
   height: 100%;
   object-fit: cover;
+}
+
+.ar-img-wrapper.transparent,
+.hidden-img-wrapper.transparent,
+.static-img-wrapper.transparent {
+  opacity: 0;
+  /* height: 0; */
 }
 
 .ar-img-wrapper.hover:hover {
