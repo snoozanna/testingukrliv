@@ -98,24 +98,6 @@ return iFrame
 // this.mapMount.appendChild(iFrame)
 }
 
-//Get random 5 letter word
-
-setup.generate5LetterCode = () => {
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-let word = ""
-for (let i =0 ; i < 5 ; i++){
-word += alphabet[Math.round((alphabet.length-1)*Math.random())];
-}
-  return word;
-}
-
-//Check if an array contains multiple instances of an element
-
-setup.checkForRepeats = (array,element) => {
- const arrayCopy = [...array];
- const duplicates = arrayCopy.filter((item, index) => index !== arrayCopy.indexOf(item));
- return duplicates.contains(element)
-}
 
 // TOUCHEVENTS 
 // taken from https://developer.mozilla.org/en-US/docs/Web/API/Touch_events  
@@ -228,8 +210,9 @@ function log(msg) {
 
 
 :: StoryInit {"position":"100,100","size":"100,100"}
-<<cacheaudio "badjoke" "https://youhavefoundconey.net/CG/what/assets/audio/badjoke.mp3">>
+<<cacheaudio "premiere" "https://remote.co.com/MoTT/AgentTraining/Sounds/13.%20Challenge%203%20-%202.mp3">>
 <<waitforaudio>>
+
 
 
 :: header [nobr]{"position":"100,225","size":"100,100"}
@@ -244,11 +227,20 @@ function log(msg) {
 
 :: footer [nobr]{"position":"100,375","size":"100,100"}
 <footer>
+<<if $showBackwards is true>>
   <div class="nav-wrapper">
     <div class="nav-item">
         [img[Back|assets/img/backward.png][$prevpass]]
     </div>
   </div>
+  <</if>>
+  /* <<if $showRewind is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+   <<link [img[assets/img/backward.png]]>><<audio $audio time -5s>><</link>>
+    </div>
+  </div>
+  <</if>> */
   <<if $showMap is true>>
     <div class="nav-wrapper">
       <div class="nav-item">
@@ -270,20 +262,34 @@ function log(msg) {
     </div>
     </div>
     <</if>>
-    <<if $showCredits is true>>
+    /* <<if $showCredits is true>>
      <div class="nav-wrapper">
     <div class="nav-item">
     [[Credits|credits]]
     </div>
     </div>
+    <</if>> */
+     <<if $showCaptionsIcon is true>>
+     <div class="nav-wrapper">
+    <div class="nav-item">
+  <<link [img[assets/img/captions.png]]>><<set $captions to !$captions>><<goto $passage>><</link>>
+    </div>
+    </div>
     <</if>>
+    /* <<if $showFF is true>>
     <div class="nav-wrapper">
     <div class="nav-item">
+        <<link [img[assets/img/forward.png]]>><<audio $audio time +10s>><</link>>
     </div>
+  </div>
+     <</if>> */
+<<if $showForwards is true>>
+    <div class="nav-wrapper">
     <div class="nav-item">
          [img[Forward|assets/img/forward.png][$nextpass]]
     </div>
   </div>
+     <</if>>
 </footer>
 
 
@@ -305,11 +311,11 @@ function log(msg) {
 <footer>
   <div class="nav-wrapper">
     <div class="nav-item">
-     Press the image
+     Press the image to see it change. When you’ve finished listening let me know
     </div></div>
     <div class="nav-wrapper">
     <div class="nav-item">
-       <<button "Next">><<goto $nextpass>><</button>>
+       <<button "I’ve finished listening">><<goto $nextpass>><</button>>
     </div>
   </div>
 </footer>
@@ -356,7 +362,6 @@ You have two options:
 <<set $showMap to false>>
 <<set $showAudio to false>>
 <<set $showReplay to false>>
-<<set $showCredits to false>>
 <header class="credits">
 <div class="header-item"></div>
 <div class="header-item">
@@ -398,9 +403,11 @@ You have two options:
 
 :: landing [nobr]{"position":"450,50","size":"100,100"}
 <<set $title to "Our Biggest Premiere Yet">>
+<<set $theatre to "closed">>
+<<set $captions to true>>
 <<set $prevpass to "landing">>
 <<set $passage to "landing">>
-<<set $nextpass to "instructions1">>
+<<set $nextpass to "instructions">>
 /* Title  */
 
 <main class="landing">
@@ -413,62 +420,161 @@ You have two options:
 </main>
 /* <<include "footer">> */
 
-:: instructions1 [nobr]
+:: instructions [nobr]
 <<set $prevpass to "landing">>
-<<set $passage to "instructions1">>
-<<set $nextpass to "intro">>
+<<set $passage to "instructions">>
+<<set $nextpass to "instnar1">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showForwards to false>>
+<<set $showBackwards to false>>
+<<set $showCaptionsIcon to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
+
+<div id="audio"></div>
+/* <<include "header">> */
+<main class="instructions">
+<h2>Instructions</h2>
+<div id="map" class="hide">$map</div>
+<p>The <<link [img[assets/img/map.png]]>><<toggleclass "#map" "hide">><</link>> takes you to a map</p>
+
+<p>The arrow [img[Back|assets/img/backward.png][$prevpass]] skips back</p>
+
+<p>You can replay with this icon   [img[Replay|assets/img/replay.png][$passage]]</p>
+
+<p>Step forward via a button like this     [img[Forward|assets/img/forward.png][$nextpass]]</p>
+
+  
+  <p><<button "Next">><<goto $nextpass>><</button>></p>
+</main>
+/* <<include "footer">> */
+
+:: instnar1 [nobr]
+<<set $prevpass to "landing">>
+<<set $passage to "instnar1">>
+<<set $nextpass to "instnar2">>
 <<set $showMap to true>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showForwards to true>>
+<<set $showBackwards to true>>
+<<set $showCaptionsIcon to false>>
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
 <div id="audio"></div>
 <<include "header">>
 <main>
 <div id="map" class="hide">$map</div>
   <p>You should be inside or outside the Liverpool Everyman</p>
-  
-  <p>If the theatres open take a seat in the bar area downstairs or upstairs </p>
-  
-  <p>If its closed then find a place you are comfortable to stand - maybe under the theatre’s balcony</p>
-  
-  <p>When you are ready press <<button "Start">><<goto $nextpass>><</button>></p>
+ <p>Is the theatre  <div class="inline-btn-wrapper"><<link "open">><<set $theatre to "open">><<goto "instnar2">><</link>> or <div class="inline-btn-wrapper"><<link "closed">><<set $theatre to "open">><<goto "instnar2">><</link>></div></div>?</p>
+ 
 </main>
 <<include "footer">>
 
+:: instnar2 [nobr]
+<<set $prevpass to "instnar1">>
+<<set $passage to "instnar2">>
+<<set $nextpass to "preintro">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showForwards to true>>
+<<set $showBackwards to true>>
+<<set $showCaptionsIcon to false>>
+<div id="audio"></div>
+<<include "header">>
+<main>
+<div id="map" class="hide">$map</div>
+  <<if $theatre is "open">>
+    <p>Go inside and take a seat in the downstairs bar. </p>
+  <p>There are some comfy sofas either end.</p>
+  <p>When you’re ready let me know</p>
+  <<button "I'm ready">><<goto $nextpass>><</button>>
+<</if>>
+
+
+  <<if $theatre is "closed">>
+  <p>Find a place to take shelter</p>
+  <p>Maybe by the big windows, under the theatre’s balcony</p>
+  <p>When you’re ready let me know</p>
+    <<button "I'm ready">><<goto $nextpass>><</button>>
+<</if>>
+</main>
+<<include "footer">>
+
+
+
+:: preintro [nobr] {"position":"450,50","size":"100,100"}
+<<set $prevpass to "instnar2">>
+<<set $passage to "preintro">>
+<<set $nextpass to "intro">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showForwards to true>>
+<<set $showBackwards to true>>
+<<set $showCaptionsIcon to false>>
+<main>
+<div id="mount"></div>
+  <<timed 0.1s>><<replace "#mount">>
+    <p>Great!</p>
+    <p>Press  <div class="inline-btn-wrapper">[[play|intro]] </div>to listen to Our Biggest Premiere Yet</p>
+  <</replace>><</timed>>
+
+</main>
+<<include "footer">>
+
+:: introaudio [nobr]
+<<replace "#audio">><p>[narrator audio playing...]</p><</replace>>
+
 :: intro [nobr] {"position":"450,50","size":"100,100"}
-<<set $prevpass to "instructions1">>
+<<set $prevpass to "preintro">>
 <<set $passage to "intro">>
 <<set $nextpass to "child">>
 <<set $showMap to false>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to true>>
+/* <<set $audio to "premiere">> */
+/* <<audio ":all" stop>> */
+/* <<audio "premiere" play>> */
+<audio src="https://remote.co.com/MoTT/AgentTraining/Sounds/13.%20Challenge%203%20-%202.mp3" autoplay>Audio is not supported on your device</audio>
+/* <<audio $audio time 0s play>> */
+
+
 /* <<include "header">> */
 <main>
+<div id="audio"></div>
 <div id="mount"></div>
-<<timed 0.1s>><<replace "#mount">>
-  <p>NARRATOR:</p>
+<<timed 0.1s>>
+    <<include "introaudio">>
+<</timed>>
+<<if $captions is true>>
+    <<timed 0.1s>><<replace "#mount">>
+      <p>NARRATOR:</p>
 
-  <p>Welcome to With Fire and Rage...</p>
+      <p>Welcome to With Fire and Rage...</p>
 
-  <p>An audio experience following artists on the frontline in Ukraine.</p>
-  <p>I’m Veronika Skliarova, artist and producer from Kharkiv.</p>
-  <p>I will be your guide for today, taking you on a journey to meet some of our country's most radical, brave and innovative creatives.</p>
-<</replace>><</timed>>
+      <p>An audio experience following artists on the frontline in Ukraine.</p>
+      <p>I’m Veronika Skliarova, artist and producer from Kharkiv.</p>
+      <p>I will be your guide for today, taking you on a journey to meet some of our country's most radical, brave and innovative creatives.</p>
+    <</replace>><</timed>>
 
-<<timed 2s>><<replace "#mount">>
-  <p>Along the way, I encourage you to take a break... If you want, stop for a coffee. We will not spend long in each location but even so, find a place to sit, to lean, to shelter. Make yourself comfortable, after all, Liverpool is your city, not mine.</p>
-  <p>The places you will walk in, I have never beepn</p>
-  <p>But let your imagination wander from your streets to ours.</p>
-<</replace>><</timed>>
+    <<timed 2s>><<replace "#mount">>
+      <p>Along the way, I encourage you to take a break... If you want, stop for a coffee. We will not spend long in each location but even so, find a place to sit, to lean, to shelter. Make yourself comfortable, after all, Liverpool is your city, not mine.</p>
+      <p>The places you will walk in, I have never beepn</p>
+      <p>But let your imagination wander from your streets to ours.</p>
+    <</replace>><</timed>>
 
-<<timed 4s>><<replace "#mount">>
-  <p>
-      From art museums, libraries, train stations, bookshops and cafes in Liverpool, to different histories and places across Ukraine.</p>
-    <p> From the Liverpool Everyman where you are now, to the Lesya Ukrainka Theater in Lviv. Here you will meet our first artist Olya Puzhakovska, the youngest Executive and Artistic Director in Ukraine, who with tremendous courage transformed her theatre in a moment of crisis...
-    </p>
-<</replace>><</timed>>
+    <<timed 4s>><<replace "#mount">>
+      <p>
+          From art museums, libraries, train stations, bookshops and cafes in Liverpool, to different histories and places across Ukraine.</p>
+        <p> From the Liverpool Everyman where you are now, to the Lesya Ukrainka Theater in Lviv. Here you will meet our first artist Olya Puzhakovska, the youngest Executive and Artistic Director in Ukraine, who with tremendous courage transformed her theatre in a moment of crisis...
+        </p>
+    <</replace>><</timed>>
+<</if>>
 <<timed 6s>><<replace "#mount">>
   <p>So, are you ready?</p>
   <p> <<button "Let's begin">><<goto $nextpass>><</button>></p>
@@ -477,6 +583,9 @@ You have two options:
 </main>
 <<include "footer">>
 
+:: childaudio [nobr]
+<<replace "#audio">><p>[child audio playing...]</p><</replace>>
+
 :: child [nobr] {"position":"450,50","size":"100,100"}
 <<set $prevpass to "landing">>
 <<set $passage to "child">>
@@ -484,36 +593,45 @@ You have two options:
 <<set $showMap to false>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to true>>
 <main>
+<div id="audio"></div>
 <div id="mount"></div>
-<<timed 0.1s>><<replace "#mount">>
-<p>A CHILD’S VOICE:</p>
-<p>(Text Counter/retnuoC by Alexander Levitsky from Anthology24)</p><</replace>><</timed>>
+<<timed 0.1s>>
+    <<include "childaudio">>
+<</timed>>
 
-<<timed 1s>><<replace "#mount">>
+<<if $captions is true>>
+    <<timed 0.1s>><<replace "#mount">>
+    <p>A CHILD’S VOICE:</p>
+    <p>(Text Counter/retnuoC by Alexander Levitsky from Anthology24)</p><</replace>><</timed>>
 
-  <p>Ten. Nine. Eight. Seven.</p>
-  <p>Burning house in heaven.</p>
-  <p>A cartridge is full of deceptions.</p>
-<</replace>><</timed>>
-<<timed 2s>><<replace "#mount">>
-  <p>Slyness. Blackmail. No exceptions.</p>
-  <p>Red reflections.</p>
-  <p>Reviewing eternal senses of life.</p>
-  <p>‘Destroy,’ ‘Forget.’ ‘Deprive.’</p>
-<</replace>><</timed>>
-<<timed 4s>><<replace "#mount">>
-  <p>Six. Five.</p>
-  <p>‘Burn down’ church choirs plea.</p>
-  <p>There is nowhere to flee.</p>
-<</replace>><</timed>>
-<<timed 6s>><<replace "#mount">>
-  <p>Four. Three.</p>
-  <p>To the abyss of suffering, we have run.</p>
-  <p>Two. One.</p>
-  <p>The war has begun. </p>
-<</replace>><</timed>>
+    <<timed 1s>><<replace "#mount">>
+
+      <p>Ten. Nine. Eight. Seven.</p>
+      <p>Burning house in heaven.</p>
+      <p>A cartridge is full of deceptions.</p>
+    <</replace>><</timed>>
+    <<timed 2s>><<replace "#mount">>
+      <p>Slyness. Blackmail. No exceptions.</p>
+      <p>Red reflections.</p>
+      <p>Reviewing eternal senses of life.</p>
+      <p>‘Destroy,’ ‘Forget.’ ‘Deprive.’</p>
+    <</replace>><</timed>>
+    <<timed 4s>><<replace "#mount">>
+      <p>Six. Five.</p>
+      <p>‘Burn down’ church choirs plea.</p>
+      <p>There is nowhere to flee.</p>
+    <</replace>><</timed>>
+    <<timed 6s>><<replace "#mount">>
+      <p>Four. Three.</p>
+      <p>To the abyss of suffering, we have run.</p>
+      <p>Two. One.</p>
+      <p>The war has begun. </p>
+    <</replace>><</timed>>
+<</if>>
 <<timed 8s>><<replace "#mount">>
  <<button "Next">><<goto $nextpass>><</button>>
  <</replace>><</timed>>
@@ -521,52 +639,102 @@ You have two options:
 </main>
 <<include "footer">>
 
+:: olgaaudio [nobr]
+<<replace "#audio">><p>[olga audio playing...]</p><</replace>>
+
 :: olga [nobr] {"position":"450,50","size":"100,100"}
 <<set $prevpass to "child">>
 <<set $passage to "olga">>
-<<set $nextpass to "AR1">>
+<<set $nextpass to "instnar3">>
 <<set $showMap to false>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to true>>
 <main>
+<div id="audio"></div>
 <div id="mount"></div>
-<<timed 0.1s>><<replace "#mount">>
-<p>OLYA PUZHAKOVSKA:</p>
-<p>On the 24th of February 2022 (the day of the full-scale invasion), we made a plan of how to defend the theatre and how we could avoid it being captured.</p>
-<p>It’s the highest building in the district and right across the street, there is a big military base. So we put razor wire anywhere a person could climb onto the rooftop, and some of the staff began to make Molotov cocktails.</p>
- <</replace>><</timed>>
- <<timed 2s>><<replace "#mount">>
-<p>This was the first day.</p>
-<p>The war had already being going in the east for many years, so the full-scale invasion was not a surprise. But still, in the sharp moment of crisis, we were lost and we didn't know how to adapt our work.</p>
-<p>At first, it was very chaotic. We had no sleep. Every day we had meetings with the whole theatre team. We made a lot of mistakes, but we tried to find the best solutions.</p>
- <</replace>><</timed>>
-  <<timed 4s>><<replace "#mount">>
-<p>We started by setting up the spaces for refugees and cleaning the basement that became a bomb shelter.</p>
-<p>We invited not only artists but anyone who had to flee and needed a space to stay.</p>
-<p>Many of our staff didn't feel safe in their apartments, so they also lived here in our theatre.</p>
- <</replace>><</timed>>
-   <<timed 6s>><<replace "#mount">>
-<p>We set up a shower and created a small kitchen. The person who used to be in charge of the laundry for costumes now washed clothes and bedding instead.</p>
-<p>The small stage became a space to store humanitarian aid. Actors distributed it not only in Lviv but to other cities, often under shelling.</p>
- <</replace>><</timed>>
-   <<timed 8s>><<replace "#mount">>
-<p>
-  We organised buses for those who were displaced to go through the border to Poland. Because it was an awful situation, those over 60 and mothers with a lot of small kids were stuck there for weeks.
-  We prepared warm food and drinks, and actors would give this out at the railway stations, where internally displaced people were also waiting for days in winter.
-</p>
-<p>We equipped soldiers, including our colleagues and friends, who went to go and defend the country.</p>
- <</replace>><</timed>>
- <<timed 10s>><<replace "#mount">>
-<p>In the costume department, we made uniforms and balaclavas for the soldiers. A very interesting fashion designer who lived in our shelter became the head of this production.</p>
-<p>Everything we had as a theatre was used in a new way. Set and costume became humanitarian aid, and technical supplies things like walkie-talkies were sent to the front line.</p>
- <</replace>><</timed>>
-  <<timed 12s>><<replace "#mount">>
-<p>For the last five years, we have been trying to work without a strict hierarchy. And it is this horizontal structure that led to our biggest premiere yet - where the whole team united on the 24th of February to respond to the full-scale invasion and work as one strong mechanism.</p>
- <</replace>><</timed>>
+<<timed 0.1s>>
+    <<include "olgaaudio">>
+<</timed>>
+<<if $captions is true>>
+    <<timed 0.1s>><<replace "#mount">>
+    <p>OLYA PUZHAKOVSKA:</p>
+    <p>On the 24th of February 2022 (the day of the full-scale invasion), we made a plan of how to defend the theatre and how we could avoid it being captured.</p>
+    <p>It’s the highest building in the district and right across the street, there is a big military base. So we put razor wire anywhere a person could climb onto the rooftop, and some of the staff began to make Molotov cocktails.</p>
+    <</replace>><</timed>>
+    <<timed 2s>><<replace "#mount">>
+    <p>This was the first day.</p>
+    <p>The war had already being going in the east for many years, so the full-scale invasion was not a surprise. But still, in the sharp moment of crisis, we were lost and we didn't know how to adapt our work.</p>
+    <p>At first, it was very chaotic. We had no sleep. Every day we had meetings with the whole theatre team. We made a lot of mistakes, but we tried to find the best solutions.</p>
+    <</replace>><</timed>>
+      <<timed 4s>><<replace "#mount">>
+    <p>We started by setting up the spaces for refugees and cleaning the basement that became a bomb shelter.</p>
+    <p>We invited not only artists but anyone who had to flee and needed a space to stay.</p>
+    <p>Many of our staff didn't feel safe in their apartments, so they also lived here in our theatre.</p>
+    <</replace>><</timed>>
+      <<timed 6s>><<replace "#mount">>
+    <p>We set up a shower and created a small kitchen. The person who used to be in charge of the laundry for costumes now washed clothes and bedding instead.</p>
+    <p>The small stage became a space to store humanitarian aid. Actors distributed it not only in Lviv but to other cities, often under shelling.</p>
+    <</replace>><</timed>>
+      <<timed 8s>><<replace "#mount">>
+    <p>
+      We organised buses for those who were displaced to go through the border to Poland. Because it was an awful situation, those over 60 and mothers with a lot of small kids were stuck there for weeks.
+      We prepared warm food and drinks, and actors would give this out at the railway stations, where internally displaced people were also waiting for days in winter.
+    </p>
+    <p>We equipped soldiers, including our colleagues and friends, who went to go and defend the country.</p>
+    <</replace>><</timed>>
+    <<timed 10s>><<replace "#mount">>
+    <p>In the costume department, we made uniforms and balaclavas for the soldiers. A very interesting fashion designer who lived in our shelter became the head of this production.</p>
+    <p>Everything we had as a theatre was used in a new way. Set and costume became humanitarian aid, and technical supplies things like walkie-talkies were sent to the front line.</p>
+    <</replace>><</timed>>
+      <<timed 12s>><<replace "#mount">>
+    <p>For the last five years, we have been trying to work without a strict hierarchy. And it is this horizontal structure that led to our biggest premiere yet - where the whole team united on the 24th of February to respond to the full-scale invasion and work as one strong mechanism.</p>
+    <</replace>><</timed>>
+ <</if>>
    <<timed 14s>><<replace "#mount">>
-<p> <<button "Next">><<goto $nextpass>><</button>></p>
+<p> When you're finished listening, let me know</p>
+<<button "I'm finished">><<goto $nextpass>><</button>>
  <</replace>><</timed>>
+
+</main>
+<<include "footer">>
+
+:: instnar3 [nobr]
+<<set $prevpass to "olga">>
+<<set $passage to "instnar3">>
+<<if $theatre is "open">>
+  <<set $nextpass to "AR1">>
+<</if>>
+<<if $theatre is "closed">>
+  <<set $nextpass to "AR2">>
+<</if>>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
+<div id="audio"></div>
+
+<main>
+<div id="map" class="hide">$map</div>
+<<if $theatre is "open">>
+  <p> Let me show you some images </p>
+  <p>Stand infront of the elevator, facing the bar</p>
+  <p>Hold up your phone</p>
+    <<button "I'm in position">><<goto $nextpass>><</button>>
+<</if>>
+
+<<if $theatre is "closed">>
+<p>Let me show you some images </p>
+<p>Cross the road and face the Liverpool Everyman</p>
+<p>Hold up your phone and press</p>
+  <<button "Show Me">><<goto $nextpass>><</button>>
+<</if>>
+
 
 </main>
 <<include "footer">>
@@ -574,132 +742,215 @@ You have two options:
 :: AR1 [nobr]{"position":"450,50","size":"100,100"}
 <<set $prevpass to "landing">>
 <<set $passage to "AR1">>
-<<set $nextpass to "journey1">>
+<<set $nextpass to "instnar4">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
 /* <<include "header">> */
 <main>
   <div class="ar-imgs-container">
     <div class="ar-img-wrapper touch bottom" id="initial" >
       <img src="./assets/img/everyman-theatre.webp" class="">
-      /* <img src="./assets/img/big_stage_by_B.Yemets.jpg" class=""> */
       </div>
-    /* <div class="static-img-wrapper" id="stat" class="hide" >
-      <img src="./assets/img/static.gif"  id="stat">
-    </div> */
-    /* <div class="hidden-img-wrapper top" id="reveal"  >
-      <img src="./assets/img/big_stage_by_B.Yemets.jpg" >
-    </div> */
   </div >
 
 /* <p>(Liverpool Everyman Transforms into the volunteering at Lesya Ukrainka Theater)</p> */
-
 
 </main>
 <<include "footerAR">>
 <<done>><<set $s to setup.startup()>><</done>>
 
+:: instnar4 [nobr]
+<<set $prevpass to "AR1">>
+<<set $passage to "instnar4">>
+<<set $nextpass to "AR2">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
+<div id="audio"></div>
+
+<main>
+<div id="map" class="hide">$map</div>
+<p>Go outside and cross the road </p>
+<p>Face the Liverpool Everyman</p>
+<p>Hold up your phone </p>
+
+  <<button "I'm in position">><<goto $nextpass>><</button>>
+</main>
+<<include "footer">>
+
+
+:: AR2 [nobr]{"position":"450,50","size":"100,100"}
+<<set $prevpass to "landing">>
+<<set $passage to "AR2">>
+<<set $nextpass to "instnar5">>
+<<set $showMap to false>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
+/* <<include "header">> */
+<main>
+  <div class="ar-imgs-container">
+    <div class="ar-img-wrapper touch bottom" id="initial" >
+      <img src="./assets/img/everyman-theatre.webp" class="">
+      </div>
+  </div >
+
+</main>
+<<include "footerAR">>
+<<done>><<set $s to setup.startup()>><</done>>
+
+:: instnar5 [nobr]
+<<set $prevpass to "AR2">>
+<<set $passage to "instnar5">>
+<<set $nextpass to "journey1">>
+<<set $showMap to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
+<<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
+<div id="audio"></div>
+
+<main>
+<div id="map" class="hide">$map</div>
+<p>Ready to go to the Liverpool Philharmonic?</p>
+<p>It’s a couple of minutes straight down the road</p>
+
+
+  <<button "Let's go">><<goto $nextpass>><</button>>
+</main>
+<<include "footer">>
+
 
 :: journey1 [nobr]
 <<set $prevpass to "AR1">>
 <<set $passage to "journey1">>
-<<set $nextpass to "narrator2">>
+<<set $nextpass to "thestreetspt1">>
 <<set $showMap to true>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to false>>
 /* <<set $showAudio to true>> */
 /* Everyman to 1931  */
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <main>
 <div id="audio"></div>
 <div id="map" class="hide">$map</div>
-<p>The next location is the Liverpool Philharmonic. </p>
+<p>You can the Map to help you get there.</p>
 
-<p>Its a couple on minutes straight down the road.</p>
-
-<p>Use the Map to help you get there.</p>
-
-<p>As you begin to walk press [[Play|narrator2]].</p>
+<p>As you begin to walk press <<button "Play">><<goto $nextpass>><</button>></p>
 
 </main>
 
 <<include "footer">>
 
 
-:: journey1audio [nobr]
-<<replace "#audio">><p>[audio playing...]</p><</replace>>
+:: thestreetspt1audio [nobr]
+<<replace "#audio">><p>[narrator audio playing...]</p><</replace>>
 
 
-/* $map */ */
 
 
-:: narrator2[nobr]
+:: thestreetspt1[nobr]
 <<set $prevpass to "journey1">>
-<<set $passage to "narrator2">>
+<<set $passage to "thestreetspt1">>
 <<set $nextpass to "teacher">>
 <<set $showMap to true>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
-<<set $audio to "journey1audio">>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to true>>
+
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <<include "footer">>
+
 <main>
 <div id="audio"></div>
 <div id="map" class="hide">$map</div>
 <div id="mount"></div>
+/* Walk The Streets Part One */
+<<timed 0.1s>>
+    <<include "thestreetspt1audio">>
+<</timed>>
+<<if $captions is true>>
 <<timed 0.1s>><<replace "#mount">>
-<p>Audio - The Streets Part One</p>
-  <p>NARRATOR:</p>
-  <p>From the beginning, our cities and streets changed and became full of strange and interesting artefacts.</p>
-  <p>People made roadblocks and outposts to prepare for invasion. Artists welded giant metal beams creating “hedgehogs” that we impossible for tanks to drive over</p>
-<</replace>><</timed>>
-<<timed 2s>><<replace "#mount">>
-  <p>Signs are put up, as shop basements, underground bars and metro stations become a place to hide from rockets.</p>
-  <p>Churches like the one behind and the one in front of you on Hope Street, are boarded up, to stop the stain glass from shattering in explosions.</p>
-<</replace>><</timed>>
-<<timed 4s>><<replace "#mount">>
-  <p>Statues similar to the one you will pass on your left of social reformer Hugh Stowell Brown, are covered in sandbags to protect them, as are important buildings.</p>
-  <p>And the air raid alarm, a memory from high school drills, now appear as a nightmare.</p>
-<</replace>><</timed>>
-<<timed 6s>><<replace "#mount">>
-  <p>Millions of people flee the frontline cities, men of all ages are drafted into the military and teachers cancel lessons writing...</p>
-<</replace>><</timed>>
-<<timed 8s>><<replace "#mount">>
-<<button "Next">><<goto $nextpass>><</button>>
-<</replace>><</timed>>
+    <p>Audio - The Streets Part One</p>
+      <p>NARRATOR:</p>
+      <p>From the beginning, our cities and streets changed and became full of strange and interesting artefacts.</p>
+      <p>People made roadblocks and outposts to prepare for invasion. Artists welded giant metal beams creating “hedgehogs” that we impossible for tanks to drive over</p>
+    <</replace>><</timed>>
+    <<timed 2s>><<replace "#mount">>
+      <p>Signs are put up, as shop basements, underground bars and metro stations become a place to hide from rockets.</p>
+      <p>Churches like the one behind and the one in front of you on Hope Street, are boarded up, to stop the stain glass from shattering in explosions.</p>
+    <</replace>><</timed>>
+    <<timed 4s>><<replace "#mount">>
+      <p>Statues similar to the one you will pass on your left of social reformer Hugh Stowell Brown, are covered in sandbags to protect them, as are important buildings.</p>
+      <p>And the air raid alarm, a memory from high school drills, now appear as a nightmare.</p>
+    <</replace>><</timed>>
+    <<timed 6s>><<replace "#mount">>
+      <p>Millions of people flee the frontline cities, men of all ages are drafted into the military and teachers cancel lessons writing...</p>
+    <</replace>><</timed>>
+    <<timed 8s>><<replace "#mount">>
+    <<button "Next">><<goto $nextpass>><</button>>
+    <</replace>><</timed>>
+<</if>>
 </main>
 <<include "footer">>
 
+:: teacheraudio [nobr]
+<<replace "#audio">><p>[teacher audio playing...]</p><</replace>>
+
 :: teacher [nobr]
-<<set $prevpass to "narrator2">>
+<<set $prevpass to "thestreetspt1">>
 <<set $passage to "teacher">>
 <<set $nextpass to "end">>
 <<set $showMap to true>>
 <<set $showAudio to false>>
 <<set $showReplay to true>>
-<<set $showCredits to false>>
+<<set $showBackwards to true>>
+<<set $showForwards to true>>
+<<set $showCaptionsIcon to true>>
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <main>
 <div id="audio"></div>
 <div id="map" class="hide">$map</div>
 <div id="mount"></div>
-<<timed 0.1s>><<replace "#mount">>
-<p>THE TEACHER:</p>
-<p>(Text by Nina Zakhozhenko from Anthology24)</p>
-<</replace>><</timed>>
-<<timed 1s>><<replace "#mount">>
-<p>There will be no classes today.</p>
-<p>Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.</p>
-<</replace>><</timed>>
-<<timed 2s>><<replace "#mount">>
-<p>Write your name/surname on your hand. Your blood group. Relatives’ phone number. If the explosion is close, run to the bathroom.</p>
-<</replace>><</timed>>
-<<timed 4s>><<replace "#mount">>
-<p>Keep in touch. Breathe deeply.</p>
-<</replace>><</timed>>
-<<timed 6s>><<replace "#mount">>
-<p>This will go down in the history books.</p>
-<</replace>><</timed>>
+<<timed 0.1s>>
+    <<include "teacheraudio">>
+<</timed>>
+<<if $captions is true>>
+    <<timed 0.1s>><<replace "#mount">>
+    <p>THE TEACHER:</p>
+    <p>(Text by Nina Zakhozhenko from Anthology24)</p>
+    <</replace>><</timed>>
+    <<timed 1s>><<replace "#mount">>
+    <p>There will be no classes today.</p>
+    <p>Stay safe. Mind the sirens. Go down to the shelter. Pack a backpack. Bandages and iodine. Other medications you may need. A bottle of water. Biscuits. A flashlight. A needle with thread. Money. Documents. A power bank. A mobile phone.</p>
+    <</replace>><</timed>>
+    <<timed 2s>><<replace "#mount">>
+    <p>Write your name/surname on your hand. Your blood group. Relatives’ phone number. If the explosion is close, run to the bathroom.</p>
+    <</replace>><</timed>>
+    <<timed 4s>><<replace "#mount">>
+    <p>Keep in touch. Breathe deeply.</p>
+    <</replace>><</timed>>
+    <<timed 6s>><<replace "#mount">>
+    <p>This will go down in the history books.</p>
+    <</replace>><</timed>>
+<</if>>
 <<timed 8s>><<replace "#mount">>
 <p> <<button "I've arrived">><<goto $nextpass>><</button>></p>
 <</replace>><</timed>>
@@ -738,7 +989,7 @@ You have two options:
 
 </div>
 <br/>
-<p>Or back to the main <a href="https://liv-ukr-main.netlify.app/map">map</a></p>
+/* <p>Or back to the main <a href="https://liv-ukr-main.netlify.app/map">map</a></p> */
 </main>
 <<include "footer">>
 

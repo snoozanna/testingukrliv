@@ -109,6 +109,20 @@ main {
   flex-direction: column;
 }
 
+/* inline button  */
+
+.inline-btn-wrapper {
+  display: inline-block;
+  margin: 0px 5px;
+}
+
+.inline-btn-wrapper > a {
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
 /* footer  */
 footer {
   display: flex;
@@ -283,6 +297,16 @@ main.credits > p,
 header.credits > .header-item > h1,
 header.credits > .header-item > h3 {
   text-align: center;
+}
+
+/* INSTRUCTIONS  */
+
+main.instructions > h2 {
+  margin-block-end: 3rem;
+}
+main.instructions > p > .link-image > img {
+  width: 35px;
+  margin: 0 10px;
 }
 
 /* END  */
