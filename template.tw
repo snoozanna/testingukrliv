@@ -558,7 +558,7 @@ You have two options:
    <h2>$title</h2>
  </div>
     <p>Great!</p>
-    <p>Press  <div class="inline-btn-wrapper">[[play|intro]] </div>to listen to </p>
+    <p>Press  <div class="inline-btn-wrapper">[[play|intro]] </div>to listen </p>
   <</replace>><</timed>>
 
 </main>
