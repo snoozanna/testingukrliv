@@ -498,8 +498,9 @@ You have two options:
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
 <div id="audio"></div>
 <<include "header">>
-<main>
+<main class="instructions">
 <div id="map" class="hide">$map</div>
+
   <p>You should be inside or outside the Liverpool Everyman</p>
  <p>Is the theatre  <div class="inline-btn-wrapper"><<link "open">><<set $theatre to "open">><<goto "instnar2">><</link>> or <div class="inline-btn-wrapper"><<link "closed">><<set $theatre to "open">><<goto "instnar2">><</link>></div></div>?</p>
  
@@ -518,7 +519,7 @@ You have two options:
 <<set $showCaptionsIcon to false>>
 <div id="audio"></div>
 <<include "header">>
-<main>
+<main class="instructions">
 <div id="map" class="hide">$map</div>
   <<if $theatre is "open">>
     <p>Go inside and take a seat in the downstairs bar. </p>
@@ -549,7 +550,7 @@ You have two options:
 <<set $showForwards to true>>
 <<set $showBackwards to true>>
 <<set $showCaptionsIcon to false>>
-<main>
+<main class="instructions">
 <div id="mount"></div>
   <<timed 0.1s>><<replace "#mount">>
  <div class="poster-wrapper">
@@ -758,7 +759,7 @@ You have two options:
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
 <div id="audio"></div>
 
-<main>
+<main class="instructions">
 <div id="map" class="hide">$map</div>
 <<if $theatre is "open">>
   <p> Let me show you some images </p>
@@ -815,7 +816,7 @@ You have two options:
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
 <div id="audio"></div>
 
-<main>
+<main class="instructions">
 <div id="map" class="hide">$map</div>
 <p>Go outside and cross the road </p>
 <p>Face the Liverpool Everyman</p>
@@ -861,7 +862,7 @@ You have two options:
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <div id="audio"></div>
 
-<main>
+<main class="instructions">
 <div id="map" class="hide">$map</div>
 <p>Ready to go to the Liverpool Philharmonic?</p>
 <p>It’s a couple of minutes straight down the road</p>
@@ -885,7 +886,7 @@ You have two options:
 /* <<set $showAudio to true>> */
 /* Everyman to 1931  */
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
-<main>
+<main class="instructions">
 <div id="audio"></div>
 <div id="map" class="hide">$map</div>
 <p>You can the Map to help you get there.</p>

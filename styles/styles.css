@@ -137,7 +137,7 @@ main {
 
 .inline-btn-wrapper {
   display: inline-block;
-  margin: 0px 5px;
+  margin: 4px 5px;
 }
 
 /* .inline-btn-wrapper > a {
@@ -325,16 +325,20 @@ main.instructions > h2 {
   margin-block-end: 3rem;
 }
 
-main.instructions > #mount > p > .link-image > img {
+main.instructions > #mount > p > .link-image > img,
+main.instructions > p > .link-image > img {
   width: 30px;
   margin: 0 10px;
 }
 
-main.instructions > #mount > p {
+main.instructions > #mount > p,
+main.instructions > p {
   background-color: #1fb9aa;
   padding: 6px 8px;
   border-radius: 10px;
+  border: black 0.5px solid;
   color: black;
+  width: fit-content;
 }
 
 /* END  */
@@ -436,6 +440,7 @@ main.end {
 
 footer.ar > .nav-wrapper > .nav-item > #mount > span {
   display: block;
+  font-size: 1.4rem;
 }
 
 @media screen and (min-width: 450px) {

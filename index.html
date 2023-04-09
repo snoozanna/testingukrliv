@@ -536,8 +536,9 @@ You have two options:
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)&gt;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 &lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
+
   &lt;p&gt;You should be inside or outside the Liverpool Everyman&lt;/p&gt;
  &lt;p&gt;Is the theatre  &lt;div class=&quot;inline-btn-wrapper&quot;&gt;&lt;&lt;link &quot;open&quot;&gt;&gt;&lt;&lt;set $theatre to &quot;open&quot;&gt;&gt;&lt;&lt;goto &quot;instnar2&quot;&gt;&gt;&lt;&lt;/link&gt;&gt; or &lt;div class=&quot;inline-btn-wrapper&quot;&gt;&lt;&lt;link &quot;closed&quot;&gt;&gt;&lt;&lt;set $theatre to &quot;open&quot;&gt;&gt;&lt;&lt;goto &quot;instnar2&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/div&gt;&lt;/div&gt;?&lt;/p&gt;
  
@@ -553,7 +554,7 @@ You have two options:
 &lt;&lt;set $showCaptionsIcon to false&gt;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 &lt;&lt;include &quot;header&quot;&gt;&gt;
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
   &lt;&lt;if $theatre is &quot;open&quot;&gt;&gt;
     &lt;p&gt;Go inside and take a seat in the downstairs bar. &lt;/p&gt;
@@ -579,7 +580,7 @@ You have two options:
 &lt;&lt;set $showForwards to true&gt;&gt;
 &lt;&lt;set $showBackwards to true&gt;&gt;
 &lt;&lt;set $showCaptionsIcon to false&gt;&gt;
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
   &lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
  &lt;div class=&quot;poster-wrapper&quot;&gt;
@@ -767,7 +768,7 @@ You have two options:
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)&gt;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
 &lt;&lt;if $theatre is &quot;open&quot;&gt;&gt;
   &lt;p&gt; Let me show you some images &lt;/p&gt;
@@ -818,7 +819,7 @@ You have two options:
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)&gt;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
 &lt;p&gt;Go outside and cross the road &lt;/p&gt;
 &lt;p&gt;Face the Liverpool Everyman&lt;/p&gt;
@@ -857,7 +858,7 @@ You have two options:
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)&gt;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
 &lt;p&gt;Ready to go to the Liverpool Philharmonic?&lt;/p&gt;
 &lt;p&gt;It’s a couple of minutes straight down the road&lt;/p&gt;
@@ -877,7 +878,7 @@ You have two options:
 /* &lt;&lt;set $showAudio to true&gt;&gt; */
 /* Everyman to 1931  */
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)&gt;&gt;
-&lt;main&gt;
+&lt;main class=&quot;instructions&quot;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
 &lt;p&gt;You can the Map to help you get there.&lt;/p&gt;
