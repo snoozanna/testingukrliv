@@ -11,6 +11,7 @@
   --main-bg-color: #140246;
   --accent-color-primary: #fea602;
   --accent-color-secondary: #1fb9aa;
+  --accent-color-shadow: #140246;
   /* --color-red: #bc4121;
   --color-mint: #94cab7;
   --color-grey: #7f7f7f;
@@ -53,12 +54,19 @@ button,
   font-family: var(--font-headings);
   text-transform: uppercase;
   padding: 5px;
+  box-shadow: var(--accent-color-shadow) 4px 4px;
 }
 
 button:hover {
-  background-color: var(--accent-color-secondary);
+  background-color: var(--color-pink);
   border: #fff 1px solid;
   color: #fff;
+}
+
+button:focus,
+.inline-btn-wrapper > a {
+  transform: translate(2px, 2px);
+  box-shadow: var(--accent-color-shadow) 1px 1px;
 }
 
 a {
@@ -66,7 +74,7 @@ a {
 }
 
 a:active {
-  background-color: var(--accent-color-secondary);
+  background-color: var(--color-pink);
 }
 
 a:hover {
@@ -290,6 +298,7 @@ textarea {
 /* LANDING  */
 main.landing {
   align-items: center;
+  height: 100vh;
 }
 
 main.landing > h1 {

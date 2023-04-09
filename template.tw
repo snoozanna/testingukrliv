@@ -430,7 +430,7 @@ You have two options:
    <img class="poster" src="./../assets/img/obpy.jpeg"/>
    <h2>$title</h2>
  </div>
-<p><<button "Begin">><<goto $nextpass>><</button>></p>
+<<button "Begin">><<goto $nextpass>><</button>>
 
 /* <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>> */
 
