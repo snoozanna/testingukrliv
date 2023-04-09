@@ -1,19 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Secular+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Spinnaker&display=swap");
 /* CONSTANTS  */
 
 :root {
-  --main-bg-color: #2e375f;
+  /* --main-bg-color: #2e375f;
   --accent-color-primary: #e8d7a4;
+  --accent-color-secondary: #1fb9aa; */
+  --main-bg-color: #140246;
+  --accent-color-primary: #fea602;
   --accent-color-secondary: #1fb9aa;
-  --color-red: #bc4121;
+  /* --color-red: #bc4121;
   --color-mint: #94cab7;
   --color-grey: #7f7f7f;
   --color-orange: #e86530;
   --color-purple: #7f6fb0;
-  --color-pink: #cd7362;
-  --font-headings: "Merriweather", serif;
+  --color-pink: #cd7362; */
+  --color-yellow: #fea602;
+  --color-red: #ff0200;
+  --color-purple: #140246;
+  --color-pink: #ff007c;
+  /* --color-yellow: #f3d903; */
+  --color-orange: #f75146;
+  --font-headings: "Shippori Antique B1", sans-serif;
   --font-body: "Open Sans", sans-serif;
   --padding: 2rem;
 }
@@ -31,24 +41,32 @@
   content: "";
 }
 
-button {
-  background-color: transparent;
+button,
+.inline-btn-wrapper > a {
+  /* background-color: transparent;
   border: #fff 1px solid;
+  border-radius: 3px; */
+  background-color: var(--color-yellow);
+  color: black;
+  border: black 1px solid;
   border-radius: 3px;
+  font-family: var(--font-headings);
+  text-transform: uppercase;
+  padding: 5px;
 }
 
 button:hover {
-  background-color: #cf1b98;
+  background-color: var(--accent-color-secondary);
   border: #fff 1px solid;
   color: #fff;
 }
 
 a {
-  color: #f2647d;
+  color: var(--accent-color-secondary);
 }
 
 a:active {
-  background-color: #f2647d;
+  background-color: var(--accent-color-secondary);
 }
 
 a:hover {
@@ -69,6 +87,12 @@ body {
   font-family: var(--font-body);
   overflow: scroll;
   background: var(--main-bg-color);
+  background: linear-gradient(
+    27deg,
+    var(--main-bg-color) 0%,
+    var(--color-orange) 85%,
+    var(--color-yellow) 100%
+  );
   /* padding: 1.5rem */
   display: flex;
   flex-direction: column;
@@ -116,12 +140,12 @@ main {
   margin: 0px 5px;
 }
 
-.inline-btn-wrapper > a {
+/* .inline-btn-wrapper > a {
   border: 1px solid white;
   padding: 5px;
   border-radius: 5px;
   color: white;
-}
+} */
 
 /* footer  */
 footer {
@@ -172,6 +196,20 @@ nav {
   opacity: 0;
 }
 
+.poster-wrapper {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.poster-wrapper > h2,
+.poster-wrapper > h1 {
+  background: var(--color-purple);
+  margin-block-start: -3rem;
+  position: fixed;
+  z-index: 9999;
+  padding: 0 1rem;
+}
+
 .menu-wrapper {
   display: flex;
   justify-content: center;
@@ -182,27 +220,6 @@ nav {
 .menu-wrapper > button {
   margin-inline-end: 10px;
   margin-block-end: 10px;
-}
-
-.door-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  text-align: right;
-}
-
-.door-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.door-item > button > img {
-  max-width: 7rem;
-}
-
-.door-item > span {
-  text-align: center;
 }
 
 textarea {
@@ -301,12 +318,23 @@ header.credits > .header-item > h3 {
 
 /* INSTRUCTIONS  */
 
+main.instructions {
+  justify-content: flex-start;
+}
 main.instructions > h2 {
   margin-block-end: 3rem;
 }
-main.instructions > p > .link-image > img {
-  width: 35px;
+
+main.instructions > #mount > p > .link-image > img {
+  width: 30px;
   margin: 0 10px;
+}
+
+main.instructions > #mount > p {
+  background-color: #1fb9aa;
+  padding: 6px 8px;
+  border-radius: 10px;
+  color: black;
 }
 
 /* END  */
@@ -404,6 +432,10 @@ main.end {
   height: 200px;
   width: 600px;
   overflow: scroll;
+}
+
+footer.ar > .nav-wrapper > .nav-item > #mount > span {
+  display: block;
 }
 
 @media screen and (min-width: 450px) {

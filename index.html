@@ -367,10 +367,24 @@ function log(msg) {
  
   &lt;/div&gt;
   
-&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="5" name="footerAR" tags="nobr" position="100,375" size="100,100">&lt;footer&gt;
+&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="5" name="footerAR" tags="nobr" position="100,375" size="100,100">&lt;footer class=&quot;ar&quot;&gt;
   &lt;div class=&quot;nav-wrapper&quot;&gt;
     &lt;div class=&quot;nav-item&quot;&gt;
-     Press the image to see it change. When you’ve finished listening let me know
+    &lt;div id=&quot;mount&quot;&gt; &lt;span&gt;Press the image&lt;/span&gt; &lt;span&gt;to see it change&lt;/span&gt;&lt;/div&gt;
+    &lt;&lt;silently&gt;&gt;
+	&lt;&lt;repeat 10s&gt;&gt;
+    &lt;&lt;timed 0.1s&gt;&gt;
+      &lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+         &lt;span&gt;When you’ve finished&lt;/span&gt; &lt;span&gt;listening let me know&lt;/span&gt;
+      &lt;&lt;/replace&gt;&gt;
+     &lt;&lt;/timed&gt;&gt;
+     &lt;&lt;timed 6s&gt;&gt;
+      &lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+       &lt;span&gt;Press the image&lt;/span&gt; &lt;span&gt;to see it change&lt;/span&gt;
+      &lt;&lt;/replace&gt;&gt;
+     &lt;&lt;/timed&gt;&gt;
+    &lt;&lt;/repeat&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
     &lt;/div&gt;&lt;/div&gt;
     &lt;div class=&quot;nav-wrapper&quot;&gt;
     &lt;div class=&quot;nav-item&quot;&gt;
@@ -456,7 +470,10 @@ You have two options:
 
 &lt;main class=&quot;landing&quot;&gt;
 
-&lt;h1&gt;Our Biggest Premiere Yet&lt;/h1&gt;
+&lt;div class=&quot;poster-wrapper&quot;&gt;
+   &lt;img class=&quot;poster&quot; src=&quot;./../assets/img/obpy.jpeg&quot;/&gt;
+   &lt;h2&gt;$title&lt;/h2&gt;
+ &lt;/div&gt;
 &lt;p&gt;&lt;&lt;button &quot;Begin&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
 
 /* &lt;&lt;button &quot;lofiAR&quot;&gt;&gt;&lt;&lt;set $prevpass to $passage&gt;&gt;&lt;&lt;goto &quot;lofiai&quot;&gt;&gt;&lt;&lt;/button&gt;&gt; */
@@ -467,8 +484,8 @@ You have two options:
 &lt;&lt;set $nextpass to &quot;instnar1&quot;&gt;&gt;
 &lt;&lt;set $showMap to false&gt;&gt;
 &lt;&lt;set $showAudio to false&gt;&gt;
-&lt;&lt;set $showReplay to true&gt;&gt;
-&lt;&lt;set $showForwards to false&gt;&gt;
+&lt;&lt;set $showReplay to false&gt;&gt;
+&lt;&lt;set $showForwards to true&gt;&gt;
 &lt;&lt;set $showBackwards to false&gt;&gt;
 &lt;&lt;set $showCaptionsIcon to false&gt;&gt;
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)&gt;&gt;
@@ -478,18 +495,36 @@ You have two options:
 &lt;main class=&quot;instructions&quot;&gt;
 &lt;h2&gt;Instructions&lt;/h2&gt;
 &lt;div id=&quot;map&quot; class=&quot;hide&quot;&gt;$map&lt;/div&gt;
-&lt;p&gt;The &lt;&lt;link [img[assets/img/map.png]]&gt;&gt;&lt;&lt;toggleclass &quot;#map&quot; &quot;hide&quot;&gt;&gt;&lt;&lt;/link&gt;&gt; takes you to a map&lt;/p&gt;
+&lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
+&lt;&lt;timed 2s&gt;&gt;
+  &lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+    &lt;p&gt;The &lt;&lt;link [img[assets/img/map.png]]&gt;&gt;&lt;&lt;toggleclass &quot;#map&quot; &quot;hide&quot;&gt;&gt;&lt;&lt;/link&gt;&gt; takes you to a map&lt;/p&gt;
+  &lt;&lt;/replace&gt;&gt;
 
+&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 5s&gt;&gt;
+  &lt;&lt;append &quot;#mount&quot;&gt;&gt;
 &lt;p&gt;The arrow [img[Back|assets/img/backward.png][$prevpass]] skips back&lt;/p&gt;
-
+  &lt;&lt;/append&gt;&gt;
+&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 8s&gt;&gt;
+  &lt;&lt;append &quot;#mount&quot;&gt;&gt;
 &lt;p&gt;You can replay with this icon   [img[Replay|assets/img/replay.png][$passage]]&lt;/p&gt;
-
+  &lt;&lt;/append&gt;&gt;
+    
+&lt;&lt;/timed&gt;&gt;
+&lt;&lt;timed 11s&gt;&gt;
+  &lt;&lt;append &quot;#mount&quot;&gt;&gt;
 &lt;p&gt;Step forward via a button like this     [img[Forward|assets/img/forward.png][$nextpass]]&lt;/p&gt;
-
-  
-  &lt;p&gt;&lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/p&gt;
+  &lt;&lt;/append&gt;&gt;
+&lt;&lt;/timed&gt;&gt;
+  &lt;&lt;timed 13s&gt;&gt;
+  &lt;&lt;append &quot;#mount&quot;&gt;&gt;
+&lt;&lt;button &quot;Next&quot;&gt;&gt;&lt;&lt;goto $nextpass&gt;&gt;&lt;&lt;/button&gt;&gt;
+  &lt;&lt;/append&gt;&gt;
+&lt;&lt;/timed&gt;&gt;
 &lt;/main&gt;
-/* &lt;&lt;include &quot;footer&quot;&gt;&gt; */</tw-passagedata><tw-passagedata pid="11" name="instnar1" tags="nobr" position="100,225" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
+&lt;&lt;include &quot;footer&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="instnar1" tags="nobr" position="100,225" size="100,100">&lt;&lt;set $prevpass to &quot;landing&quot;&gt;&gt;
 &lt;&lt;set $passage to &quot;instnar1&quot;&gt;&gt;
 &lt;&lt;set $nextpass to &quot;instnar2&quot;&gt;&gt;
 &lt;&lt;set $showMap to true&gt;&gt;
@@ -547,8 +582,12 @@ You have two options:
 &lt;main&gt;
 &lt;div id=&quot;mount&quot;&gt;&lt;/div&gt;
   &lt;&lt;timed 0.1s&gt;&gt;&lt;&lt;replace &quot;#mount&quot;&gt;&gt;
+ &lt;div class=&quot;poster-wrapper&quot;&gt;
+   &lt;img class=&quot;poster&quot; src=&quot;./../assets/img/obpy.jpeg&quot;/&gt;
+   &lt;h2&gt;$title&lt;/h2&gt;
+ &lt;/div&gt;
     &lt;p&gt;Great!&lt;/p&gt;
-    &lt;p&gt;Press  &lt;div class=&quot;inline-btn-wrapper&quot;&gt;[[play|intro]] &lt;/div&gt;to listen to Our Biggest Premiere Yet&lt;/p&gt;
+    &lt;p&gt;Press  &lt;div class=&quot;inline-btn-wrapper&quot;&gt;[[play|intro]] &lt;/div&gt;to listen to &lt;/p&gt;
   &lt;&lt;/replace&gt;&gt;&lt;&lt;/timed&gt;&gt;
 
 &lt;/main&gt;
@@ -935,7 +974,11 @@ You have two options:
 &lt;&lt;set $passage to &quot;end&quot;&gt;&gt;
 &lt;&lt;set $nextpass to &quot;end&quot;&gt;&gt;
 &lt;&lt;set $showMap to false&gt;&gt;
-&lt;&lt;set $showCredits to true&gt;&gt;
+&lt;&lt;set $showAudio to false&gt;&gt;
+&lt;&lt;set $showReplay to true&gt;&gt;
+&lt;&lt;set $showBackwards to true&gt;&gt;
+&lt;&lt;set $showForwards to false&gt;&gt;
+&lt;&lt;set $showCaptionsIcon to false&gt;&gt;
 &lt;&lt;set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)&gt;&gt;
 &lt;main class=&quot;end&quot;&gt;
 &lt;div id=&quot;audio&quot;&gt;&lt;/div&gt;

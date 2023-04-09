@@ -308,10 +308,24 @@ function log(msg) {
 
 
 :: footerAR [nobr]{"position":"100,375","size":"100,100"}
-<footer>
+<footer class="ar">
   <div class="nav-wrapper">
     <div class="nav-item">
-     Press the image to see it change. When you’ve finished listening let me know
+    <div id="mount"> <span>Press the image</span> <span>to see it change</span></div>
+    <<silently>>
+	<<repeat 10s>>
+    <<timed 0.1s>>
+      <<replace "#mount">>
+         <span>When you’ve finished</span> <span>listening let me know</span>
+      <</replace>>
+     <</timed>>
+     <<timed 6s>>
+      <<replace "#mount">>
+       <span>Press the image</span> <span>to see it change</span>
+      <</replace>>
+     <</timed>>
+    <</repeat>>
+<</silently>>
     </div></div>
     <div class="nav-wrapper">
     <div class="nav-item">
@@ -412,7 +426,10 @@ You have two options:
 
 <main class="landing">
 
-<h1>Our Biggest Premiere Yet</h1>
+<div class="poster-wrapper">
+   <img class="poster" src="./../assets/img/obpy.jpeg"/>
+   <h2>$title</h2>
+ </div>
 <p><<button "Begin">><<goto $nextpass>><</button>></p>
 
 /* <<button "lofiAR">><<set $prevpass to $passage>><<goto "lofiai">><</button>> */
@@ -426,8 +443,8 @@ You have two options:
 <<set $nextpass to "instnar1">>
 <<set $showMap to false>>
 <<set $showAudio to false>>
-<<set $showReplay to true>>
-<<set $showForwards to false>>
+<<set $showReplay to false>>
+<<set $showForwards to true>>
 <<set $showBackwards to false>>
 <<set $showCaptionsIcon to false>>
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.4030572538972, -2.969504715141457)>>
@@ -437,18 +454,36 @@ You have two options:
 <main class="instructions">
 <h2>Instructions</h2>
 <div id="map" class="hide">$map</div>
-<p>The <<link [img[assets/img/map.png]]>><<toggleclass "#map" "hide">><</link>> takes you to a map</p>
+<div id="mount"></div>
+<<timed 2s>>
+  <<replace "#mount">>
+    <p>The <<link [img[assets/img/map.png]]>><<toggleclass "#map" "hide">><</link>> takes you to a map</p>
+  <</replace>>
 
+<</timed>>
+<<timed 5s>>
+  <<append "#mount">>
 <p>The arrow [img[Back|assets/img/backward.png][$prevpass]] skips back</p>
-
+  <</append>>
+<</timed>>
+<<timed 8s>>
+  <<append "#mount">>
 <p>You can replay with this icon   [img[Replay|assets/img/replay.png][$passage]]</p>
-
+  <</append>>
+    
+<</timed>>
+<<timed 11s>>
+  <<append "#mount">>
 <p>Step forward via a button like this     [img[Forward|assets/img/forward.png][$nextpass]]</p>
-
-  
-  <p><<button "Next">><<goto $nextpass>><</button>></p>
+  <</append>>
+<</timed>>
+  <<timed 13s>>
+  <<append "#mount">>
+<<button "Next">><<goto $nextpass>><</button>>
+  <</append>>
+<</timed>>
 </main>
-/* <<include "footer">> */
+<<include "footer">>
 
 :: instnar1 [nobr]
 <<set $prevpass to "landing">>
@@ -517,8 +552,12 @@ You have two options:
 <main>
 <div id="mount"></div>
   <<timed 0.1s>><<replace "#mount">>
+ <div class="poster-wrapper">
+   <img class="poster" src="./../assets/img/obpy.jpeg"/>
+   <h2>$title</h2>
+ </div>
     <p>Great!</p>
-    <p>Press  <div class="inline-btn-wrapper">[[play|intro]] </div>to listen to Our Biggest Premiere Yet</p>
+    <p>Press  <div class="inline-btn-wrapper">[[play|intro]] </div>to listen to </p>
   <</replace>><</timed>>
 
 </main>
@@ -962,7 +1001,11 @@ You have two options:
 <<set $passage to "end">>
 <<set $nextpass to "end">>
 <<set $showMap to false>>
-<<set $showCredits to true>>
+<<set $showAudio to false>>
+<<set $showReplay to true>>
+<<set $showBackwards to true>>
+<<set $showForwards to false>>
+<<set $showCaptionsIcon to false>>
 <<set $map = setup.generateDirectionsMap(53.4030572538972, -2.969504715141457,53.40143323565547, -2.9706816152244295)>>
 <main class="end">
 <div id="audio"></div>
